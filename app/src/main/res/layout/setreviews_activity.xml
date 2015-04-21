@@ -1,71 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="105dp"
+                android:layout_height="match_parent"
                 android:background="@color/white"
                 android:layout_gravity="bottom"
-                android:id="@+id/reviews_layout"
-                android:visibility="visible"
                 android:elevation="100dp">
 
-    <View android:layout_width="match_parent"
-          android:layout_height="2dp"
-          android:layout_alignParentTop="true"
-          android:background="@color/androidbase"/>
-
-    <View android:layout_width="2dp"
-          android:layout_height="match_parent"
-          android:layout_alignParentLeft="true"
-          android:background="@color/androidbase"/>
-
-
+    <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/androidbase"/>
+    <View
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@color/androidbase"/>
     <View android:layout_width="2dp"
           android:layout_height="match_parent"
           android:layout_alignParentRight="true"
           android:background="@color/androidbase"/>
 
-    <!--<Button-->
-    <!--android:layout_width="40dp"-->
-    <!--android:layout_height="40dp"-->
-    <!--android:layout_marginLeft="5dp"-->
-    <!--android:layout_marginTop="5dp"-->
-    <!--android:layout_alignParentLeft="true"-->
-    <!--android:layout_alignParentTop="true"-->
-    <!--android:id="@+id/reviews_pic"-->
-    <!--android:background="@drawable/pic"/>-->
-    <Button
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="9dp"
-            android:id="@+id/reviews_emoticon"
-            android:text="发送"
-            android:textColor="@color/white"
-            android:background="@color/base"/>
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/setthreads_content"
-            android:hint="请输入回复"
-            android:textColorHint="@color/grey"
-            android:textColor="@color/hehe"
-            android:textSize="16sp"
-            android:layout_alignParentBottom="true"
-            android:layout_toRightOf="@+id/reviews_emoticon"
-            android:layout_toLeftOf="@+id/reviews_post"
-            android:layout_margin="5dp"
-            android:paddingLeft="5dp"
-            android:paddingBottom="10dp"/>
-    <Button
-            android:layout_width="45dp"
-            android:layout_height="35dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+    <include layout="@layout/toolbar"/>
 
-            android:id="@+id/reviews_post"
-            android:text="发送"
-            android:textColor="@color/white"
-            android:background="@color/base"/>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="56dp"
+            android:layout_alignParentBottom="true">
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/setreviews_content"
+                android:hint="请输入回复"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:padding="2dp"
+                android:gravity="top"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+            <Button
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/setreviews_emoticon"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/emoticon"/>
+            <Button
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:id="@+id/setreviews_pic"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/pic"/>
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            <Button
+                    android:layout_width="57dp"
+                    android:layout_height="37dp"
+                    android:id="@+id/setreviews_post"
+                    android:layout_gravity="center_vertical"
+                    android:text="发送"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:background="@color/base"
+                    android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
 </RelativeLayout>
 

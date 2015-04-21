@@ -12,7 +12,7 @@
         <org.succlz123.s1go.app.support.circleimageview.CircleImageView
                 android:layout_width="43dp"
                 android:layout_height="43dp"
-                android:id="@+id/content_listview_item_img"
+                android:id="@+id/reviews_listview_item_img"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                  android:layout_gravity="center_vertical"/>
@@ -21,11 +21,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/content_listview_item_name"
+                android:id="@+id/reviews_listview_item_name"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
 
-                android:layout_toRightOf="@+id/content_listview_item_img"
+                android:layout_toRightOf="@+id/reviews_listview_item_img"
                 android:textSize="16sp"
                 android:textColor="@color/base"/>
         <TextView
@@ -33,9 +33,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="center_vertical"
-                android:layout_below="@+id/content_listview_item_name"
-                android:layout_toRightOf="@+id/content_listview_item_img"
-                android:id="@+id/content_listview_item_time"
+                android:layout_below="@+id/reviews_listview_item_name"
+                android:layout_toRightOf="@+id/reviews_listview_item_img"
+                android:id="@+id/reviews_listview_item_time"
                 android:textSize="13sp"
                 android:textColor="@color/gray"/>
         <TextView
@@ -44,7 +44,7 @@
                 android:layout_margin="10dp"
                 android:layout_alignParentRight="true"
                 android:layout_gravity="center_vertical"
-                android:id="@+id/content_listview_item_num"
+                android:id="@+id/reviews_listview_item_num"
                 android:textSize="16sp"
                 android:textColor="@color/gray"/>
     </RelativeLayout>
@@ -52,7 +52,7 @@
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/content_listview_item_content"
+            android:id="@+id/reviews_listview_item_content"
             android:textSize="16sp"
             android:layout_margin="5dp"
             android:padding="5dp"

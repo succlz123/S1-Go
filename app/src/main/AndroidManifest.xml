@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
             android:allowBackup="true"
@@ -22,10 +22,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.activity.ThreadsActivity"/>
-        <activity android:name=".ui.activity.ContentActivity"/>
+        <activity android:name=".ui.activity.ReviewsActivity"/>
         <activity android:name=".ui.activity.ImageViewActivity"/>
-        <activity android:name=".ui.activity.SetReviewsActivity" android:theme="@style/Theme.AppCompat.Translucent"/>
-
+        <activity android:name=".ui.activity.SetThreadsActivity"
+                  android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.activity.SetReviewsActivity"
+                  android:windowSoftInputMode="adjustResize"/>
+        <!--透明主题-->
+        <!--android:theme="@style/Theme.AppCompat.Translucent"-->
     </application>
 
 </manifest>

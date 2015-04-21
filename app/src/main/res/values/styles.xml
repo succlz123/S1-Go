@@ -31,11 +31,13 @@
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
-         <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
         <item name="colorPrimaryDark">@color/basebackground</item>
         <item name="android:navigationBarColor">@color/grey</item>
         <item name="colorPrimary">@color/base</item>
         <item name="android:backgroundDimEnabled">true</item>
-    </style>
+     </style>
+
+
 
 </resources>
