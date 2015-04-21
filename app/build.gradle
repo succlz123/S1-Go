@@ -22,9 +22,9 @@ apply plugin: 'com.android.application'
 
 repositories {
 //    jcenter()
-maven {
-url "http://127.0.0.1:8081/nexus/content/groups/public/"
-}
+    maven {
+        url "http://127.0.0.1:8081/nexus/content/groups/public/"
+    }
 }
 
 android {
@@ -61,7 +61,7 @@ dependencies {
 }
 
 apply plugin: 'idea'
-idea{
+idea {
     module {
         downloadJavadoc = false
         downloadSources = false
@@ -69,6 +69,16 @@ idea{
 }
 
 android {
+
+    signingConfigs {
+        debug {
+            storeFile file("../debug.keystore")
+            storePassword "android"
+            keyAlias "androiddebugkey"
+            keyPassword "android"
+        }
+    }
+
     lintOptions {
         abortOnError false
     }
