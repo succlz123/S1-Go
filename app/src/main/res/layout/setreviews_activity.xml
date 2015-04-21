@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="105dp"
+                android:background="@color/white"
+                android:layout_gravity="bottom"
+                android:id="@+id/reviews_layout"
+                android:visibility="visible"
+                android:elevation="100dp">
+
+    <View android:layout_width="match_parent"
+          android:layout_height="2dp"
+          android:layout_alignParentTop="true"
+          android:background="@color/androidbase"/>
+
+    <View android:layout_width="2dp"
+          android:layout_height="match_parent"
+          android:layout_alignParentLeft="true"
+          android:background="@color/androidbase"/>
+
+
+    <View android:layout_width="2dp"
+          android:layout_height="match_parent"
+          android:layout_alignParentRight="true"
+          android:background="@color/androidbase"/>
+
+    <!--<Button-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:layout_marginLeft="5dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:layout_alignParentLeft="true"-->
+    <!--android:layout_alignParentTop="true"-->
+    <!--android:id="@+id/reviews_pic"-->
+    <!--android:background="@drawable/pic"/>-->
+    <Button
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="9dp"
+            android:id="@+id/reviews_emoticon"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:background="@color/base"/>
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setthreads_content"
+            android:hint="请输入回复"
+            android:textColorHint="@color/grey"
+            android:textColor="@color/hehe"
+            android:textSize="16sp"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/reviews_emoticon"
+            android:layout_toLeftOf="@+id/reviews_post"
+            android:layout_margin="5dp"
+            android:paddingLeft="5dp"
+            android:paddingBottom="10dp"/>
+    <Button
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+
+            android:id="@+id/reviews_post"
+            android:text="发送"
+            android:textColor="@color/white"
+            android:background="@color/base"/>
+</RelativeLayout>
+

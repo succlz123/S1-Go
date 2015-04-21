@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:my="http://schemas.android.com/apk/res-auto"
+             android:orientation="vertical"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:id="@+id/threads_base_fragment"
+             android:background="@color/androidbase">
+
+    <include layout="@layout/toolbar"/>
+
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/threads_base_activity_listview"
+            android:dividerHeight="1dp"
+            android:layout_marginTop="56dp"
+            android:paddingTop="3dp"
+            android:paddingLeft="3.5dp"
+            android:paddingRight="3.5dp"
+            android:clipToPadding="false"
+            android:drawSelectorOnTop="true"
+            android:divider="#00000000">
+    </ListView>
+
+    <com.melnykov.fab.FloatingActionButton
+            android:id="@+id/thread_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="16dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_action_edit_dark"/>
+
+    <org.succlz123.s1go.app.support.swingindicator.SwingIndicator
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="56dp"
+            android:background="@color/white"
+            android:id="@+id/threads_progress"
+            android:visibility="visible"
+            my:circleColor="@color/base"
+            my:circleRadius="7dp"
+            my:swingRadius="50dp"
+            my:cycle="400"/>
+
+
+</FrameLayout>

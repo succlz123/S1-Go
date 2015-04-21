@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white">
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+        <org.succlz123.s1go.app.support.circleimageview.CircleImageView
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:id="@+id/content_listview_item_img"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                 android:layout_gravity="center_vertical"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/content_listview_item_name"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+
+                android:layout_toRightOf="@+id/content_listview_item_img"
+                android:textSize="16sp"
+                android:textColor="@color/base"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="center_vertical"
+                android:layout_below="@+id/content_listview_item_name"
+                android:layout_toRightOf="@+id/content_listview_item_img"
+                android:id="@+id/content_listview_item_time"
+                android:textSize="13sp"
+                android:textColor="@color/gray"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/content_listview_item_num"
+                android:textSize="16sp"
+                android:textColor="@color/gray"/>
+    </RelativeLayout>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/content_listview_item_content"
+            android:textSize="16sp"
+            android:layout_margin="5dp"
+            android:padding="5dp"
+            android:textColor="@color/hehe"
+            android:background="@color/white"/>
+
+</LinearLayout>
