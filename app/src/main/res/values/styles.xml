@@ -8,6 +8,7 @@
         <item name="android:navigationBarColor">@color/grey</item>
         <!--返回键样式-->
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
+        <item name="android:windowTranslucentStatus">true</item>
 
     </style>
 

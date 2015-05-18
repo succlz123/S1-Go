@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.dao.Helper.S1FidHelper;
-import org.succlz123.s1go.app.dao.Helper.S1FidImgHelper;
+import org.succlz123.s1go.app.dao.helper.S1Fid;
+import org.succlz123.s1go.app.dao.helper.S1FidIcon;
 import org.succlz123.s1go.app.ui.activity.ThreadsActivity;
 
 import java.util.Arrays;
@@ -64,34 +64,34 @@ public class HotAreaFragment extends Fragment {
             convertView = getActivity().getLayoutInflater().inflate(R.layout.forum_fragment_listview_item, parent, false);
             TextView textView = (TextView) convertView.findViewById(R.id.forum_base_fragment_listview_item_title);
             ImageView imageView = (ImageView) convertView.findViewById(R.id.forum_base_fragment_listview_item_forum_img);
-            imageView.setImageBitmap(S1FidImgHelper.getBitmap(new Random().nextInt(193)));
+            imageView.setImageBitmap(S1FidIcon.getBitmap(new Random().nextInt(193)));
             switch (position) {
                 case 0:
-                    textView.setText(S1FidHelper.S134);
+                    textView.setText(S1Fid.S134);
                     break;
                 case 1:
-                    textView.setText(S1FidHelper.S138);
+                    textView.setText(S1Fid.S138);
                     break;
                 case 2:
-                    textView.setText(S1FidHelper.S118);
+                    textView.setText(S1Fid.S118);
                     break;
                 case 3:
-                    textView.setText(S1FidHelper.S132);
+                    textView.setText(S1Fid.S132);
                     break;
                 case 4:
-                    textView.setText(S1FidHelper.S105);
+                    textView.setText(S1Fid.S105);
                     break;
                 case 5:
-                    textView.setText(S1FidHelper.S131);
+                    textView.setText(S1Fid.S131);
                     break;
                 case 6:
-                    textView.setText(S1FidHelper.S69);
+                    textView.setText(S1Fid.S69);
                     break;
                 case 7:
-                    textView.setText(S1FidHelper.S76);
+                    textView.setText(S1Fid.S76);
                     break;
                 case 8:
-                    textView.setText(S1FidHelper.S111);
+                    textView.setText(S1Fid.S111);
                     break;
             }
             return convertView;

@@ -3,65 +3,85 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/white">
+              android:background="@color/base">
 
-    <include layout="@layout/toolbar"/>
+    <include
+            layout="@layout/toolbar"
+            android:layout_marginTop="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"/>
 
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:id="@+id/setthreads_title"
-            android:hint="标题"
-            android:textSize="18sp"
-            android:singleLine="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:padding="2dp"/>
-    <EditText
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:id="@+id/setthreads_content"
-            android:hint="正文"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@null"
-            android:padding="2dp"
-            android:gravity="top"/>
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-        <Button
-                android:layout_width="37dp"
-                android:layout_height="37dp"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/setthreads_emoticon"
-                android:layout_marginLeft="10dp"
-                android:background="@drawable/emoticon"/>
-        <Button
-                android:layout_width="37dp"
-                android:layout_height="37dp"
-                android:id="@+id/setthreads_pic"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="center_vertical"
-                android:background="@drawable/pic"/>
-        <Space
-                android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:fitsSystemWindows="true"
+            android:background="@color/white">
+
+        <EditText
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-        <Button
-                android:layout_width="57dp"
-                android:layout_height="37dp"
-                android:id="@+id/setthreads_post"
-                android:layout_gravity="center_vertical"
-                android:text="发送"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:background="@color/base"
-                android:layout_marginRight="10dp"/>
+                android:id="@+id/setthreads_title"
+                android:hint="标题"
+                android:textSize="18sp"
+                android:singleLine="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:padding="2dp"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/setthreads_content"
+                android:hint="正文"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:padding="2dp"
+                android:gravity="top"/>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:orientation="horizontal">
+
+            <Button
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:layout_gravity="center_vertical"
+                    android:id="@+id/setthreads_emoticon"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/emoticon"/>
+
+            <Button
+                    android:layout_width="37dp"
+                    android:layout_height="37dp"
+                    android:id="@+id/setthreads_pic"
+                    android:layout_marginLeft="20dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@drawable/pic"/>
+
+            <Space
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+
+            <Button
+                    android:layout_width="57dp"
+                    android:layout_height="37dp"
+                    android:id="@+id/setthreads_post"
+                    android:layout_gravity="center_vertical"
+                    android:text="发送"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:background="@color/base"
+                    android:layout_marginRight="10dp"/>
+
+        </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

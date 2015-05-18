@@ -4,14 +4,14 @@ package org.succlz123.s1go.app.bean.login;
  * Created by fashi on 2015/4/18.
  */
 public class LoginVariables {
-    String auth;
-    String cookiepre;
-    String formhash;
-    String groupid;//用户组
-    String member_uid;//用户id
-    String member_username;//用户名
-    String readaccess;//阅读权
-    String saltkey;
+    private String auth;
+    private String cookiepre;
+    private String formhash;
+    private String groupid;//用户组
+    private String member_uid;//用户id
+    private String member_username;//用户名
+    private String readaccess;//阅读权
+    private String saltkey;
 
     public String getAuth() {
         return auth;

@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -15,8 +16,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.S1GoApplication;
-import org.succlz123.s1go.app.bean.setreviews.SetReviewsObject;
-import org.succlz123.s1go.app.dao.Api.SetReviewsApi;
+import org.succlz123.s1go.app.bean.set.SetThreadsAndReviewsObject;
+import org.succlz123.s1go.app.dao.api.IsFastClickButton;
+import org.succlz123.s1go.app.dao.interaction.SetThreadsAndReviews;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -38,10 +40,10 @@ public class SetReviewsActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.setreviews_activity);
 		mTid = getIntent().getStringExtra("tid");
+		mFormhash = getIntent().getStringExtra("formhash");
 		mPhoneInfo = "\n \n \n ——发送自 Stage1st Go " + "[url=http://baidu.com]" +
 				android.os.Build.MODEL + " Android " + android.os.Build.VERSION.RELEASE
 				+ "[/url]";
-		mFormhash = getIntent().getStringExtra("formhash");
 		initViews();
 		setToolbar();
 		PostBtnOnClickListener postBtnOnClickListener = new PostBtnOnClickListener();
@@ -69,13 +71,15 @@ public class SetReviewsActivity extends ActionBarActivity {
 		@Override
 		public void onClick(View v) {
 			mReviews = mReviewsEdit.getText().toString();
-			if (!mReviews.isEmpty()) {
+			if (!TextUtils.isEmpty(mReviews)) {
 				if (mReviews.length() < 2) {
 					Toast.makeText(SetReviewsActivity.this, "回复字数过少", Toast.LENGTH_SHORT).show();
 				} else {
-					dialog(1);
+					if (!IsFastClickButton.isFastClick()) {
+						dialog(1);
+					}
 				}
-			} else if (mReviews.isEmpty()) {
+			} else if (TextUtils.isEmpty(mReviews)) {
 				Toast.makeText(SetReviewsActivity.this, "请输入回复内容", Toast.LENGTH_SHORT).show();
 			}
 		}
@@ -95,9 +99,9 @@ public class SetReviewsActivity extends ActionBarActivity {
 				dialog.dismiss();
 				if (message == 0) {
 					finish();
-					overridePendingTransition(0, 0);
 				} else if (message == 1) {
-					new SetReviewstAsyncTask(mTid, mReviews, mPhoneInfo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+					new SetReviewstAsyncTask(mTid, mFormhash, mReviews, mPhoneInfo).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+					Toast.makeText(SetReviewsActivity.this, "正在发送,稍等片刻", Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
@@ -110,18 +114,21 @@ public class SetReviewsActivity extends ActionBarActivity {
 		builder.create().show();
 	}
 
-	private class SetReviewstAsyncTask extends AsyncTask<Void, Void, SetReviewsObject> {
+
+	private class SetReviewstAsyncTask extends AsyncTask<Void, Void, SetThreadsAndReviewsObject> {
 		private HashMap<String, String> mHearders = new HashMap<String, String>();
 		private LinkedHashMap<String, String> mBody = new LinkedHashMap<String, String>();
 
 		private String mTid;
-		private String mReviewsEdit;
+		private String mFormhash;
+		private String mReviews;
 		private String mPhoneInfo;
 
-		public SetReviewstAsyncTask(String mTid, String mReviewsEdit, String mPhoneInfo) {
+		public SetReviewstAsyncTask(String mTid, String mFormhash, String mReviews, String mPhoneInfo) {
 			super();
-			this.mReviewsEdit = mReviewsEdit;
 			this.mTid = mTid;
+			this.mFormhash = mFormhash;
+			this.mReviews = mReviews;
 			this.mPhoneInfo = mPhoneInfo;
 		}
 
@@ -135,7 +142,7 @@ public class SetReviewsActivity extends ActionBarActivity {
 				String saltkey = "saltkey=" + S1GoApplication.getInstance().getUserInfo().getSaltkey();
 
 				String noticetrimstr = "";
-				String message = mReviewsEdit + mPhoneInfo;
+				String message = mReviews + mPhoneInfo;
 				String mobiletype = "0";
 
 				this.mHearders.put("Cookie", cookie + auth + ";" + cookie + saltkey + ";");
@@ -147,16 +154,18 @@ public class SetReviewsActivity extends ActionBarActivity {
 		}
 
 		@Override
-		protected SetReviewsObject doInBackground(Void... params) {
+		protected SetThreadsAndReviewsObject doInBackground(Void... params) {
 
-			return SetReviewsApi.SetReviews(mTid, mHearders, mBody);
+			return SetThreadsAndReviews.SetReviews(mTid, mHearders, mBody);
 		}
 
 		@Override
-		protected void onPostExecute(SetReviewsObject aVoid) {
+		protected void onPostExecute(SetThreadsAndReviewsObject aVoid) {
 			super.onPostExecute(aVoid);
-			if (aVoid.getMessage().getMessageval().equals("post_reply_succeed")) {
-				finish();
+			if (aVoid != null) {
+				if (aVoid.getMessage().getMessageval().equals("post_reply_succeed")) {
+					finish();
+				}
 			}
 		}
 	}
@@ -173,12 +182,10 @@ public class SetReviewsActivity extends ActionBarActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (!mReviewsEdit.getText().toString().isEmpty()) {
+		if (!TextUtils.isEmpty(mReviewsEdit.getText().toString())) {
 			dialog(0);
-		} else if (mReviewsEdit.getText().toString().isEmpty()) {
+		} else if (TextUtils.isEmpty(mReviewsEdit.getText().toString())) {
 			super.onBackPressed();
 		}
 	}
-
-
 }

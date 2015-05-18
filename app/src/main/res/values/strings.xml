@@ -3,6 +3,8 @@
 
     <string name="action_settings">设置</string>
     <string name="action_search">搜索</string>
-    <string name="open">open</string>
-    <string name="close">close</string>
+    <string name="welcome">欢迎您回来&#160;&#160;</string>
+    <string name="open">打开</string>
+    <string name="close">关闭</string>
+
 </resources>

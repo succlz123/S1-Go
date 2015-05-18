@@ -15,11 +15,11 @@ import android.widget.*;
 import com.melnykov.fab.FloatingActionButton;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.S1GoApplication;
-import org.succlz123.s1go.app.bean.forum.ForumForumThreadlist;
-import org.succlz123.s1go.app.bean.forum.ForumObject;
-import org.succlz123.s1go.app.dao.Api.ForumTitleApi;
-import org.succlz123.s1go.app.dao.Helper.S1FidHelper;
-import org.succlz123.s1go.app.support.swingindicator.SwingIndicator;
+import org.succlz123.s1go.app.bean.threads.ThreadsList;
+import org.succlz123.s1go.app.bean.threads.ThreadsObject;
+import org.succlz123.s1go.app.dao.interaction.GetThreads;
+import org.succlz123.s1go.app.dao.helper.S1Fid;
+import org.succlz123.s1go.app.support.com.kaiguan.swingindicator.SwingIndicator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,12 +31,12 @@ import java.util.List;
 public class ThreadsActivity extends ActionBarActivity {
 	private ListView mListView;
 	private String mFid;
-	private ForumObject forumObject;
+	private ThreadsObject threadsObject;
 	private AppAdapet mApdater;
 	private Toolbar mToolbar;
 	private Boolean isLogin;
 	private String ToolbarTitle;
-	private List<ForumForumThreadlist> mForumForumThreadlist;
+	private List<ThreadsList> mThreadsList;
 	private SwingIndicator mSwingIndicator;
 	private FloatingActionButton mFloatingActionButton;
 
@@ -48,17 +48,17 @@ public class ThreadsActivity extends ActionBarActivity {
 		initViews();
 		setToolbar();
 		setFloatingActionButton();
-		new GetThreadsTitleAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		new GetThreadsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				Intent intent = new Intent(ThreadsActivity.this, ReviewsActivity.class);
-				intent.putExtra("tid", mForumForumThreadlist.get(position).getTid());
-				intent.putExtra("title", mForumForumThreadlist.get(position).getSubject());
+				intent.putExtra("tid", mThreadsList.get(position).getTid());
+				intent.putExtra("title", mThreadsList.get(position).getSubject());
 				startActivity(intent);
-			}
+ 			}
 		});
-	}
+ 	}
 
 	private void initViews() {
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -68,7 +68,7 @@ public class ThreadsActivity extends ActionBarActivity {
 	}
 
 	private void setToolbar() {
-		ToolbarTitle = S1FidHelper.GetS1Fid(Integer.valueOf(mFid));
+		ToolbarTitle = S1Fid.GetS1Fid(Integer.valueOf(mFid));
 		mToolbar.setTitle(ToolbarTitle);
 		mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
 		mToolbar.setSubtitleTextColor(Color.parseColor("#ffffff"));
@@ -86,16 +86,18 @@ public class ThreadsActivity extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(ThreadsActivity.this, SetThreadsActivity.class);
+				intent.putExtra("fid", mFid);
+				intent.putExtra("formhash", threadsObject.getVariables().getFormhash());
 				startActivityForResult(intent, 1);
 			}
 		});
-		mFloatingActionButton.attachToListView(mListView);//把listview和浮动imagebutton组合
+		mFloatingActionButton.attachToListView(mListView);
 	}
 
 	private class AppAdapet extends BaseAdapter {
 
 		private class ViewHolder {
-			private TextView title;
+			private TextView mTitle;
 			private TextView name;
 			private TextView time;
 			private TextView lastTime;
@@ -107,8 +109,8 @@ public class ThreadsActivity extends ActionBarActivity {
 
 		@Override
 		public int getCount() {
-			if (forumObject != null) {
-				return forumObject.getVariables().getForum_threadlist().size();
+			if (threadsObject != null) {
+				return threadsObject.getVariables().getForum_threadlist().size();
 			}
 			return 0;
 		}
@@ -129,7 +131,7 @@ public class ThreadsActivity extends ActionBarActivity {
 			if (convertView == null) {
 				convertView = getLayoutInflater().inflate(R.layout.threads_listview_item, parent, false);
 				holder = new ViewHolder();
-				holder.title = (TextView) convertView.findViewById(R.id.threads_listview_title);
+				holder.mTitle = (TextView) convertView.findViewById(R.id.threads_listview_title);
 				holder.name = (TextView) convertView.findViewById(R.id.threads_listview_name);
 				holder.time = (TextView) convertView.findViewById(R.id.threads_listview_time);
 				holder.lastTime = (TextView) convertView.findViewById(R.id.threads_listview_last_post_time);
@@ -141,23 +143,22 @@ public class ThreadsActivity extends ActionBarActivity {
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			mForumForumThreadlist = new ArrayList<ForumForumThreadlist>();
-			mForumForumThreadlist = forumObject.getVariables().getForum_threadlist();
-			holder.title.setText(mForumForumThreadlist.get(position).getSubject());
-			holder.name.setText(mForumForumThreadlist.get(position).getAuthor());
-			holder.time.setText(Html.fromHtml(mForumForumThreadlist.get(position).getDateline()));
-			holder.lastTime.setText(Html.fromHtml(mForumForumThreadlist.get(position).getLastpost()));
-			holder.lastPoster.setText(mForumForumThreadlist.get(position).getLastposter());
-			holder.reply.setText(mForumForumThreadlist.get(position).getReplies());
-			holder.click.setText(mForumForumThreadlist.get(position).getViews());
+			mThreadsList = new ArrayList<ThreadsList>();
+			mThreadsList = threadsObject.getVariables().getForum_threadlist();
+			holder.mTitle.setText(mThreadsList.get(position).getSubject());
+			holder.name.setText(mThreadsList.get(position).getAuthor());
+			holder.time.setText(Html.fromHtml(mThreadsList.get(position).getDateline()));
+			holder.lastTime.setText(Html.fromHtml(mThreadsList.get(position).getLastpost()));
+			holder.lastPoster.setText(mThreadsList.get(position).getLastposter());
+			holder.reply.setText(mThreadsList.get(position).getReplies());
+			holder.click.setText(mThreadsList.get(position).getViews());
 			holder.fid.setText(null);
 
 			return convertView;
 		}
 	}
 
-	private class GetThreadsTitleAsyncTask extends AsyncTask<Void, Void, ForumObject> {
-
+	private class GetThreadsAsyncTask extends AsyncTask<Void, Void, ThreadsObject> {
 		private HashMap<String, String> hearders = new HashMap<String, String>();
 
 		@Override
@@ -173,15 +174,15 @@ public class ThreadsActivity extends ActionBarActivity {
 		}
 
 		@Override
-		protected ForumObject doInBackground(Void... params) {
-			return ForumTitleApi.getForumTitle(mFid, hearders);
+		protected ThreadsObject doInBackground(Void... params) {
+			return GetThreads.getThreads(mFid, hearders);
 		}
 
 		@Override
-		protected void onPostExecute(ForumObject aVoid) {
+		protected void onPostExecute(ThreadsObject aVoid) {
 			super.onPostExecute(aVoid);
-			forumObject = aVoid;
-			isLogin = (forumObject != null && forumObject.getMessage() == null);
+			threadsObject = aVoid;
+			isLogin = (threadsObject != null && threadsObject.getMessage() == null);
 			if (!isLogin) {
 				Toast.makeText(ThreadsActivity.this, "抱歉，您尚未登录，没有权限访问该版块", Toast.LENGTH_LONG).show();
 			} else if (isLogin) {
