@@ -12,6 +12,28 @@ public class LoginVariables {
     private String member_username;//用户名
     private String readaccess;//阅读权
     private String saltkey;
+    private String password;
+
+//    private static LoginVariables instance;
+//
+//    public static LoginVariables getInstance() {
+//        if (instance == null) {
+//            instance = new LoginVariables();
+//        }
+//        return instance;
+//    }
+//
+//    private LoginVariables() {
+//
+//    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getAuth() {
         return auth;

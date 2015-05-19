@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * Created by fashi on 2015/4/25.
  */
 public class S1ImageCacheDB extends SQLiteOpenHelper {
-
     private static final int VERSION = 1;
     private static final String DB_NAME = "imagecache.db";
     private static final String TABLE_NAME = "imagecache";

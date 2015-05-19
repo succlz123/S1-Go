@@ -23,23 +23,41 @@ import java.util.concurrent.Executors;
  * Created by fashi on 2015/5/11.
  */
 public class ImageDownLoader {
-    /*图片内存缓存*/
+    /**
+     * 图片lrucache缓存
+     */
     private LruCache<String, Bitmap> mLruCache;
-    /*查询数据库的请求所开启的线程队列*/
+    /**
+     * 查询数据库的请求的线程队列
+     */
     private HashMap<String, DataBaseRunnable> mDataBaseTaskQueue;
-    /*访问网路下载的请求所开启的线程队列*/
+    /**
+     * 访问网路下载的请求的线程队列
+     */
     private HashMap<String, NetWorkRunnable> mNetWorkTaskQueue;
-    /*查询数据库线程池*/
+    /**
+     * 查询数据库线程池
+     */
     private ExecutorService mDataBaseThreadPoll;
-    /*访问网路下载线程池*/
+    /**
+     * 访问网路下载线程池
+     */
     private ExecutorService mNetworkThreadPoll;
-    /*线程池里线程的数量*/
+    /**
+     * 线程池里线程的最大数量
+     */
     private final static int THREADPOLL_NUM = 5;
-    /*缓存文件夹路径*/
+    /**
+     * 缓存文件夹路径
+     */
     private File mCacherFileDir;
-    /*缓存文件夹名*/
+    /**
+     * 缓存文件夹名
+     */
     private static final String DIR_CACHE = "picture_cache";
-    /*单例模式*/
+    /**
+     * 单例模式
+     */
     private static ImageDownLoader instance;
 
     public synchronized static ImageDownLoader getInstance() {
@@ -64,7 +82,10 @@ public class ImageDownLoader {
         mCacherFileDir = CreateFile.createFileDir(DIR_CACHE);
     }
 
-    /*如果发现内存缓存中没有图片 把bitmap放进缓存中*/
+    /**
+     * 如果发现内存缓存中没有图片
+     * 把bitmap放进缓存中
+     */
     private void addLruCache(String url, AppSize appSize, Bitmap bitmap) {
         String key = url + "_" + appSize.getWidth() + "x" + appSize.getHeight();
         if (getBitmapFromMemCache(url, appSize) == null && bitmap != null) {
@@ -72,13 +93,19 @@ public class ImageDownLoader {
         }
     }
 
-    /*查询缓存中bitmap的bitmap 没有返回null*/
+    /**
+     * 查询缓存中bitmap的bitmap
+     * 没有返回null
+     */
     private Bitmap getBitmapFromMemCache(String url, AppSize appSize) {
         String key = url + "_" + appSize.getWidth() + "x" + appSize.getHeight();
         return mLruCache.get(key);
     }
 
-    /*查询数据库里bitmap的本地file缓存地址 没有就返回null*/
+    /**
+     * 查询数据库里bitmap的本地file缓存地址
+     * 没有就返回null
+     */
     private Bitmap getBitmapFromDataBase(String url, AppSize appSize) {
         String localCachePath = S1ImageCacheDB.getInstance().getCache(url);
         if (localCachePath != null) {
@@ -103,13 +130,15 @@ public class ImageDownLoader {
         return null;
     }
 
-    /*内存缓存和本地缓存都没有的情况下去网络下载
-    1 用okhttp去网络下载图片 获得inputstream输入流
-    2 把inputstream保存到本地PICTURE_CACHE文件夹里
-    3 把保存到本地的inputstream的路径和文件大小信息写入数据库
-    4 如果获取的inputstream
-      不为空 返回 保存到本地的FileOutputStream转换成的bitmap
-      为空 返回null*/
+    /**
+     * 内存缓存和本地数据库缓存都没有 去网络获取
+     * 用okhttp去网络下载图片 获得inputstream输入流
+     * 把inputstream保存到本地PICTURE_CACHE文件夹
+     * 把本地的inputstream的路径和文件大小信息写入数据库
+     * 如果获取的inputstream
+     * 不为空 返回 由本地的FileOutputStream转换成的bitmap
+     * 为空 返回 null
+     */
     private Bitmap getBitmapFromNetWork(String url) {
         InputStream is = MyOkHttp.getInstance().doImageGet(url);
         FileOutputStream os = null;

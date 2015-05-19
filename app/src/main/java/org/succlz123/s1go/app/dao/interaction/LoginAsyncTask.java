@@ -1,11 +1,13 @@
 package org.succlz123.s1go.app.dao.interaction;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.widget.Toast;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.S1GoApplication;
 import org.succlz123.s1go.app.bean.login.LoginObject;
 import org.succlz123.s1go.app.bean.login.LoginVariables;
+import org.succlz123.s1go.app.dao.api.DeEnCode;
 import org.succlz123.s1go.app.dao.api.MyOkHttp;
 import org.succlz123.s1go.app.dao.helper.S1Url;
 
@@ -15,12 +17,19 @@ import java.util.HashMap;
  * Created by fashi on 2015/5/18.
  */
 public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
+    private static final String SUCCEED = "location_login_succeed_mobile";
+    private static final String FAILED = "login_invalid";
+    private static final String USER_NAME = "username";
+    private static final String PASS_WORD = "password";
+    private static final String COOKIE_TIME = "cookietime";
+    private static final String COOKIE_TIME_DIGIT = "2592000";
+
     private HashMap<String, String> paramss = new HashMap<String, String>();
     private String mUrl;
     private String mUsername;
     private String mPassword;
     private LoginObject mLoginObject;
-    private LoginVariables mLoginVariables;
+    private LoginVariables mUserInfo;
     private String mMessagestr;
     private String mMessageval;
 
@@ -33,9 +42,9 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        paramss.put("username", mUsername);
-        paramss.put("password", mPassword);
-        paramss.put("cookietime", "2592000");
+        paramss.put(USER_NAME, mUsername);
+        paramss.put(PASS_WORD, mPassword);
+        paramss.put(COOKIE_TIME, COOKIE_TIME_DIGIT);
     }
 
     @Override
@@ -48,17 +57,23 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String aVoid) {
         super.onPostExecute(aVoid);
         mLoginObject = LoginObject.parseJson(aVoid);
-        mLoginVariables = mLoginObject.getVariables();
-        //登陆成功返回 欢迎回来 登陆失败返回 还可以登陆尝试的次数
+        mUserInfo = mLoginObject.getVariables();
+        mUserInfo.setPassword(DeEnCode.code(mPassword));
+
+        //登陆成功返回 欢迎回来
+        //登陆失败返回 还可以尝试的次数
         mMessagestr = mLoginObject.getMessage().getMessagestr();
-        //登陆成功返回 location_login_succeed_mobile 登陆失败返回 login_invalid
+
+        //登陆成功返回 SUCCEED
+        //登陆失败返回 FAILED
         mMessageval = mLoginObject.getMessage().getMessageval();
-        if ((mMessageval.equals("location_login_succeed_mobile"))) {
-            S1GoApplication.getInstance().addUserInfo(mLoginVariables);
+
+        if ((TextUtils.equals(mMessageval, SUCCEED))) {
+            S1GoApplication.getInstance().addUser(mUserInfo);
             String hint = S1GoApplication.getInstance().getApplicationContext()
                     .getResources().getString(R.string.welcome) + mUsername;
             Toast.makeText(S1GoApplication.getInstance(), hint, Toast.LENGTH_SHORT).show();
-        } else if (mMessageval.equals("login_invalid")) {
+        } else if ((TextUtils.equals(mMessageval, FAILED))) {
             Toast.makeText(S1GoApplication.getInstance(), mMessagestr, Toast.LENGTH_SHORT).show();
         }
     }

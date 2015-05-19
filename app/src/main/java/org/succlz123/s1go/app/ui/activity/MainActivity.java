@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
+import android.os.*;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
@@ -23,7 +20,9 @@ import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.S1GoApplication;
 import org.succlz123.s1go.app.bean.login.LoginVariables;
 import org.succlz123.s1go.app.dao.api.ConvertUidToAvatarUrl;
+import org.succlz123.s1go.app.dao.api.DeEnCode;
 import org.succlz123.s1go.app.dao.api.GetMemInfo;
+import org.succlz123.s1go.app.dao.interaction.LoginAsyncTask;
 import org.succlz123.s1go.app.support.AppSize;
 import org.succlz123.s1go.app.support.imageloader.ImageDownLoader;
 import org.succlz123.s1go.app.ui.fragment.*;
@@ -36,15 +35,15 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawLayoutListView;
     private AppAdapter mBaseAdapter;
-    private ArrayList<Fragment> mFragmentArraryList;
+    private ArrayList<Fragment> mFragmentList;
     private boolean mIsExit = false;//标识是否点击过一次back
     private int mPosition;
     private TextView mUid;
     private TextView mReadaccess;
     private TextView mLogin;
-    private CircularImageView mCircleImageView;
-    private LoginVariables loginVariables;
+    private ImageView mCircleImageView;
     private AppSize mAppSize;
+    private LoginVariables mUserInfo;
 
     private MainForumFragment mMainForumFragment;
     private HotAreaFragment mHotAreaFragment;
@@ -69,16 +68,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        S1GoApplication.getInstance().addUserInfoListener(new S1GoApplication.UserInfoListener() {
-            @Override
-            public void onInfoChanged(LoginVariables loginVariables) {
-                MainActivity.this.loginVariables = loginVariables;
-                setInfo(loginVariables);
-            }
-        });
-        final LoginVariables loginVariables = S1GoApplication.getInstance().getUserInfo();
-        setInfo(loginVariables);
         setToolbar();
+        setUserInfo();
         setmDrawerToggle();
         mFragmentArraryListAdd();
         setmDrawLayoutListView();
@@ -131,7 +122,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void mFragmentArraryListAdd() {
-        mFragmentArraryList = new ArrayList<Fragment>();
+        mFragmentList = new ArrayList<Fragment>();
         mMainForumFragment = new MainForumFragment();
         mHotAreaFragment = new HotAreaFragment();
         mThemeParkFragment = new ThemeParkFragment();
@@ -139,12 +130,12 @@ public class MainActivity extends ActionBarActivity {
         mXiaoHeiWuFragment = new XiaoHeiWuFragment();
         mHotThreadsFragment = new HotThreadsFragment();
         mLoginDiaLogFragment = new LoginDiaLogFragment();
-        mFragmentArraryList.add(mMainForumFragment);
-        mFragmentArraryList.add(mHotAreaFragment);
-        mFragmentArraryList.add(mThemeParkFragment);
-        mFragmentArraryList.add(mSubForumFragment);
-        mFragmentArraryList.add(mXiaoHeiWuFragment);
-        mFragmentArraryList.add(mHotThreadsFragment);
+        mFragmentList.add(mMainForumFragment);
+        mFragmentList.add(mHotAreaFragment);
+        mFragmentList.add(mThemeParkFragment);
+        mFragmentList.add(mSubForumFragment);
+        mFragmentList.add(mXiaoHeiWuFragment);
+        mFragmentList.add(mHotThreadsFragment);
     }
 
     private void setmDrawLayoutListView() {
@@ -160,8 +151,8 @@ public class MainActivity extends ActionBarActivity {
                     public void run() {
                         MainActivity.this.mPosition = position;
                         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        for (int i = 0; i < mFragmentArraryList.size(); i++) {
-                            Fragment fragment = mFragmentArraryList.get(i);
+                        for (int i = 0; i < mFragmentList.size(); i++) {
+                            Fragment fragment = mFragmentList.get(i);
                             if (i == position) {
                                 if (getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName()) == null) {
                                     fragmentTransaction.add(R.id.activity_content, fragment, fragment.getClass().getSimpleName());
@@ -190,20 +181,39 @@ public class MainActivity extends ActionBarActivity {
         Log.e("mCircleImageView W_H", width + "_" + height);
     }
 
-    private void setInfo(LoginVariables loginVariables) {
+    private void setUserInfo() {
+        mUserInfo = S1GoApplication.getInstance().getUserInfo();
+        if (mUserInfo != null) {
+            String name = mUserInfo.getMember_username();
+            String password = DeEnCode.code(mUserInfo.getPassword());
+            LoginAsyncTask mLoginAsyncTask = new LoginAsyncTask(name, password);
+            mLoginAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
+        onUserInfoChanged(mUserInfo);
+        S1GoApplication.getInstance().addUserListener(new S1GoApplication.UserListener() {
+            @Override
+            public void onChanged(LoginVariables userInfo) {
+                onUserInfoChanged(userInfo);
+            }
+        });
+    }
 
-        if (loginVariables != null) {
+    private void onUserInfoChanged(LoginVariables userInfo) {
+        if (userInfo != null) {
+            String name = userInfo.getMember_username();
+            String password = DeEnCode.code(userInfo.getPassword());
+            String uid = userInfo.getMember_uid();
+            String readAccess = userInfo.getReadaccess();
+
             Logout logout = new Logout();
             mLogin.setOnClickListener(logout);
             mLogin.setText("登出");
-            String toolbarname = loginVariables.getMember_username();
-            String toolbaruid = loginVariables.getMember_uid();
-            String toolbarreadaccess = loginVariables.getReadaccess();
-            mToolbar.setSubtitle(toolbarname);
-            mUid.setText("UID " + toolbaruid);
-            mReadaccess.setText("阅读权限 " + toolbarreadaccess);
+            mToolbar.setSubtitle(name);
+            mUid.setText("UID " + uid);
+            mReadaccess.setText("阅读权限 " + readAccess);
+
             if (mAppSize != null) {
-                ImageDownLoader.getInstance().loadBitmap(ConvertUidToAvatarUrl.getAvatar(toolbaruid), mAppSize, new ImageDownLoader.CallBack() {
+                ImageDownLoader.getInstance().loadBitmap(ConvertUidToAvatarUrl.getAvatar(uid), mAppSize, new ImageDownLoader.CallBack() {
                     @Override
                     public void onLoad(String url, Bitmap bitmap) {
                         mCircleImageView.setImageBitmap(bitmap);
@@ -215,12 +225,13 @@ public class MainActivity extends ActionBarActivity {
                     }
                 });
             }
+
             if (this.mToolbar.getChildCount() > 3) {
                 View view = this.mToolbar.getChildAt(3);
                 view.setTranslationY(view.getHeight() + 15);
                 view.animate().translationY(0);
             }
-        } else if (loginVariables == null) {
+        } else if (userInfo == null) {
             Login login = new Login();
             mLogin.setOnClickListener(login);
             mLogin.setText("登录");
@@ -256,7 +267,7 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
-                S1GoApplication.getInstance().removeUserInfo();
+                S1GoApplication.getInstance().removeUser();
             }
         });
         builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {

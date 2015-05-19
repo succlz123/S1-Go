@@ -3,8 +3,8 @@ package org.succlz123.s1go.app;
 import android.app.Application;
 import android.os.Handler;
 import org.succlz123.s1go.app.bean.login.LoginVariables;
-import org.succlz123.s1go.app.dao.helper.S1FidIcon;
 import org.succlz123.s1go.app.dao.database.S1UserDB;
+import org.succlz123.s1go.app.dao.helper.S1FidIcon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,73 +13,67 @@ import java.util.List;
  * Created by fashi on 2015/4/13.
  */
 public class S1GoApplication extends Application {
+    public LoginVariables mUserInfo;
+    private UserListener mUserListener;
+    private Handler mHandler = new Handler();
+    private List<UserListener> mUserListenerList = new ArrayList<UserListener>();
 
-	private static S1GoApplication instance;
-	private LoginVariables loginVariables;
-	private Handler handler = new Handler();
+    private static S1GoApplication instance;
 
-	public static interface UserInfoListener {
-		public void onInfoChanged(LoginVariables loginVariables);
-	}
+    public static S1GoApplication getInstance() {
+        return instance;
+    }
 
-	private List<UserInfoListener> userInfoListenerList = new ArrayList<UserInfoListener>();
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        instance = this;
+        //获得论坛板块名图标
+        S1FidIcon.getS1FidImg();
+    }
 
-	public static S1GoApplication getInstance() {
-		return instance;
-	}
+    public static interface UserListener {
+        public void onChanged(LoginVariables mUserInfo);
+    }
 
-	@Override
-	public void onCreate() {
-		super.onCreate();
-		instance = this;
-		//获得论坛板块名图标
-		S1FidIcon.getS1FidImg();
+    public void addUserListener(UserListener userListener) {
+        this.mUserListenerList.add(userListener);
+    }
 
-	}
+    public synchronized LoginVariables getUserInfo() {
+        if (mUserInfo == null) {
+            mUserInfo = S1UserDB.getInstance().execSelect();//获取数据库里的用户数据
+        }
+        return mUserInfo;
+    }
 
+    public synchronized void addUser(LoginVariables userInfo) {
+        mUserInfo = userInfo;
+        S1UserDB.getInstance().execInsert(userInfo);//插入用户登录数据
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (UserListener userListener : mUserListenerList) {
+                    userListener.onChanged(mUserInfo);
+                }
+            }
+        });
+    }
 
-	public void addUserInfo(final LoginVariables loginVariables) {
-		this.loginVariables = loginVariables;
-		S1UserDB.getInstance().execInsert(loginVariables);//插入用户登录数据
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				for (UserInfoListener userInfoListener : userInfoListenerList) {
-					userInfoListener.onInfoChanged(loginVariables);
-				}
-			}
-		});
-	}
+    public void removeUser() {
+        S1UserDB.getInstance().execDelete();//删除
+        mUserInfo = null;
+        mHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                for (UserListener userListener : mUserListenerList) {
+                    userListener.onChanged(mUserInfo);
+                }
+            }
+        });
+    }
 
-	public void removeUserInfo() {
-		S1UserDB.getInstance().execDelete();//删除
-		this.loginVariables = null;
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				for (UserInfoListener userInfoListener : userInfoListenerList) {
-					userInfoListener.onInfoChanged(null);
-				}
-			}
-		});
-	}
-
-	public void addUserInfoListener(UserInfoListener userInfoListener) {
-		this.userInfoListenerList.add(userInfoListener);
-	}
-
-	public void removeUserInfoListener(UserInfoListener userInfoListener) {
-		this.userInfoListenerList.remove(userInfoListener);
-	}
-
-	public LoginVariables getUserInfo() {
-		if (this.loginVariables == null) {
-			this.loginVariables = S1UserDB.getInstance().execSelect();//获取数据库里的用户数据
-		}
-		return this.loginVariables;
-	}
-
-	public void runOnUIThread(Runnable runnable) {
-		handler.post(runnable);//从子线程取出toast 放在ui线程更新显示toast
-	}
+    public void runOnUIThread(Runnable runnable) {
+        mHandler.post(runnable);//从子线程取出任务 放在ui线程执行
+    }
 }
