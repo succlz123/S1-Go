@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.dao.database;
+package org.succlz123.s1go.app.dao.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,16 +6,17 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.bean.login.LoginVariables;
 
 /**
  * Created by fashi on 2015/4/18.
  */
-public class S1UserDB extends SQLiteOpenHelper {
+public class UserDB extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     private static final String DB_NAME = "userinfo.db";
     private static final String TABLE_NAME = "userinfo";
+
     private static final String COLUMN_AUTH = "auth";
     private static final String COLUMN_COOKIEPRE = "cookiepre";
     private static final String COLUMN_FORMHASH = "formhash";
@@ -38,16 +39,16 @@ public class S1UserDB extends SQLiteOpenHelper {
             + COLUMN_PASSWORD + " TEXT"
             + ")";
 
-    private static S1UserDB instance;
+    private static UserDB instance;
 
-    public static synchronized S1UserDB getInstance() {
+    public static synchronized UserDB getInstance() {
         if (instance == null) {
-            instance = new S1UserDB(S1GoApplication.getInstance().getApplicationContext(), DB_NAME, null, VERSION);
+            instance = new UserDB(MyApplication.getInstance().getApplicationContext(), DB_NAME, null, VERSION);
         }
         return instance;
     }
 
-    private S1UserDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    private UserDB(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 

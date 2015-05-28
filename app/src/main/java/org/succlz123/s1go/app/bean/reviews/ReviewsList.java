@@ -14,12 +14,12 @@ public class ReviewsList {
     private String first;
     private String groupid;
     private String memberstatus;
-    private String message;//帖子内容
     private String number;
     private String pid;//应该是回帖的这条的信息id
     private String status;
     private String tid;//帖子id
     private String usernam;//用户名 回帖名 如果账号被删除 默认没有
+    private String message;//帖子内容
 
     public String getAdminid() {
         return adminid;

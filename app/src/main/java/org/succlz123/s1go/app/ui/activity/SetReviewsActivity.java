@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.bean.set.SetThreadsAndReviewsObject;
 import org.succlz123.s1go.app.dao.api.IsFastClickButton;
 import org.succlz123.s1go.app.dao.interaction.SetThreadsAndReviews;
@@ -135,11 +135,11 @@ public class SetReviewsActivity extends ActionBarActivity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (S1GoApplication.getInstance().getUserInfo() == null) {
+			if (MyApplication.getInstance().getUserInfo() == null) {
 			} else {
-				String cookie = S1GoApplication.getInstance().getUserInfo().getCookiepre();
-				String auth = "auth=" + Uri.encode(S1GoApplication.getInstance().getUserInfo().getAuth());
-				String saltkey = "saltkey=" + S1GoApplication.getInstance().getUserInfo().getSaltkey();
+				String cookie = MyApplication.getInstance().getUserInfo().getCookiepre();
+				String auth = "auth=" + Uri.encode(MyApplication.getInstance().getUserInfo().getAuth());
+				String saltkey = "saltkey=" + MyApplication.getInstance().getUserInfo().getSaltkey();
 
 				String noticetrimstr = "";
 				String message = mReviews + mPhoneInfo;

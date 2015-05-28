@@ -3,31 +3,30 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/drawerLayout"
+        android:fitsSystemWindows="false"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
+            android:layout_height="match_parent"
+            android:background="@color/base">
 
         <FrameLayout
-                android:layout_marginTop="25dp"
-                android:id="@+id/activity_content"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_marginTop="25dp">
 
-        <include
-                layout="@layout/toolbar"
-                android:layout_marginTop="25dp"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"/>
+            <FrameLayout
+                    android:id="@+id/activity_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:elevation="@dimen/elevation"
-                android:background="@color/base"/>
+            <include
+                    layout="@layout/toolbar"/>
+
+        </FrameLayout>
 
     </FrameLayout>
 
@@ -37,13 +36,14 @@
             android:layout_gravity="start"
             android:clickable="true"
             android:elevation="10dp"
+            android:layout_marginRight="10dip"
             android:background="@color/white"
             android:orientation="vertical">
 
         <FrameLayout
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="170dp">
+                android:layout_height="190dp">
 
             <ImageView
                     android:layout_width="match_parent"
@@ -66,12 +66,12 @@
             <!--/>-->
 
             <com.github.siyamed.shapeimageview.CircularImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="82dp"
+                    android:layout_height="82dp"
                     android:id="@+id/avatar_drawerlayout_img"
                     android:layout_gravity="left|bottom"
-                    android:layout_marginBottom="40dp"
-                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="55dp"
+                    android:layout_marginLeft="15dp"
                     app:siBorderWidth="3dp"
                     app:siBorderColor="@color/white"
                     android:src="@drawable/noavatar"/>
@@ -79,12 +79,12 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/drawerlayout_uid"
+                    android:id="@+id/drawerlayout_un"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:text="UID"
+                    android:text="用户"
                     android:layout_gravity="bottom"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginLeft="17dp"/>
 
             <TextView
@@ -92,17 +92,17 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
                     android:textSize="15sp"
-                    android:text="阅读权限"
-                    android:id="@+id/drawerlayout_readaccess"
+                    android:text="UID"
+                    android:id="@+id/drawerlayout_uid"
                     android:layout_gravity="bottom"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginLeft="105dp"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|bottom"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_marginRight="12dp"
                     android:id="@+id/login"
                     android:textSize="16sp"
@@ -119,12 +119,6 @@
                 android:layout_marginTop="10dp"
                 android:background="#ffffff"
                 android:divider="@null"/>
-
-        <!--<View-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="2dp"-->
-        <!--android:background="@color/androidbase"-->
-        <!--android:layout_marginBottom="10dp"/>-->
 
         <LinearLayout
                 android:layout_width="match_parent"

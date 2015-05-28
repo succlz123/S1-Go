@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.support.com.kaiguan.swingindicator;
+package org.succlz123.s1go.app.support.swingindicator;
 
 import android.content.Context;
 import android.content.res.TypedArray;

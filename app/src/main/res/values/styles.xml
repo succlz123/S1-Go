@@ -8,7 +8,9 @@
         <item name="android:navigationBarColor">@color/grey</item>
         <!--返回键样式-->
         <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
+        <!--状态栏透明-->
         <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
 
     </style>
 
@@ -26,19 +28,32 @@
         <item name="android:textColorPrimary">@color/base</item>
     </style>
 
-    <style name="Theme.AppCompat.Translucent">
-        <item name="android:windowNoTitle">true</item>
-        <item name="android:windowActionBar">false</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="android:colorBackgroundCacheHint">@null</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowAnimationStyle">@android:style/Animation</item>
-        <item name="colorPrimaryDark">@color/basebackground</item>
-        <item name="android:navigationBarColor">@color/grey</item>
-        <item name="colorPrimary">@color/base</item>
-        <item name="android:backgroundDimEnabled">true</item>
-     </style>
+    <!--<style name="Theme.AppCompat.Translucent">-->
+        <!--<item name="android:windowNoTitle">true</item>-->
+        <!--<item name="android:windowActionBar">false</item>-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
+        <!--<item name="android:colorBackgroundCacheHint">@null</item>-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowAnimationStyle">@android:style/Animation</item>-->
+        <!--<item name="colorPrimaryDark">@color/basebackground</item>-->
+        <!--<item name="android:navigationBarColor">@color/grey</item>-->
+        <!--<item name="colorPrimary">@color/base</item>-->
+        <!--<item name="android:backgroundDimEnabled">true</item>-->
+    <!--</style>-->
 
+    <!--<style name="Animation" parent="@android:style/Animation">-->
+    <!--&lt;!&ndash;窗体进入动画&ndash;&gt;-->
+    <!--<item name="android:windowEnterAnimation">@android:anim/slide_in_left</item>-->
+    <!--&lt;!&ndash;窗体退出动画&ndash;&gt;-->
+    <!--<item name="android:windowExitAnimation">@android:anim/slide_in_left</item>-->
+    <!--</style>-->
+
+    <style name="TranslucentTheme" parent="AppTheme">
+        <!--theme透明-->
+        <item name="android:windowIsTranslucent">true</item>
+        <!--背景透明-->
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
 
 
 </resources>

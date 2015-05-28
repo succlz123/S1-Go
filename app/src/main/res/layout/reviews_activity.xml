@@ -35,7 +35,7 @@
             android:visibility="gone"
             android:src="@drawable/ic_action_edit_dark"/>
 
-    <org.succlz123.s1go.app.support.com.kaiguan.swingindicator.SwingIndicator
+    <org.succlz123.s1go.app.support.swingindicator.SwingIndicator
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="56dp"

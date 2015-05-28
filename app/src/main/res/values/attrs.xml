@@ -22,5 +22,4 @@
         <attr name="tileBackgroundColor" format="color"/>
     </declare-styleable>
 
-
 </resources>

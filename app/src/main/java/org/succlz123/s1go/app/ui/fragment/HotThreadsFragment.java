@@ -12,7 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.bean.hostthreads.HotThreadsDate;
 import org.succlz123.s1go.app.bean.hostthreads.HotThreadsObject;
 import org.succlz123.s1go.app.dao.interaction.GetHostThreads;
@@ -113,11 +113,11 @@ public class HotThreadsFragment extends Fragment {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if (S1GoApplication.getInstance().getUserInfo() == null) {
+            if (MyApplication.getInstance().getUserInfo() == null) {
             } else {
-                String cookie = S1GoApplication.getInstance().getUserInfo().getCookiepre();
-                String auth = "auth=" + Uri.encode(S1GoApplication.getInstance().getUserInfo().getAuth());
-                String saltkey = "saltkey=" + S1GoApplication.getInstance().getUserInfo().getSaltkey();
+                String cookie = MyApplication.getInstance().getUserInfo().getCookiepre();
+                String auth = "auth=" + Uri.encode(MyApplication.getInstance().getUserInfo().getAuth());
+                String saltkey = "saltkey=" + MyApplication.getInstance().getUserInfo().getSaltkey();
                 this.hearders.put("Cookie", cookie + auth + ";" + cookie + saltkey + ";");
             }
         }

@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.support;
+package org.succlz123.s1go.app.support.utils;
 
 /**
  * Created by fashi on 2015/4/26.

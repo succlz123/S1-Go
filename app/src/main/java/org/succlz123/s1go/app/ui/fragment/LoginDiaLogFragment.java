@@ -12,7 +12,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.dao.interaction.LoginAsyncTask;
 
 /**
@@ -60,11 +60,11 @@ public class LoginDiaLogFragment extends DialogFragment {
     }
 
     private void initString() {
-        mConfirm = S1GoApplication.getInstance().getApplicationContext()
+        mConfirm = MyApplication.getInstance().getApplicationContext()
                 .getResources().getString(R.string.confirm);
-        mPlease_input_un_pw = S1GoApplication.getInstance().getApplicationContext()
+        mPlease_input_un_pw = MyApplication.getInstance().getApplicationContext()
                 .getResources().getString(R.string.please_input_un_pw);
-        mCancel = S1GoApplication.getInstance().getApplicationContext()
+        mCancel = MyApplication.getInstance().getApplicationContext()
                 .getResources().getString(R.string.cancel);
     }
 }

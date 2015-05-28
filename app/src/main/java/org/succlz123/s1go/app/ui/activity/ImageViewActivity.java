@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.support.AppSize;
+import org.succlz123.s1go.app.support.utils.AppSize;
 import org.succlz123.s1go.app.support.imageloader.ImageDownLoader;
 
 /**

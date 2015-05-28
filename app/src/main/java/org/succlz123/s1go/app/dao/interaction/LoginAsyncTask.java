@@ -4,7 +4,7 @@ import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.widget.Toast;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.bean.login.LoginObject;
 import org.succlz123.s1go.app.bean.login.LoginVariables;
 import org.succlz123.s1go.app.dao.api.DeEnCode;
@@ -69,12 +69,12 @@ public class LoginAsyncTask extends AsyncTask<Void, Void, String> {
         mMessageval = mLoginObject.getMessage().getMessageval();
 
         if ((TextUtils.equals(mMessageval, SUCCEED))) {
-            S1GoApplication.getInstance().addUser(mUserInfo);
-            String hint = S1GoApplication.getInstance().getApplicationContext()
+            MyApplication.getInstance().addUser(mUserInfo);
+            String hint = MyApplication.getInstance().getApplicationContext()
                     .getResources().getString(R.string.welcome) + mUsername;
-            Toast.makeText(S1GoApplication.getInstance(), hint, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getInstance(), hint, Toast.LENGTH_SHORT).show();
         } else if ((TextUtils.equals(mMessageval, FAILED))) {
-            Toast.makeText(S1GoApplication.getInstance(), mMessagestr, Toast.LENGTH_SHORT).show();
+            Toast.makeText(MyApplication.getInstance(), mMessagestr, Toast.LENGTH_SHORT).show();
         }
     }
 }

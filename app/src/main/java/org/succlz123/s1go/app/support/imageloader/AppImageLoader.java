@@ -4,9 +4,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Looper;
 import android.text.TextUtils;
-import org.succlz123.s1go.app.S1GoApplication;
-import org.succlz123.s1go.app.dao.database.S1ImageCacheDB;
-import org.succlz123.s1go.app.support.AppSize;
+import org.succlz123.s1go.app.MyApplication;
+import org.succlz123.s1go.app.dao.db.ImageCacheDB;
+import org.succlz123.s1go.app.support.utils.AppSize;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -55,7 +55,7 @@ public class AppImageLoader {
     }
 
     private Bitmap readLocalCache(String url, AppSize size) {
-        String localCachePath = S1ImageCacheDB.getInstance().getCache(url);
+        String localCachePath = ImageCacheDB.getInstance().execSelect(url);
         if (!TextUtils.isEmpty(localCachePath)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inJustDecodeBounds = true;
@@ -104,7 +104,7 @@ public class AppImageLoader {
 //                os.flush();
 //                is.close();
 //                os.close();
-//                S1ImageCacheDB.getInstance().insertCache(url, new File(cacheFile));
+//                ImageCacheDB.getInstance().execInsert(url, new File(cacheFile));
 //                return BitmapFactory.decodeFile(cacheFile);
 //            }
 //        } catch (IOException e) {
@@ -142,7 +142,7 @@ public class AppImageLoader {
             }
 
             final Bitmap finalLocalCache = localCache;
-            S1GoApplication.getInstance().runOnUIThread(new Runnable() {
+            MyApplication.getInstance().runOnUIThread(new Runnable() {
                 @Override
                 public void run() {
                     for (Callback callback : callbackList) {

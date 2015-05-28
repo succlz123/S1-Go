@@ -11,10 +11,11 @@ import java.util.HashMap;
  */
 public class GetReviews {
 
-    public static ReviewsObject getReviews(String tid,HashMap<String, String> hearders) {
-        String url = S1Url.S1_BASE + S1Url.THREAD_POST.replace("tid=", "tid=" + tid);
-        String json = MyOkHttp.getInstance().doGet(url, hearders);
-        ReviewsObject reviewsObject = ReviewsObject.parseJson(json);
-        return reviewsObject;
-    }
+	public static ReviewsObject getReviews(String tid, HashMap<String, String> hearders) {
+		String url = S1Url.S1_BASE + S1Url.THREAD_POST.replace("tid=", "tid=" + tid);
+		String json = MyOkHttp.getInstance().doGet(url, hearders);
+		ReviewsObject reviewsObject = ReviewsObject.parseJson(json);
+
+		return reviewsObject;
+	}
 }

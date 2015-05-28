@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.MenuItem;
@@ -13,13 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import com.melnykov.fab.FloatingActionButton;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.S1GoApplication;
 import org.succlz123.s1go.app.bean.threads.ThreadsList;
 import org.succlz123.s1go.app.bean.threads.ThreadsObject;
-import org.succlz123.s1go.app.dao.interaction.GetThreads;
 import org.succlz123.s1go.app.dao.helper.S1Fid;
-import org.succlz123.s1go.app.support.com.kaiguan.swingindicator.SwingIndicator;
+import org.succlz123.s1go.app.dao.interaction.GetThreads;
+import org.succlz123.s1go.app.support.swingindicator.SwingIndicator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,7 +32,7 @@ import java.util.List;
 /**
  * Created by fashi on 2015/4/14.
  */
-public class ThreadsActivity extends ActionBarActivity {
+public class ThreadsActivity extends SwipeBackActivity {
 	private ListView mListView;
 	private String mFid;
 	private ThreadsObject threadsObject;
@@ -39,6 +43,9 @@ public class ThreadsActivity extends ActionBarActivity {
 	private List<ThreadsList> mThreadsList;
 	private SwingIndicator mSwingIndicator;
 	private FloatingActionButton mFloatingActionButton;
+	private SwipeBackLayout mSwipeBackLayout;
+	private SwipyRefreshLayout mSwipyRefreshLayout;
+	private PtrFrameLayout mPtrFrame;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +55,7 @@ public class ThreadsActivity extends ActionBarActivity {
 		initViews();
 		setToolbar();
 		setFloatingActionButton();
+		setSwipeBack();
 		new GetThreadsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
@@ -56,15 +64,61 @@ public class ThreadsActivity extends ActionBarActivity {
 				intent.putExtra("tid", mThreadsList.get(position).getTid());
 				intent.putExtra("title", mThreadsList.get(position).getSubject());
 				startActivity(intent);
- 			}
+			}
 		});
- 	}
+
+		mPtrFrame=(PtrFrameLayout)findViewById(R.id.ptr);
+		mPtrFrame.setResistance(1.7f);
+		mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
+		mPtrFrame.setDurationToClose(200);
+		mPtrFrame.setDurationToCloseHeader(1000);
+// default is false
+		mPtrFrame.setPullToRefresh(false);
+// default is true
+		mPtrFrame.setKeepHeaderWhenRefresh(true);
+		mPtrFrame.setPtrHandler(new PtrDefaultHandler() {
+			@Override
+			public void onRefreshBegin(PtrFrameLayout ptrFrameLayout) {
+				mPtrFrame.refreshComplete();
+				Toast.makeText(ThreadsActivity.this,"cccc",Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+				return super.checkCanDoRefresh(frame, content, header);
+			}
+		});
+
+//		mSwipyRefreshLayout.setColorSchemeResources(
+//				android.R.color.holo_blue_light,
+//				android.R.color.holo_red_light,
+//				android.R.color.holo_orange_light,
+//				android.R.color.holo_green_light);
+//		mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+//			@Override
+//			public void onRefresh(SwipyRefreshLayoutDirection direction) {
+//				Log.d("MainActivity", "Refresh triggered at "
+//						+ (direction == SwipyRefreshLayoutDirection.TOP ? "top" : "bottom"));
+//				if (direction == SwipyRefreshLayoutDirection.TOP) {
+//					new GetThreadsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//				} else if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
+//
+//				}
+//			}
+//		});
+	}
+
+	private void setSwipeBack() {
+		mSwipeBackLayout = getSwipeBackLayout();
+		mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
+	}
 
 	private void initViews() {
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
 		mSwingIndicator = (SwingIndicator) findViewById(R.id.threads_progress);
 		mFloatingActionButton = (FloatingActionButton) findViewById(R.id.thread_fab);
 		mListView = (ListView) findViewById(R.id.threads_base_activity_listview);
+//		mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.ptr);
 	}
 
 	private void setToolbar() {
@@ -164,17 +218,17 @@ public class ThreadsActivity extends ActionBarActivity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (S1GoApplication.getInstance().getUserInfo() == null) {
-			} else {
-				String cookie = S1GoApplication.getInstance().getUserInfo().getCookiepre();
-				String auth = "auth=" + Uri.encode(S1GoApplication.getInstance().getUserInfo().getAuth());
-				String saltkey = "saltkey=" + S1GoApplication.getInstance().getUserInfo().getSaltkey();
+			if (MyApplication.getInstance().getUserInfo() != null) {
+				String cookie = MyApplication.getInstance().getUserInfo().getCookiepre();
+				String auth = "auth=" + Uri.encode(MyApplication.getInstance().getUserInfo().getAuth());
+				String saltkey = "saltkey=" + MyApplication.getInstance().getUserInfo().getSaltkey();
 				this.hearders.put("Cookie", cookie + auth + ";" + cookie + saltkey + ";");
 			}
 		}
 
 		@Override
 		protected ThreadsObject doInBackground(Void... params) {
+
 			return GetThreads.getThreads(mFid, hearders);
 		}
 
@@ -191,6 +245,7 @@ public class ThreadsActivity extends ActionBarActivity {
 				mSwingIndicator.setVisibility(View.GONE);
 				mFloatingActionButton.setVisibility(View.VISIBLE);
 				mApdater.notifyDataSetChanged();
+//				mSwipyRefreshLayout.setRefreshing(false);
 			}
 		}
 	}
