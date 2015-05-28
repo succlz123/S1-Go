@@ -1,6 +1,6 @@
-package org.succlz123.s1go.app.dao.Api;
+package org.succlz123.s1go.app.dao.api;
 
-import org.succlz123.s1go.app.dao.Helper.S1Url;
+import org.succlz123.s1go.app.dao.helper.S1Url;
 
 /**
  * Created by fashi on 2015/4/21.

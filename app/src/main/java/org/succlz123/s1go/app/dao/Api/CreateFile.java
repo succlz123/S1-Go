@@ -2,7 +2,7 @@ package org.succlz123.s1go.app.dao.api;
 
 import android.os.Environment;
 import android.util.Log;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 
 import java.io.File;
 
@@ -34,7 +34,7 @@ public class CreateFile {
             // 通过context来获得SD卡路径
 //            filePath = Environment.getExternalStorageDirectory() + File.separator + dirName;
             //通过application来获取环境变量
-            String caCheDir = S1GoApplication.getInstance().getExternalCacheDir().getAbsolutePath();
+            String caCheDir = MyApplication.getInstance().getExternalCacheDir().getAbsolutePath();
             filePath = caCheDir + File.separator + dirName + File.separator;
         } else {
 //            filePath = context.getCacheDir().getPath() + File.separator

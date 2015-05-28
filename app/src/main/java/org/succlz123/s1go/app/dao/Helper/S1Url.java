@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.dao.Helper;
+package org.succlz123.s1go.app.dao.helper;
 
 /**
  * Created by fashi on 2015/4/12.
@@ -15,7 +15,7 @@ public class S1Url {
 	public static final String AVATAR_SMALL = "http://bbs.saraba1st.com/2b/uc_server/data/avatar/000/00/00/00_avatar_small.jpg";
 	public static final String AVATAR_MIDDLE = "http://bbs.saraba1st.com/2b/uc_server/data/avatar/000/00/00/00_avatar_middle.jpg";
 
-	public static final String xx = "http://bbs.saraba1st.com/2b/api/mobile/index.php?mobile=no&version=1&module=login&loginsubmit=yes&loginfield=auto&submodule=checkpost";
+	public static final String LOGIN = "http://bbs.saraba1st.com/2b/api/mobile/index.php?mobile=no&version=1&module=login&loginsubmit=yes&loginfield=auto&submodule=checkpost";
 
 	public static final String SET_GET = "http://bbs.saraba1st.com/2b/api/mobile/index.php?mobile=no&version=1&module=secure&type=post";
 	public static final String SET_REVIEWS = "http://bbs.saraba1st.com/2b/api/mobile/index.php?mobile=no&version=1&module=sendreply&replysubmit=yes&tid=";

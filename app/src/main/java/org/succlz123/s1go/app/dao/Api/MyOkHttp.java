@@ -1,14 +1,12 @@
-package org.succlz123.s1go.app.dao.Api;
+package org.succlz123.s1go.app.dao.api;
 
 import android.widget.Toast;
 import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import org.succlz123.s1go.app.S1GoApplication;
-import org.succlz123.s1go.app.bean.login.LoginObject;
-import org.succlz123.s1go.app.bean.login.LoginVariables;
-import org.succlz123.s1go.app.bean.send.SetThreadsAndReviewsObject;
+import org.succlz123.s1go.app.MyApplication;
+import org.succlz123.s1go.app.bean.set.SetThreadsAndReviewsObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,6 +17,7 @@ import java.util.Set;
  * Created by fashi on 2015/4/12.
  */
 public class MyOkHttp {
+
     private static MyOkHttp instance;
 
     public synchronized static MyOkHttp getInstance() {
@@ -45,14 +44,14 @@ public class MyOkHttp {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
 
         }
         return null;
     }
 
-    //登录
-    public void login(String url, HashMap<String, String> params) {
+    /*登录成功返回json*/
+    public String login(String url, HashMap<String, String> params) {
         OkHttpClient okHttpClient = new OkHttpClient();
         Request.Builder builder = new Request.Builder().url(url);
         FormEncodingBuilder formEncodingBuilder = new FormEncodingBuilder();
@@ -67,24 +66,12 @@ public class MyOkHttp {
             if (response.isSuccessful()) {
                 response.body().charStream();
                 String json = response.body().string();
-                LoginObject loginObject = LoginObject.parseJson(json);
-                LoginVariables loginVariables = loginObject.getVariables();
-                final String messagestr = loginObject.getMessage().getMessagestr();
-                String messageval = loginObject.getMessage().getMessageval();
-                if ((messageval.equals("location_login_succeed_mobile"))) {
-                    S1GoApplication.getInstance().addUserInfo(loginVariables);
-                } else if (messageval.equals("login_invalid")) {
-                    S1GoApplication.getInstance().runOnUIThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(S1GoApplication.getInstance(), messagestr, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
+                return json;
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     //用auth和saltkey验证登录 获取有权限的板块
@@ -137,34 +124,34 @@ public class MyOkHttp {
                 switch (i) {
                     case SETTHREADS:
                         if (setThreadsAndReviewsObject.getMessage().getMessageval().equals("post_newthread_succeed")) {
-                            S1GoApplication.getInstance().runOnUIThread(new Runnable() {
+                            MyApplication.getInstance().runOnUIThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(S1GoApplication.getInstance(), "非常感谢，帖子发布成功", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MyApplication.getInstance(), "非常感谢，帖子发布成功", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {
-                            S1GoApplication.getInstance().runOnUIThread(new Runnable() {
+                            MyApplication.getInstance().runOnUIThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(S1GoApplication.getInstance(), "非常遗憾，帖子发布失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MyApplication.getInstance(), "非常遗憾，帖子发布失败", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                         break;
                     case SETREVIEWS:
                         if (setThreadsAndReviewsObject.getMessage().getMessageval().equals("post_reply_succeed")) {
-                            S1GoApplication.getInstance().runOnUIThread(new Runnable() {
+                            MyApplication.getInstance().runOnUIThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(S1GoApplication.getInstance(), "非常感谢，回复发布成功", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MyApplication.getInstance(), "非常感谢，回复发布成功", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         } else {
-                            S1GoApplication.getInstance().runOnUIThread(new Runnable() {
+                            MyApplication.getInstance().runOnUIThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(S1GoApplication.getInstance(), "非常遗憾，回复发布失败", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MyApplication.getInstance(), "非常遗憾，回复发布失败", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }

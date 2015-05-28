@@ -3,7 +3,7 @@ package org.succlz123.s1go.app.dao.api;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Debug;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 
 /**
  * Created by fashi on 2015/4/26.
@@ -16,7 +16,7 @@ public class GetMemInfo {
         long nativeAlloc = Debug.getNativeHeapAllocatedSize();
         String vmAllocStr = "V" + formatMemoryText(vmAlloc);
 //        String nativeAllocStr = "N" + formatMemoryText(nativeAlloc);
-        ActivityManager am = (ActivityManager) S1GoApplication.getInstance().getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) MyApplication.getInstance().getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
         int memoryClass = am.getMemoryClass();
         String result = "M" + Integer.toString(memoryClass) + "MB";
 //        return vmAllocStr + "," + nativeAllocStr + "," + result;

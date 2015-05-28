@@ -1,9 +1,9 @@
-package org.succlz123.s1go.app.dao.Helper;
+package org.succlz123.s1go.app.dao.helper;
 
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import org.succlz123.s1go.app.S1GoApplication;
+import org.succlz123.s1go.app.MyApplication;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +23,7 @@ public class S1FidIcon {
 
     public static void getS1FidImg() {
 
-        AssetManager assetFileDescriptor = S1GoApplication.getInstance().getAssets();
+        AssetManager assetFileDescriptor = MyApplication.getInstance().getAssets();
         try {
             String[] emoticonDirs = assetFileDescriptor.list("emoticon");
             for (String dir : emoticonDirs) {

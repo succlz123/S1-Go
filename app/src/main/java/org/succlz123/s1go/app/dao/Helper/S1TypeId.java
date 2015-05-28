@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.dao.Helper;
+package org.succlz123.s1go.app.dao.helper;
 
 import java.lang.reflect.Field;
 
