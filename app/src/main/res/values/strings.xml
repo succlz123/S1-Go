@@ -9,5 +9,31 @@
     <string name="confirm">确定</string>
     <string name="please_input_un_pw">请输入用户名和密码</string>
     <string name="cancel">取消</string>
+    <string name="sorry">抱歉，网络异常或者您尚未登录</string>
+    <string name="set_threads">发帖</string>
+    <string name="set_reviews">回帖</string>
+    <string name="too_little_words">回复字数过少</string>
+    <string name="please_input_reviews">请输入回复内容</string>
+    <string name="tips">提示</string>
+    <string name="wait_a_moment">正在发送,稍等片刻</string>
+    <string name="confirmation_reviews_give_up">确认放弃回复吗?</string>
+    <string name="confirmation_set">确认发送吗?</string>
+    <string name="the_word_too_much_or_too_little">正文字数过多或少</string>
+    <string name="title_word_too_much">标题字数过少</string>
+    <string name="title_word_too_little">标题字数过多</string>
+    <string name="please_intput_title_or_body">请输入标题或者正文</string>
+    <string name="set_failed">发送失败</string>
+    <string name="set_succeed">发送成功</string>
+    <string name="set_pic">......</string>
+    <string name="title">标题</string>
+    <string name="content">正文</string>
+    <string name="set">发送</string>
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+
 
 </resources>

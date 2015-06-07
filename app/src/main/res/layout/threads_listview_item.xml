@@ -14,7 +14,6 @@
                 android:textSize="17sp"
                 android:textColor="@color/hehe"
                 android:maxLines="2"
-
                 android:ellipsize="end"
                 android:id="@+id/threads_listview_title"
                 android:layout_margin="5dp"/>

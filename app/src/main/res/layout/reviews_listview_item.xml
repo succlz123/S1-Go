@@ -59,6 +59,9 @@
             android:id="@+id/reviews_listview_item_content"
             android:textSize="16sp"
             android:layout_margin="5dp"
+
+            android:textIsSelectable="true"
+
             android:padding="5dp"
             android:textColor="@color/hehe"
             android:background="@color/white"/>

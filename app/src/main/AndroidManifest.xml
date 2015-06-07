@@ -1,49 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="org.succlz123.s1go.app">
+<manifest
+    package="org.succlz123.s1go.app"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- 允许程序打开网络 -->
+    <!-- network access -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- 允许程序访问gsm网络状态信息 -->
+    <!-- get gsm network info -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- 允许程序访问Wi-Fi网络状态信息 -->
+    <!-- get wifi network info -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- 允许写入sdcard -->
+    <!-- write sdcard -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-            android:allowBackup="true"
-            android:name=".MyApplication"
-            android:icon="@drawable/ic_launcher"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme">
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
 
         <activity
-                android:name=".ui.activity.MainActivity"
-                android:label="@string/app_name">
+            android:name=".ui.activity.MainActivity"
+            android:theme="@style/DrawerlayoutTheme"
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ThreadsActivity"
-                  android:theme="@style/TranslucentTheme"/>
+        <activity
+            android:name=".ui.activity.ThreadsActivity"
+            android:theme="@style/TranslucentTheme"/>
 
-        <activity android:name=".ui.activity.ReviewsActivity"
-                  android:theme="@style/TranslucentTheme"/>
+        <activity
+            android:name=".ui.activity.ReviewsActivity"
+            android:theme="@style/TranslucentTheme"/>
 
-        <activity android:name=".ui.activity.ImageViewActivity"
-                  android:theme="@style/TranslucentTheme"/>
+        <activity
+            android:name=".ui.activity.ImageViewActivity"
+            android:theme="@style/TranslucentTheme"/>
 
-        <activity android:name=".ui.activity.SetThreadsActivity"
-                  android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.activity.SetThreadsActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".ui.activity.SetReviewsActivity"
-                  android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".ui.activity.SetReviewsActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
-        <activity android:name=".ui.activity.SearchActivity"
-                  android:launchMode="singleTop">
+        <activity
+            android:name=".ui.activity.SearchActivity"
+            android:launchMode="singleTop">
         </activity>
 
         <!--透明主题-->

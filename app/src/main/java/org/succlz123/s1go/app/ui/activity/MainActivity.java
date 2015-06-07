@@ -1,32 +1,51 @@
 package org.succlz123.s1go.app.ui.activity;
 
-import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.os.*;
-import android.provider.MediaStore;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.util.TypedValue;
-import android.view.*;
-import android.widget.*;
+import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.github.siyamed.shapeimageview.CircularImageView;
+
 import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.bean.login.LoginVariables;
-import org.succlz123.s1go.app.dao.api.ConvertUidToAvatarUrl;
-import org.succlz123.s1go.app.dao.api.DeEnCode;
-import org.succlz123.s1go.app.dao.interaction.LoginAsyncTask;
-import org.succlz123.s1go.app.support.imageloader.ImageDownLoader;
+import org.succlz123.s1go.app.support.asynctask.LoginAsyncTask;
+import org.succlz123.s1go.app.support.bean.login.LoginVariables;
+import org.succlz123.s1go.app.support.db.UserDB;
+import org.succlz123.s1go.app.support.io.ImageLoader;
 import org.succlz123.s1go.app.support.utils.AppSize;
-import org.succlz123.s1go.app.ui.fragment.*;
+import org.succlz123.s1go.app.support.utils.DeEnCode;
+import org.succlz123.s1go.app.support.utils.S1UidToAvatarUrl;
+import org.succlz123.s1go.app.ui.fragment.left.HotAreaFragment;
+import org.succlz123.s1go.app.ui.fragment.left.HotThreadsFragment;
+import org.succlz123.s1go.app.ui.fragment.left.MainForumFragment;
+import org.succlz123.s1go.app.ui.fragment.left.SubforumFragment;
+import org.succlz123.s1go.app.ui.fragment.left.ThemeParkFragment;
+import org.succlz123.s1go.app.ui.fragment.left.XiaoHeiWuFragment;
+import org.succlz123.s1go.app.ui.fragment.login.LoginDiaLogFragment;
 
 import java.util.ArrayList;
 
@@ -74,19 +93,13 @@ public class MainActivity extends AppCompatActivity {
 		setDrawerToggle();
 		FragmentListAdd();
 		setDrawLayoutListView();
-		TypedValue typedValue = new TypedValue();
-		getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
-		int color = typedValue.data;
+//		TypedValue typedValue = new TypedValue();
+//		getTheme().resolveAttribute(R.attr.colorPrimaryDark, typedValue, true);
+//		int color = typedValue.data;
 //		mDrawerLayout.setStatusBarBackgroundColor(color);
 //		mDrawerLayout.setStatusBarBackgroundColor(getResources().getColor(R.color.shadow));
-		mDrawerLayout.setStatusBarBackgroundColor(
-				getResources().getColor(R.color.white));
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-//		mToolbar.setTitle(GetMemInfo.getMemInfo().toString());
+//		mDrawerLayout.setStatusBarBackgroundColor(
+//				getResources().getColor(R.color.white));
 	}
 
 	private void initViews() {
@@ -100,15 +113,15 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	private void setToolbar() {
-		mToolbar.setTitle("Stage1st Go");
-		mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-		mToolbar.setSubtitleTextColor(Color.parseColor("#ffffff"));
+		mToolbar.setTitle(getString(R.string.app_name));
+		mToolbar.setTitleTextColor(Color.WHITE);
+		mToolbar.setSubtitleTextColor(Color.WHITE);
 		mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitle);
 		setSupportActionBar(mToolbar);
-		getSupportActionBar().setHomeButtonEnabled(true);
 		//设置返回键可用
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setHomeButtonEnabled(true);
 		//创建返回键，并实现打开开关监听
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private void setDrawerToggle() {
@@ -151,8 +164,8 @@ public class MainActivity extends AppCompatActivity {
 		mDrawLayoutListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-
-				mDrawerLayout.closeDrawer(Gravity.LEFT);//选择完fragment 关闭drawerlayout
+				//选择完fragment 关闭drawerlayout
+				mDrawerLayout.closeDrawer(Gravity.LEFT);
 				new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
 					@Override
 					public void run() {
@@ -161,14 +174,19 @@ public class MainActivity extends AppCompatActivity {
 						for (int i = 0; i < mFragmentList.size(); i++) {
 							Fragment fragment = mFragmentList.get(i);
 							if (i == position) {
-								if (getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName()) == null) {
-									fragmentTransaction.add(R.id.activity_content, fragment, fragment.getClass().getSimpleName());
-								}//找到同名fragment显示
+								//找到同名fragment显示
+								if (getSupportFragmentManager()
+										.findFragmentByTag(fragment.getClass().getSimpleName()) == null) {
+									fragmentTransaction
+											.add(R.id.activity_content, fragment, fragment.getClass().getSimpleName());
+								}
 								fragmentTransaction.show(fragment);
 							} else {
-								if (getSupportFragmentManager().findFragmentByTag(fragment.getClass().getSimpleName()) != null) {
+								//其他不是需要的fragment隐藏
+								if (getSupportFragmentManager()
+										.findFragmentByTag(fragment.getClass().getSimpleName()) != null) {
 									fragmentTransaction.hide(fragment);
-								}//其他不是需要的fragment隐藏
+								}
 							}
 						}
 						fragmentTransaction.commitAllowingStateLoss();
@@ -185,11 +203,11 @@ public class MainActivity extends AppCompatActivity {
 		int width = mCircleImageView.getWidth();
 		int height = mCircleImageView.getHeight();
 		mAppSize = new AppSize(width, height);
-		Log.e("mCircleImageView W_H", width + "_" + height);
 	}
 
 	private void setUserInfo() {
-		mUserInfo = MyApplication.getInstance().getUserInfo();
+//		mUserInfo = MyApplication.getInstance().getUserInfo();
+		mUserInfo= UserDB.getInstance().execSelect();
 		if (mUserInfo != null) {
 			String name = mUserInfo.getMember_username();
 			String password = DeEnCode.code(mUserInfo.getPassword());
@@ -220,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
 			mUid.setText("UID " + uid);
 
 			if (mAppSize != null) {
-				ImageDownLoader.getInstance().loadBitmap(ConvertUidToAvatarUrl.getAvatar(uid), mAppSize, new ImageDownLoader.CallBack() {
+				ImageLoader.getInstance().loadBitmap(S1UidToAvatarUrl.getAvatar(uid), mAppSize, new ImageLoader.CallBack() {
 					@Override
 					public void onLoad(String url, Bitmap bitmap) {
 						mCircleImageView.setImageBitmap(bitmap);
@@ -330,10 +348,10 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.menu_main, menu);
-		MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "搜索");
-		item.setIcon(R.drawable.search);
-		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		getMenuInflater().inflate(R.menu.menu_main, menu);
+//		MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "搜索");
+//		item.setIcon(R.drawable.search);
+//		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -342,15 +360,15 @@ public class MainActivity extends AppCompatActivity {
 		switch (item.getItemId()) {
 //			case R.id.action_settings:
 //				break;
-			case Menu.FIRST:
-//				Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-//				startActivity(intent);
-//				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
-
-				Intent intent1 = new Intent();
-				intent1.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
-				startActivity(intent1);
-				break;
+//			case Menu.FIRST:
+////				Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+////				startActivity(intent);
+////				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+//
+//				Intent intent1 = new Intent();
+//				intent1.setAction(MediaStore.ACTION_IMAGE_CAPTURE);
+//				startActivity(intent1);
+//				break;
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -2,9 +2,10 @@ package org.succlz123.s1go.app;
 
 import android.app.Application;
 import android.os.Handler;
-import org.succlz123.s1go.app.bean.login.LoginVariables;
-import org.succlz123.s1go.app.dao.db.UserDB;
-import org.succlz123.s1go.app.dao.helper.S1FidIcon;
+
+import org.succlz123.s1go.app.support.bean.login.LoginVariables;
+import org.succlz123.s1go.app.support.db.UserDB;
+import org.succlz123.s1go.app.support.utils.S1FidIcon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,6 @@ import java.util.List;
  */
 public class MyApplication extends Application {
 	public LoginVariables mUserInfo;
-	private onUserListener mOnUserListener;
 	private Handler mHandler = new Handler();
 	private List<onUserListener> mOnUserListenerList = new ArrayList<onUserListener>();
 
@@ -28,8 +28,7 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
-		//获得论坛板块名图标
-		S1FidIcon.getS1FidImg();
+		S1FidIcon.initFidIcon();//initialize fid icons
 	}
 
 	public static interface onUserListener {
@@ -42,14 +41,14 @@ public class MyApplication extends Application {
 
 	public LoginVariables getUserInfo() {
 		if (mUserInfo == null) {
-			mUserInfo = UserDB.getInstance().execSelect();//获取数据库里的用户数据
+			mUserInfo = UserDB.getInstance().execSelect();//select user info from database
 		}
 		return mUserInfo;
 	}
 
 	public void addUser(LoginVariables userInfo) {
 		mUserInfo = userInfo;
-		UserDB.getInstance().execInsert(userInfo);//插入用户登录数据
+		UserDB.getInstance().execInsert(userInfo);//insert user info to database
 		mHandler.post(new Runnable() {
 			@Override
 			public void run() {
@@ -61,7 +60,7 @@ public class MyApplication extends Application {
 	}
 
 	public void removeUser() {
-		UserDB.getInstance().execDelete();//删除
+		UserDB.getInstance().execDelete();//delete user info from database
 		mUserInfo = null;
 		mHandler.post(new Runnable() {
 			@Override

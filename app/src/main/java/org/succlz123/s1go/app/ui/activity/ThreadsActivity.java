@@ -1,5 +1,6 @@
 package org.succlz123.s1go.app.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -10,24 +11,31 @@ import android.text.Html;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.melnykov.fab.FloatingActionButton;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
-import in.srain.cube.views.ptr.PtrDefaultHandler;
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import me.imid.swipebacklayout.lib.SwipeBackLayout;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+
 import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.bean.threads.ThreadsList;
-import org.succlz123.s1go.app.bean.threads.ThreadsObject;
-import org.succlz123.s1go.app.dao.helper.S1Fid;
-import org.succlz123.s1go.app.dao.interaction.GetThreads;
-import org.succlz123.s1go.app.support.swingindicator.SwingIndicator;
+import org.succlz123.s1go.app.support.bean.login.LoginVariables;
+import org.succlz123.s1go.app.support.bean.threads.ThreadsList;
+import org.succlz123.s1go.app.support.bean.threads.ThreadsObject;
+import org.succlz123.s1go.app.support.biz.GetThreads;
+import org.succlz123.s1go.app.support.utils.S1Fid;
+import org.succlz123.s1go.app.support.utils.S1String;
+import org.succlz123.s1go.app.support.widget.swingindicator.SwingIndicator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by fashi on 2015/4/14.
@@ -36,81 +44,57 @@ public class ThreadsActivity extends SwipeBackActivity {
 	private ListView mListView;
 	private String mFid;
 	private ThreadsObject threadsObject;
-	private AppAdapet mApdater;
+	private ThreadsAdapter mThreadsAdapter;
 	private Toolbar mToolbar;
 	private Boolean isLogin;
 	private String ToolbarTitle;
 	private List<ThreadsList> mThreadsList;
+
 	private SwingIndicator mSwingIndicator;
 	private FloatingActionButton mFloatingActionButton;
 	private SwipeBackLayout mSwipeBackLayout;
 	private SwipyRefreshLayout mSwipyRefreshLayout;
-	private PtrFrameLayout mPtrFrame;
+
+	public static void actionStart(Context context, String fid) {
+		Intent intent = new Intent(context, ThreadsActivity.class);
+		intent.putExtra(S1String.FID, fid);
+		context.startActivity(intent);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.threads_activity);
-		mFid = getIntent().getStringExtra("fid");
+		initData();
 		initViews();
 		setToolbar();
 		setFloatingActionButton();
 		setSwipeBack();
 		new GetThreadsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Intent intent = new Intent(ThreadsActivity.this, ReviewsActivity.class);
-				intent.putExtra("tid", mThreadsList.get(position).getTid());
-				intent.putExtra("title", mThreadsList.get(position).getSubject());
-				startActivity(intent);
-			}
-		});
-
-		mPtrFrame=(PtrFrameLayout)findViewById(R.id.ptr);
-		mPtrFrame.setResistance(1.7f);
-		mPtrFrame.setRatioOfHeaderHeightToRefresh(1.2f);
-		mPtrFrame.setDurationToClose(200);
-		mPtrFrame.setDurationToCloseHeader(1000);
-// default is false
-		mPtrFrame.setPullToRefresh(false);
-// default is true
-		mPtrFrame.setKeepHeaderWhenRefresh(true);
-		mPtrFrame.setPtrHandler(new PtrDefaultHandler() {
-			@Override
-			public void onRefreshBegin(PtrFrameLayout ptrFrameLayout) {
-				mPtrFrame.refreshComplete();
-				Toast.makeText(ThreadsActivity.this,"cccc",Toast.LENGTH_SHORT).show();
-			}
-
-			@Override
-			public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-				return super.checkCanDoRefresh(frame, content, header);
-			}
-		});
-
-//		mSwipyRefreshLayout.setColorSchemeResources(
-//				android.R.color.holo_blue_light,
-//				android.R.color.holo_red_light,
-//				android.R.color.holo_orange_light,
-//				android.R.color.holo_green_light);
-//		mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
-//			@Override
-//			public void onRefresh(SwipyRefreshLayoutDirection direction) {
-//				Log.d("MainActivity", "Refresh triggered at "
-//						+ (direction == SwipyRefreshLayoutDirection.TOP ? "top" : "bottom"));
-//				if (direction == SwipyRefreshLayoutDirection.TOP) {
-//					new GetThreadsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//				} else if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
-//
-//				}
-//			}
-//		});
+		setListView();
+		setSwipyRefreshLayout();
 	}
 
-	private void setSwipeBack() {
-		mSwipeBackLayout = getSwipeBackLayout();
-		mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
+	private void setSwipyRefreshLayout() {
+		mSwipyRefreshLayout.setColorSchemeResources(
+				android.R.color.holo_blue_light,
+				android.R.color.holo_red_light,
+				android.R.color.holo_orange_light,
+				android.R.color.holo_green_light);
+		mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
+			@Override
+			public void onRefresh(SwipyRefreshLayoutDirection direction) {
+				if (direction == SwipyRefreshLayoutDirection.TOP) {
+					new GetThreadsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+				} else if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
+					Toast.makeText(ThreadsActivity.this, "cccc", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+	}
+
+	private void initData() {
+		mFid = getIntent().getStringExtra(S1String.FID);
 	}
 
 	private void initViews() {
@@ -118,14 +102,19 @@ public class ThreadsActivity extends SwipeBackActivity {
 		mSwingIndicator = (SwingIndicator) findViewById(R.id.threads_progress);
 		mFloatingActionButton = (FloatingActionButton) findViewById(R.id.thread_fab);
 		mListView = (ListView) findViewById(R.id.threads_base_activity_listview);
-//		mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.ptr);
+		mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.swipyrefreshlayout);
+	}
+
+	private void setSwipeBack() {
+		mSwipeBackLayout = getSwipeBackLayout();
+		mSwipeBackLayout.setEdgeTrackingEnabled(SwipeBackLayout.EDGE_LEFT);
 	}
 
 	private void setToolbar() {
 		ToolbarTitle = S1Fid.GetS1Fid(Integer.valueOf(mFid));
 		mToolbar.setTitle(ToolbarTitle);
-		mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-		mToolbar.setSubtitleTextColor(Color.parseColor("#ffffff"));
+		mToolbar.setTitleTextColor(Color.WHITE);
+		mToolbar.setSubtitleTextColor(Color.WHITE);
 		mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitle);
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -139,16 +128,27 @@ public class ThreadsActivity extends SwipeBackActivity {
 		mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ThreadsActivity.this, SetThreadsActivity.class);
-				intent.putExtra("fid", mFid);
-				intent.putExtra("formhash", threadsObject.getVariables().getFormhash());
-				startActivityForResult(intent, 1);
+//				SetThreadsActivity.actionStart(ThreadsActivity.this,mFid,threadsObject.getVariables().getFormhash());
+				SetThreadsActivity.actionStart(ThreadsActivity.this, mFid, MyApplication.getInstance().getUserInfo().getFormhash());
+
 			}
 		});
 		mFloatingActionButton.attachToListView(mListView);
 	}
 
-	private class AppAdapet extends BaseAdapter {
+	private void setListView() {
+		mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				ReviewsActivity.actionStart(
+						ThreadsActivity.this,
+						mThreadsList.get(position).getTid(),
+						mThreadsList.get(position).getSubject());
+			}
+		});
+	}
+
+	private class ThreadsAdapter extends BaseAdapter {
 
 		private class ViewHolder {
 			private TextView mTitle;
@@ -163,8 +163,8 @@ public class ThreadsActivity extends SwipeBackActivity {
 
 		@Override
 		public int getCount() {
-			if (threadsObject != null) {
-				return threadsObject.getVariables().getForum_threadlist().size();
+			if (mThreadsList != null) {
+				return mThreadsList.size();
 			}
 			return 0;
 		}
@@ -184,7 +184,9 @@ public class ThreadsActivity extends SwipeBackActivity {
 			ViewHolder holder = null;
 			if (convertView == null) {
 				convertView = getLayoutInflater().inflate(R.layout.threads_listview_item, parent, false);
+
 				holder = new ViewHolder();
+
 				holder.mTitle = (TextView) convertView.findViewById(R.id.threads_listview_title);
 				holder.name = (TextView) convertView.findViewById(R.id.threads_listview_name);
 				holder.time = (TextView) convertView.findViewById(R.id.threads_listview_time);
@@ -193,19 +195,20 @@ public class ThreadsActivity extends SwipeBackActivity {
 				holder.reply = (TextView) convertView.findViewById(R.id.threads_listview_reply);
 				holder.click = (TextView) convertView.findViewById(R.id.threads_listview_click);
 				holder.fid = (TextView) convertView.findViewById(R.id.threads_listview_fid);
+
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
 			}
-			mThreadsList = new ArrayList<ThreadsList>();
-			mThreadsList = threadsObject.getVariables().getForum_threadlist();
-			holder.mTitle.setText(mThreadsList.get(position).getSubject());
-			holder.name.setText(mThreadsList.get(position).getAuthor());
-			holder.time.setText(Html.fromHtml(mThreadsList.get(position).getDateline()));
-			holder.lastTime.setText(Html.fromHtml(mThreadsList.get(position).getLastpost()));
-			holder.lastPoster.setText(mThreadsList.get(position).getLastposter());
-			holder.reply.setText(mThreadsList.get(position).getReplies());
-			holder.click.setText(mThreadsList.get(position).getViews());
+			ThreadsList threadsList = mThreadsList.get(position);
+
+			holder.mTitle.setText(threadsList.getSubject());
+			holder.name.setText(threadsList.getAuthor());
+			holder.time.setText(Html.fromHtml(threadsList.getDateline()));
+			holder.lastTime.setText(Html.fromHtml(threadsList.getLastpost()));
+			holder.lastPoster.setText(threadsList.getLastposter());
+			holder.reply.setText(threadsList.getReplies());
+			holder.click.setText(threadsList.getViews());
 			holder.fid.setText(null);
 
 			return convertView;
@@ -213,23 +216,23 @@ public class ThreadsActivity extends SwipeBackActivity {
 	}
 
 	private class GetThreadsAsyncTask extends AsyncTask<Void, Void, ThreadsObject> {
-		private HashMap<String, String> hearders = new HashMap<String, String>();
+		private HashMap<String, String> mHearders = new HashMap<String, String>();
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (MyApplication.getInstance().getUserInfo() != null) {
-				String cookie = MyApplication.getInstance().getUserInfo().getCookiepre();
-				String auth = "auth=" + Uri.encode(MyApplication.getInstance().getUserInfo().getAuth());
-				String saltkey = "saltkey=" + MyApplication.getInstance().getUserInfo().getSaltkey();
-				this.hearders.put("Cookie", cookie + auth + ";" + cookie + saltkey + ";");
+			LoginVariables userInfo = MyApplication.getInstance().mUserInfo;
+			if (userInfo != null) {
+				String cookie = userInfo.getCookiepre();
+				String auth = S1String.AUTH + "=" + Uri.encode(userInfo.getAuth());
+				String saltKey = S1String.SALT_KEY + "=" + userInfo.getSaltkey();
+				this.mHearders.put(S1String.COOKIE, cookie + auth + ";" + cookie + saltKey + ";");
 			}
 		}
 
 		@Override
 		protected ThreadsObject doInBackground(Void... params) {
-
-			return GetThreads.getThreads(mFid, hearders);
+			return GetThreads.getThreads(mFid, mHearders);
 		}
 
 		@Override
@@ -238,14 +241,22 @@ public class ThreadsActivity extends SwipeBackActivity {
 			threadsObject = aVoid;
 			isLogin = (threadsObject != null && threadsObject.getMessage() == null);
 			if (!isLogin) {
-				Toast.makeText(ThreadsActivity.this, "抱歉，您尚未登录，没有权限访问该版块", Toast.LENGTH_LONG).show();
+				Toast.makeText(ThreadsActivity.this, getString(R.string.sorry), Toast.LENGTH_LONG).show();
 			} else if (isLogin) {
-				mApdater = new AppAdapet();
-				mListView.setAdapter(mApdater);
+				List threadsLists = aVoid.getVariables().getForum_threadlist();
+//				Collections.sort(threadsLists, new Comparator<ThreadsList>() {
+//					@Override
+//					public int compare(ThreadsList lhs, ThreadsList rhs) {
+//						return rhs.getDblastpost() - lhs.getDblastpost();
+//					}
+//				});
+				ThreadsActivity.this.mThreadsList = threadsLists;
+				mThreadsAdapter = new ThreadsAdapter();
+				mListView.setAdapter(mThreadsAdapter);
 				mSwingIndicator.setVisibility(View.GONE);
 				mFloatingActionButton.setVisibility(View.VISIBLE);
-				mApdater.notifyDataSetChanged();
-//				mSwipyRefreshLayout.setRefreshing(false);
+				mThreadsAdapter.notifyDataSetChanged();
+				mSwipyRefreshLayout.setRefreshing(false);
 			}
 		}
 	}

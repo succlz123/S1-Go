@@ -5,18 +5,19 @@
               android:layout_height="50dp">
 
     <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:background="@drawable/froumtitle"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"
-            android:id="@+id/fourm_drawerlayout_img"/>
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/froumtitle"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/fourm_drawerlayout_img"/>
+
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="16sp"
-            android:id="@+id/fourm_drawerlayout_text"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="15dp"/>
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:id="@+id/fourm_drawerlayout_text"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="15dp"/>
 
 </LinearLayout>

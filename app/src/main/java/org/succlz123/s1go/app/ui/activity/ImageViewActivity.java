@@ -10,7 +10,7 @@ import com.davemorrissey.labs.subscaleview.ImageSource;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.support.utils.AppSize;
-import org.succlz123.s1go.app.support.imageloader.ImageDownLoader;
+import org.succlz123.s1go.app.support.io.ImageLoader;
 
 /**
  * Created by fashi on 2015/4/17.
@@ -41,7 +41,7 @@ public class ImageViewActivity extends ActionBarActivity {
         int width = metric.widthPixels;     // 屏幕宽度（像素）
         int height = metric.heightPixels;   // 屏幕高度（像素）
         AppSize appSize = new AppSize(width, height);
-        ImageDownLoader.getInstance().loadBitmap(mUrl, appSize, new ImageDownLoader.CallBack() {
+        ImageLoader.getInstance().loadBitmap(mUrl, appSize, new ImageLoader.CallBack() {
             @Override
             public void onLoad(String url, Bitmap bitmap) {
                 mSubsamplingScaleImageView.setImage(ImageSource.bitmap(bitmap));

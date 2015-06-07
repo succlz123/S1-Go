@@ -1,60 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:my="http://schemas.android.com/apk/res-auto"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:id="@+id/threads_base_fragment"
-             android:background="@color/base">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:my="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:id="@+id/threads_base_fragment">
 
+    <include
+        layout="@layout/toolbar"/>
 
-    <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
-            android:orientation="vertical"
-            android:background="@color/white">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <include
-                layout="@layout/toolbar"/>
-
-        <!--<com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout-->
-        <!--android:id="@+id/swipyrefreshlayout"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--my:direction="both">-->
-        <in.srain.cube.views.ptr.PtrFrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/ptr"
-                my:ptr_resistance="1.7"
-                my:ptr_ratio_of_header_height_to_refresh="1.2"
-                my:ptr_duration_to_close="300"
-                my:ptr_duration_to_close_header="2000"
-                my:ptr_keep_header_when_refresh="true"
-                my:ptr_pull_to_fresh="false">
+        <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
+            android:id="@+id/swipyrefreshlayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            my:direction="both">
 
             <ListView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/threads_base_activity_listview"
-                    android:dividerHeight="1dp"
-                    android:layout_marginTop="56dp"
-                    android:paddingTop="3.5dp"
-                    android:paddingLeft="3.5dp"
-                    android:paddingRight="3.5dp"
-                    android:clipToPadding="false"
-                    android:drawSelectorOnTop="true"
-                    android:divider="@color/androidbase">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/threads_base_activity_listview"
+                android:dividerHeight="1dp"
+                android:paddingTop="5dp"
+                android:paddingLeft="3dp"
+                android:paddingRight="3dp"
+                android:clipToPadding="false"
+                android:drawSelectorOnTop="true"
+                android:divider="@color/androidbase">
             </ListView>
 
+        </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
-        </in.srain.cube.views.ptr.PtrFrameLayout>
-
-        <!--</com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>-->
-
-    </LinearLayout>
-
-    <com.melnykov.fab.FloatingActionButton
+        <com.melnykov.fab.FloatingActionButton
             android:id="@+id/thread_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,23 +43,17 @@
             android:visibility="gone"
             android:src="@drawable/ic_action_edit_dark"/>
 
-    <LinearLayout
+        <org.succlz123.s1go.app.support.widget.swingindicator.SwingIndicator
             android:layout_width="match_parent"
-            android:fitsSystemWindows="true"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:id="@+id/threads_progress"
+            android:visibility="visible"
+            my:circleColor="@color/base"
+            my:circleRadius="7dp"
+            my:swingRadius="50dp"
+            my:cycle="400"/>
 
-        <org.succlz123.s1go.app.support.swingindicator.SwingIndicator
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="56dp"
-                android:background="@color/white"
-                android:id="@+id/threads_progress"
-                android:visibility="visible"
-                my:circleColor="@color/base"
-                my:circleRadius="7dp"
-                my:swingRadius="50dp"
-                my:cycle="400"/>
+    </FrameLayout>
 
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

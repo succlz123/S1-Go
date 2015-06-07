@@ -16,8 +16,8 @@
 //import android.view.ViewGroup;
 //import android.widget.TextView;
 //import org.succlz123.s1go.app.R;
-//import org.succlz123.s1go.app.bean.hostthreads.HotThreadsDate;
-//import org.succlz123.s1go.app.bean.hostthreads.HotThreadsObject;
+//import org.succlz123.s1go.app.support.bean.hostthreads.HotThreadsDate;
+//import org.succlz123.s1go.app.support.bean.hostthreads.HotThreadsObject;
 //import org.succlz123.s1go.app.dao.get.GetHostThreads;
 //import org.succlz123.s1go.app.dao.Helper.S1FidHelper;
 //

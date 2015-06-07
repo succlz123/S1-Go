@@ -1,5 +1,6 @@
 package org.succlz123.s1go.app.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -19,24 +20,29 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import com.melnykov.fab.FloatingActionButton;
-import me.imid.swipebacklayout.lib.SwipeBackLayout;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+
 import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.bean.reviews.ReviewsList;
-import org.succlz123.s1go.app.bean.reviews.ReviewsObject;
-import org.succlz123.s1go.app.dao.api.ConvertUidToAvatarUrl;
-import org.succlz123.s1go.app.dao.fromhtml.ImageLinkParser;
-import org.succlz123.s1go.app.dao.fromhtml.SpannedImageGetter;
-import org.succlz123.s1go.app.dao.interaction.GetReviews;
-import org.succlz123.s1go.app.support.imageloader.ImageDownLoader;
-import org.succlz123.s1go.app.support.swingindicator.SwingIndicator;
+import org.succlz123.s1go.app.support.bean.login.LoginVariables;
+import org.succlz123.s1go.app.support.bean.reviews.ReviewsList;
+import org.succlz123.s1go.app.support.bean.reviews.ReviewsObject;
+import org.succlz123.s1go.app.support.utils.S1UidToAvatarUrl;
+import org.succlz123.s1go.app.support.biz.fromhtml.ImageLinkParser;
+import org.succlz123.s1go.app.support.biz.fromhtml.SpannedImageGetter;
+import org.succlz123.s1go.app.support.utils.S1String;
+import org.succlz123.s1go.app.support.biz.GetReviews;
+import org.succlz123.s1go.app.support.io.ImageLoader;
+import org.succlz123.s1go.app.support.widget.swingindicator.SwingIndicator;
 import org.succlz123.s1go.app.support.utils.AppSize;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import me.imid.swipebacklayout.lib.SwipeBackLayout;
+import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
 
 /**
  * Created by fashi on 2015/4/15.
@@ -46,13 +52,20 @@ public class ReviewsActivity extends SwipeBackActivity {
 	private String mToolbarTitle;
 	private ListView mListView;
 	private ReviewsObject reviewsObject;
-	private MyAdapter mMyAdapter;
+	private ReviewsAdapter mReviewsAdapter;
 	private List<ReviewsList> mReviewsList;
 	private Toolbar mToolbar;
 	private SwingIndicator mSwingIndicator;
 	private AppSize mAppSize;
 	private FloatingActionButton mFloatingActionButton;
 	private SwipeBackLayout mSwipeBackLayout;
+
+	public static void actionStart(Context context, String tid, String title) {
+		Intent intent = new Intent(context, ReviewsActivity.class);
+		intent.putExtra(S1String.TID, tid);
+		intent.putExtra(S1String.TITLE, title);
+		context.startActivity(intent);
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +87,8 @@ public class ReviewsActivity extends SwipeBackActivity {
 	}
 
 	private void initData() {
-		mTid = getIntent().getStringExtra("tid");
-		mToolbarTitle = getIntent().getStringExtra("title");
+		mTid = getIntent().getStringExtra(S1String.TID);
+		mToolbarTitle = getIntent().getStringExtra(S1String.TITLE);
 	}
 
 	private void initViews() {
@@ -87,8 +100,8 @@ public class ReviewsActivity extends SwipeBackActivity {
 
 	private void setToolbar() {
 		mToolbar.setTitle(mToolbarTitle);
-		mToolbar.setTitleTextColor(Color.parseColor("#ffffff"));
-		mToolbar.setSubtitleTextColor(Color.parseColor("#ffffff"));
+		mToolbar.setTitleTextColor(Color.WHITE);
+		mToolbar.setSubtitleTextColor(Color.WHITE);
 		mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitle);
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -104,16 +117,12 @@ public class ReviewsActivity extends SwipeBackActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(ReviewsActivity.this, SetReviewsActivity.class);
-				intent.putExtra("tid", mTid);
-				intent.putExtra("formhash", reviewsObject.getVariables().getFormhash());
-				startActivityForResult(intent, 2);
-				overridePendingTransition(0, 0);
+				SetReviewsActivity.actionStart(ReviewsActivity.this, mTid, reviewsObject.getVariables().getFormhash());
 			}
 		});
 	}
 
-	private class MyAdapter extends BaseAdapter {
+	private class ReviewsAdapter extends BaseAdapter {
 
 		private class ViewHolder {
 			private ImageView mAvatarImg;
@@ -158,12 +167,12 @@ public class ReviewsActivity extends SwipeBackActivity {
 			}
 			mReviewsList = new ArrayList<ReviewsList>();
 			mReviewsList = reviewsObject.getVariables().getPostlist();
-			final String mAvatarUrl = ConvertUidToAvatarUrl.getAvatar(mReviewsList.get(position).getAuthorid());
+			final String mAvatarUrl = S1UidToAvatarUrl.getAvatar(mReviewsList.get(position).getAuthorid());
 			holder.mAvatarImg.setTag(mAvatarUrl);
 			holder.mAvatarImg.setImageResource(R.drawable.noavatar);
 			if (mAppSize != null) {
 				final ViewHolder finalHolder = holder;
-				ImageDownLoader.getInstance().loadBitmap(mAvatarUrl, mAppSize, new ImageDownLoader.CallBack() {
+				ImageLoader.getInstance().loadBitmap(mAvatarUrl, mAppSize, new ImageLoader.CallBack() {
 					@Override
 					public void onLoad(String url, Bitmap bitmap) {
 						if (mAvatarUrl.equals(finalHolder.mAvatarImg.getTag())) {
@@ -202,38 +211,46 @@ public class ReviewsActivity extends SwipeBackActivity {
 		Point size = new Point();
 		getWindowManager().getDefaultDisplay().getSize(size);
 		int screenWidth = size.x;
-		int screenHeight = size.y;
+		int screenHeight = size.y / 2;
 		mAppSize = new AppSize(screenWidth, screenHeight);
 		Log.e("ReviewsActivity W_H", mAppSize.getWidth() + "_" + mAppSize.getHeight());
 	}
 
 	private class GetReviewsAsyncTask extends AsyncTask<Void, Void, ReviewsObject> {
-		private HashMap<String, String> hearders = new HashMap<String, String>();
+		private HashMap<String, String> mHearders = new HashMap<String, String>();
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			if (MyApplication.getInstance().getUserInfo() == null) {
-			} else {
-				String cookie = MyApplication.getInstance().getUserInfo().getCookiepre();
-				String auth = "auth=" + Uri.encode(MyApplication.getInstance().getUserInfo().getAuth());
-				String saltkey = "saltkey=" + MyApplication.getInstance().getUserInfo().getSaltkey();
-				this.hearders.put("Cookie", cookie + auth + ";" + cookie + saltkey + ";");
+			LoginVariables userInfo = MyApplication.getInstance().mUserInfo;
+			if (userInfo != null) {
+				String cookie = userInfo.getCookiepre();
+				String auth = S1String.AUTH + "=" + Uri.encode(userInfo.getAuth());
+				String saltKey = S1String.SALT_KEY + "=" + userInfo.getSaltkey();
+				this.mHearders.put(S1String.COOKIE, cookie + auth + ";" + cookie + saltKey + ";");
 			}
+
+//			if (MyApplication.getInstance().getUserInfo() == null) {
+//			} else {
+//				String cookie = MyApplication.getInstance().getUserInfo().getCookiepre();
+//				String auth = "auth=" + Uri.encode(MyApplication.getInstance().getUserInfo().getAuth());
+//				String saltkey = "saltkey=" + MyApplication.getInstance().getUserInfo().getSaltkey();
+//				this.hearders.put("Cookie", cookie + auth + ";" + cookie + saltkey + ";");
+//			}
 		}
 
 		@Override
 		protected ReviewsObject doInBackground(Void... params) {
-			return GetReviews.getReviews(mTid, hearders);
+			return GetReviews.getReviews(mTid, mHearders);
 		}
 
 		@Override
 		protected void onPostExecute(ReviewsObject aVoid) {
 			super.onPostExecute(aVoid);
 			reviewsObject = aVoid;
-			mMyAdapter = new MyAdapter();
-			mListView.setAdapter(mMyAdapter);
-			mMyAdapter.notifyDataSetChanged();
+			mReviewsAdapter = new ReviewsAdapter();
+			mListView.setAdapter(mReviewsAdapter);
+			mReviewsAdapter.notifyDataSetChanged();
 			mSwingIndicator.setVisibility(View.GONE);
 			mFloatingActionButton.setVisibility(View.VISIBLE);
 		}
