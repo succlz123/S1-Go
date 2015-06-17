@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.support.io;
+package org.succlz123.s1go.app.support.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,8 +9,7 @@ import android.util.LruCache;
 import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.support.biz.MyOkHttp;
 import org.succlz123.s1go.app.support.db.ImageCacheDB;
-import org.succlz123.s1go.app.support.utils.AppSize;
-import org.succlz123.s1go.app.support.utils.LogUtil;
+import org.succlz123.s1go.app.support.io.CreateFile;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -140,7 +139,7 @@ public class ImageLoader {
 	 * 没有就返回null
 	 */
 	private Bitmap getBitmapFromDataBase(String url, AppSize appSize) {
-		String localCachePath = ImageCacheDB.getInstance().execSelect(url);
+ 		String localCachePath = ImageCacheDB.getInstance().execSelect(url);
 		if (!TextUtils.isEmpty(localCachePath)) {
 			BitmapFactory.Options options = new BitmapFactory.Options();
 			options.inJustDecodeBounds = true;
@@ -163,7 +162,7 @@ public class ImageLoader {
 	 * 不为空 返回 由本地的FileOutputStream转换成的bitmap
 	 * 为空 返回 null
 	 */
-	private Bitmap getBitmapFromNetWork(String url) {
+	private boolean getBitmapFromNetWork(String url) {
 		InputStream is = MyOkHttp.getInstance().doImageGet(url);
 		FileOutputStream os = null;
 		if (is != null) {
@@ -199,9 +198,12 @@ public class ImageLoader {
 				}
 			}
 			ImageCacheDB.getInstance().execInsert(url, new File(caCheFilePathName));
-			return BitmapFactory.decodeFile(caCheFilePathName);
+			BitmapFactory.Options options = new BitmapFactory.Options();
+			options.inJustDecodeBounds = true;
+			BitmapFactory.decodeFile(caCheFilePathName, options);
+			return options.outWidth > 0 && options.outHeight > 0;
 		}
-		return null;
+		return false;
 	}
 
 	private class DataBaseRunnable implements Runnable {
@@ -271,15 +273,15 @@ public class ImageLoader {
 
 		@Override
 		public void run() {
-			Bitmap netWorkBitmap = null;
+			boolean success = false;
 			//下载失败在重新下载次数为 2
 			Integer num = mFaildUrl.get(mUrl);
 			if (num == null || num != 1) {
 				for (int i = 0; i < 2; i++) {
-					netWorkBitmap = getBitmapFromNetWork(mUrl);
-					if (netWorkBitmap != null) {
+					success = getBitmapFromNetWork(mUrl);
+					if (success) {
 						break;
-					} else if (netWorkBitmap == null) {
+					} else if (!success) {
 						if (mUrl.startsWith("http://bbs.saraba1st.com/2b/uc_server/data/avatar/")) {
 							mFaildUrl.put(mUrl, i);
 						}
@@ -287,17 +289,24 @@ public class ImageLoader {
 				}
 			}
 
+			final boolean finalNetWorkBitmap = success;
 			MyApplication.getInstance().runOnUIThread(new Runnable() {
 				@Override
 				public void run() {
-					DataBaseRunnable dbTask = mDataBaseTaskQueue.get(mUrl);
-					if (dbTask == null) {
-						dbTask = new DataBaseRunnable(mUrl, mAppSize);
-						mDataBaseThreadPoll.submit(dbTask);
-						mDataBaseTaskQueue.put(mUrl, dbTask);
-					}
-					for (CallBack callBack : mNetWorkCallBackList) {
-						dbTask.addCallback(callBack);
+					if(finalNetWorkBitmap) {
+						DataBaseRunnable dbTask = mDataBaseTaskQueue.get(mUrl);
+						if (dbTask == null) {
+							dbTask = new DataBaseRunnable(mUrl, mAppSize);
+							mDataBaseThreadPoll.submit(dbTask);
+							mDataBaseTaskQueue.put(mUrl, dbTask);
+						}
+						for (CallBack callBack : mNetWorkCallBackList) {
+							dbTask.addCallback(callBack);
+						}
+					}else{
+						for (CallBack callBack : mNetWorkCallBackList) {
+							callBack.onError(mUrl);
+						}
 					}
 					mNetWorkTaskQueue.remove(mUrl);
 				}

@@ -15,7 +15,7 @@ import org.succlz123.s1go.app.support.io.ImageLoader;
 /**
  * Created by fashi on 2015/4/17.
  */
-public class ImageViewActivity extends ActionBarActivity {
+public class PicActivity extends ActionBarActivity {
     private String mUrl;
     private Toolbar mToolbar;
     private SubsamplingScaleImageView mSubsamplingScaleImageView;
