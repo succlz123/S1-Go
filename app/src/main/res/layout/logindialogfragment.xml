@@ -12,7 +12,7 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/white"
+                android:textColor="@color/bb"
                 android:text="请输入用户名和密码"
                 android:textSize="20sp"
                 android:layout_centerVertical="true"

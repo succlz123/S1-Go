@@ -48,7 +48,7 @@ public class HotThreadsFragment extends Fragment {
 	}
 
 	private void setSwipyRefreshLayout() {
-		mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.TOP);
+//		mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.TOP);
 		mSwipyRefreshLayout.setColorSchemeResources(
 				android.R.color.holo_blue_light,
 				android.R.color.holo_red_light,

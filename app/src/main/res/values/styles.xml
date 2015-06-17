@@ -18,8 +18,11 @@
         <!--ActionBar 白色主题-->
         <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
         <!--ActionMode样式-->
-        <item name="actionModeStyle">@style/MyActionMode</item>
-    </style> 
+        <!--<item name="actionModeStyle">@style/MyActionMode</item>-->
+        <item name="android:actionModeBackground">@color/base</item>
+        <!--ActionBar item 样式-->
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+    </style>
 
     <!--DrawerToggle配置-->
     <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
@@ -45,11 +48,11 @@
         <!-- Used to for the title of the Toolbar -->
         <!--<item name="android:textColorPrimary">#fff</item>-->
         <!-- 没用 Used to for the title of the Toolbar when parent is Theme.AppCompat.Light -->
-        <item name="android:textColorPrimaryInverse">@color/red</item>
+        <!--<item name="android:textColorPrimaryInverse">@color/red</item>-->
         <!-- Used to color the text of the action menu icons -->
-        <item name="android:textColorSecondary">@color/white</item>
+        <!--<item name="android:textColorSecondary">@color/white</item>-->
         <!-- 没用Used to color the overflow menu icon -->
-        <item name="actionMenuTextColor">@color/yellow</item>
+        <!--<item name="actionMenuTextColor">@color/yellow</item>-->
         <!-- Color of the Toolbar -->
         <!--<item name="android:background">@color/base</item>-->
 

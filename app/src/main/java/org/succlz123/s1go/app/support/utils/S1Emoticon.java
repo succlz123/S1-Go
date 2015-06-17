@@ -3,6 +3,7 @@ package org.succlz123.s1go.app.support.utils;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
 import org.succlz123.s1go.app.MyApplication;
 
 import java.io.IOException;
@@ -16,11 +17,11 @@ import java.util.regex.Pattern;
 /**
  * Created by fashi on 2015/4/13.
  */
-public class S1FidIcon {
+public class S1Emoticon {
 	private static HashMap<String, Bitmap> iconBitmapList = new HashMap<String, Bitmap>();
 	private static List<Bitmap> icons = new ArrayList<Bitmap>();
 
-	public static void initFidIcon() {
+	public static void initEmoticon() {
 		AssetManager assetFileDescriptor = MyApplication.getInstance().getAssets();
 		try {
 			String[] emoticonDirs = assetFileDescriptor.list("emoticon");
@@ -41,12 +42,22 @@ public class S1FidIcon {
 		}
 	}
 
-	public static Bitmap getFidIcon(int random) {
-		icons.addAll(iconBitmapList.values());
-		return icons.get(random);
+	public static Bitmap getEmoticon(int postion) {
+		if (icons.size() == 0) {
+			icons.addAll(iconBitmapList.values());
+ 		}
+		return icons.get(postion);
 	}
 
-	public static Bitmap getFidIcon(String fileName) {
+	public static Bitmap getEmoticon(String fileName) {
 		return iconBitmapList.get(fileName);
+	}
+
+	public static HashMap<String, Bitmap> getIconBitmapList() {
+		return iconBitmapList;
+	}
+
+	public static List<Bitmap> getIcons() {
+		return icons;
 	}
 }

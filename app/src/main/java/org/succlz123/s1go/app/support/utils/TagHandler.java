@@ -12,7 +12,7 @@ import android.text.style.ImageSpan;
 import android.text.style.StrikethroughSpan;
 import android.view.View;
 import android.webkit.URLUtil;
-import org.succlz123.s1go.app.ui.activity.ImageViewActivity;
+import org.succlz123.s1go.app.ui.activity.PicActivity;
 import org.xml.sax.XMLReader;
 
 /**
@@ -122,7 +122,7 @@ public final class TagHandler implements Html.TagHandler {
 
         @Override
         public void onClick(@NonNull View v) {
-            Intent intent = new Intent(getContext(), ImageViewActivity.class);
+            Intent intent = new Intent(getContext(), PicActivity.class);
             intent.putExtra("rul", getSource());
 
             getContext().startActivity(intent);

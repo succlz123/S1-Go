@@ -6,6 +6,9 @@ package org.succlz123.s1go.app.support.utils;
 public class S1String {
 	public static final String TID = "tid";
 	public static final String TITLE = "title";
+	public static final String CURRENTPAGERNUM = "currentpagerNum";
+	public static final String TOTALPAGERNUM = "totalPagerNum";
+	public static final String REPLY = "reply";
 	public static final String FID = "fid";
 	public static final String AUTH = "auth";
 	public static final String SALT_KEY = "saltkey";

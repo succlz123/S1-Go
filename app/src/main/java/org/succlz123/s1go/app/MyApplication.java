@@ -5,7 +5,7 @@ import android.os.Handler;
 
 import org.succlz123.s1go.app.support.bean.login.LoginVariables;
 import org.succlz123.s1go.app.support.db.UserDB;
-import org.succlz123.s1go.app.support.utils.S1FidIcon;
+import org.succlz123.s1go.app.support.utils.S1Emoticon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +28,7 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		instance = this;
-		S1FidIcon.initFidIcon();//initialize fid icons
+		S1Emoticon.initEmoticon();//initialize fid icons
 	}
 
 	public static interface onUserListener {

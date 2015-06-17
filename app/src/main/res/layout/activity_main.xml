@@ -15,7 +15,7 @@
         <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/bb"
                 android:layout_marginTop="25dp">
 
             <FrameLayout
@@ -37,7 +37,7 @@
             android:clickable="true"
             android:elevation="10dp"
             android:layout_marginRight="10dip"
-            android:background="@color/white"
+            android:background="@color/bb"
             android:orientation="vertical">
 
         <FrameLayout
@@ -73,14 +73,14 @@
                     android:layout_marginBottom="55dp"
                     android:layout_marginLeft="15dp"
                     app:siBorderWidth="3dp"
-                    app:siBorderColor="@color/white"
+                    app:siBorderColor="@color/bb"
                     android:src="@drawable/noavatar"/>
 
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/drawerlayout_un"
-                    android:textColor="@color/white"
+                    android:textColor="@color/bb"
                     android:textSize="15sp"
                     android:text="用户"
                     android:layout_gravity="bottom"
@@ -90,7 +90,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/white"
+                    android:textColor="@color/bb"
                     android:textSize="15sp"
                     android:text="UID"
                     android:id="@+id/drawerlayout_uid"
@@ -107,7 +107,7 @@
                     android:id="@+id/login"
                     android:textSize="16sp"
                     android:text="登录"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/bb"/>
 
         </FrameLayout>
 

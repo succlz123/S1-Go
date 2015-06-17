@@ -1,45 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<org.succlz123.s1go.app.support.utils.CustomInsetsFrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!--android:fitsSystemWindows="true">-->
-
-    <!--<LinearLayout-->
-    <!--android:orientation="vertical"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:background="@color/base">-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:background="@color/bb">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="0dp"
         android:id="@+id/move_linearlayout"
-        android:background="@color/white">
+        android:layout_weight="1"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
 
         <include
             layout="@layout/toolbar"/>
 
-        <!--<android.support.design.widget.TextInputLayout-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:id="@+id/textinput">-->
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/setthreads_title"
-                android:hint="@string/title"
-                android:textSize="20sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:singleLine="true"
-                android:paddingEnd="5dp"
-                android:paddingLeft="5dp"/>
-
-        <!--</android.support.design.widget.TextInputLayout>-->
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/setthreads_title"
+            android:hint="@string/title"
+            android:textSize="20sp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:singleLine="true"
+            android:paddingEnd="5dp"
+            android:paddingLeft="5dp"/>
 
         <EditText
             android:layout_width="match_parent"
@@ -51,55 +39,28 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@null"
             android:paddingLeft="5dp"
             android:gravity="start"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/setthreads_emoticon"
-                android:layout_marginLeft="10dp"
-                android:background="?selectableItemBackground"
-                android:scaleType="centerInside"
-                android:src="@drawable/emoticon"/>
-
-            <ImageButton
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:id="@+id/setthreads_pic"
-                android:layout_marginLeft="20dp"
-                android:background="?selectableItemBackground"
-                android:scaleType="centerInside"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/pic"/>
-
-            <Space
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"/>
-
-            <Button
-                android:layout_width="57dp"
-                android:layout_height="37dp"
-                android:id="@+id/setthreads_post"
-                android:layout_gravity="center_vertical"
-                android:text="@string/set"
-                android:textSize="16sp"
-                android:textColor="@color/white"
-                android:background="@color/base"
-                android:layout_marginRight="10dp"/>
-
-        </LinearLayout>
+        <View android:layout_width="match_parent"
+              android:background="@color/shadow"
+              android:id="@+id/linear_view"
+              android:visibility="gone"
+              android:layout_height="1dp"/>
 
     </LinearLayout>
 
-    <!--</LinearLayout>-->
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/emoticon_fragment"
+        android:animateLayoutChanges="true"
+        android:visibility="gone">
 
-</org.succlz123.s1go.app.support.utils.CustomInsetsFrameLayout>
+    </FrameLayout>
+
+</LinearLayout>
+
+

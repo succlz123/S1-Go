@@ -31,6 +31,9 @@ import org.succlz123.s1go.app.support.utils.S1Fid;
 import org.succlz123.s1go.app.support.utils.S1String;
 import org.succlz123.s1go.app.support.widget.swingindicator.SwingIndicator;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -101,7 +104,7 @@ public class ThreadsActivity extends SwipeBackActivity {
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
 		mSwingIndicator = (SwingIndicator) findViewById(R.id.threads_progress);
 		mFloatingActionButton = (FloatingActionButton) findViewById(R.id.thread_fab);
-		mListView = (ListView) findViewById(R.id.threads_base_activity_listview);
+		mListView = (ListView) findViewById(R.id.threads_activity_listview);
 		mSwipyRefreshLayout = (SwipyRefreshLayout) findViewById(R.id.swipyrefreshlayout);
 	}
 
@@ -143,7 +146,8 @@ public class ThreadsActivity extends SwipeBackActivity {
 				ReviewsActivity.actionStart(
 						ThreadsActivity.this,
 						mThreadsList.get(position).getTid(),
-						mThreadsList.get(position).getSubject());
+						mThreadsList.get(position).getSubject(),
+						mThreadsList.get(position).getReplies());
 			}
 		});
 	}
@@ -183,10 +187,8 @@ public class ThreadsActivity extends SwipeBackActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
-				convertView = getLayoutInflater().inflate(R.layout.threads_listview_item, parent, false);
-
 				holder = new ViewHolder();
-
+				convertView = getLayoutInflater().inflate(R.layout.threads_listview_item, parent, false);
 				holder.mTitle = (TextView) convertView.findViewById(R.id.threads_listview_title);
 				holder.name = (TextView) convertView.findViewById(R.id.threads_listview_name);
 				holder.time = (TextView) convertView.findViewById(R.id.threads_listview_time);
@@ -195,7 +197,6 @@ public class ThreadsActivity extends SwipeBackActivity {
 				holder.reply = (TextView) convertView.findViewById(R.id.threads_listview_reply);
 				holder.click = (TextView) convertView.findViewById(R.id.threads_listview_click);
 				holder.fid = (TextView) convertView.findViewById(R.id.threads_listview_fid);
-
 				convertView.setTag(holder);
 			} else {
 				holder = (ViewHolder) convertView.getTag();
@@ -250,6 +251,14 @@ public class ThreadsActivity extends SwipeBackActivity {
 //						return rhs.getDblastpost() - lhs.getDblastpost();
 //					}
 //				});
+				List<Integer> xx= new ArrayList();
+				Collections.sort(xx, new Comparator<Integer>() {
+					@Override
+					public int compare(Integer lhs, Integer rhs) {
+						return 0;
+					}
+				});
+
 				ThreadsActivity.this.mThreadsList = threadsLists;
 				mThreadsAdapter = new ThreadsAdapter();
 				mListView.setAdapter(mThreadsAdapter);

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.*;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.support.utils.S1Fid;
-import org.succlz123.s1go.app.support.utils.S1FidIcon;
+import org.succlz123.s1go.app.support.utils.S1Emoticon;
 import org.succlz123.s1go.app.ui.activity.ThreadsActivity;
 
 import java.util.Arrays;
@@ -70,7 +70,7 @@ public class HotAreaFragment extends Fragment {
 			TextView textView = (TextView) convertView.findViewById(R.id.forum_base_fragment_listview_item_title);
 			ImageView imageView = (ImageView) convertView.findViewById(R.id.forum_base_fragment_listview_item_forum_img);
 
-			imageView.setImageBitmap(S1FidIcon.getFidIcon(new Random().nextInt(193)));
+			imageView.setImageBitmap(S1Emoticon.getEmoticon(new Random().nextInt(193)));
 
 			switch (position) {
 				case 0:

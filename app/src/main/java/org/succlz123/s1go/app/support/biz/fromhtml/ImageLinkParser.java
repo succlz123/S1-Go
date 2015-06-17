@@ -9,7 +9,7 @@ import android.text.method.LinkMovementMethod;
 import android.text.style.ImageSpan;
 import android.view.MotionEvent;
 import android.widget.TextView;
-import org.succlz123.s1go.app.ui.activity.ImageViewActivity;
+import org.succlz123.s1go.app.ui.activity.PicActivity;
 
 /**
  * Created by fashi on 2015/4/17.
@@ -74,7 +74,7 @@ public class ImageLinkParser extends LinkMovementMethod {
                     if (url.startsWith("static/image/smiley/")) {
                         return false;
                     }
-                    Intent intent = new Intent(widget.getContext(), ImageViewActivity.class);
+                    Intent intent = new Intent(widget.getContext(), PicActivity.class);
                     intent.putExtra("imageurl", url);
 
                     widget.getContext().startActivity(intent);

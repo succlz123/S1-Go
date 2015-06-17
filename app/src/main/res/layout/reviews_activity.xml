@@ -1,55 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:my="http://schemas.android.com/apk/res-auto"
-             android:orientation="vertical"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/androidbase">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
     <include
-            layout="@layout/toolbar"
-            android:layout_marginTop="25dp"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"/>
+        layout="@layout/toolbar"/>
 
-    <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/reviews_activity_listview"
-            android:divider="#00000000"
-            android:layout_marginTop="81dp"
-            android:dividerHeight="5dp"
-            android:paddingTop="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:clipToPadding="false">
-    </ListView>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/reviews_activity_viewpager"/>
 
-    <com.melnykov.fab.FloatingActionButton
-            android:id="@+id/reviews_fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_margin="16dp"
-            android:visibility="gone"
-            android:src="@drawable/ic_action_edit_dark"/>
-
-    <org.succlz123.s1go.app.support.widget.swingindicator.SwingIndicator
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="56dp"
-            android:background="@color/white"
-            android:id="@+id/reviews_progress"
-            android:visibility="visible"
-            my:circleColor="@color/base"
-            my:circleRadius="7dp"
-            my:swingRadius="50dp"
-            my:cycle="400"/>
-
-    <View
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:elevation="@dimen/elevation"
-            android:background="@color/base"/>
-
-</FrameLayout>
+</LinearLayout>

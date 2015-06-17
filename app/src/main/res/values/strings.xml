@@ -25,8 +25,8 @@
     <string name="set_failed">发送失败</string>
     <string name="set_succeed">发送成功</string>
     <string name="set_pic">......</string>
-    <string name="title">标题</string>
-    <string name="content">正文</string>
+    <string name="title">标题 (最少6字)</string>
+    <string name="content">正文 (最少6字)</string>
     <string name="set">发送</string>
     <!--<string name="set_reviews">正文字数过多或少</string>-->
     <!--<string name="set_reviews">发帖</string>-->

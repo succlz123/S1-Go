@@ -8,8 +8,8 @@ import android.text.Html;
 import android.widget.TextView;
 import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.support.utils.S1FidIcon;
-import org.succlz123.s1go.app.support.io.ImageLoader;
+import org.succlz123.s1go.app.support.utils.S1Emoticon;
+import org.succlz123.s1go.app.support.utils.ImageLoader;
 import org.succlz123.s1go.app.support.utils.AppSize;
 
 /**
@@ -30,7 +30,7 @@ public class SpannedImageGetter implements Html.ImageGetter {
 			String url = source.substring("static/image/smiley/".length());
 			String type = url.substring(0, url.indexOf("/"));
 			String name = url.substring(url.indexOf("/") + 1, url.indexOf("."));
-			Bitmap bitmap = S1FidIcon.getFidIcon(name);
+			Bitmap bitmap = S1Emoticon.getEmoticon(name);
 			BitmapDrawable drawable = new BitmapDrawable(MyApplication.getInstance().getResources(), bitmap);
 			drawable.setBounds(0, 0, 60, 60);
 			return drawable;

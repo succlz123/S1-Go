@@ -6,20 +6,25 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.util.Log;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.Window;
-import android.widget.Button;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageButton;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -29,6 +34,7 @@ import org.succlz123.s1go.app.support.bean.set.SetThreadsAndReviewsObject;
 import org.succlz123.s1go.app.support.biz.SetThreadsAndReviews;
 import org.succlz123.s1go.app.support.utils.IsFastClickBtn;
 import org.succlz123.s1go.app.support.utils.S1String;
+import org.succlz123.s1go.app.ui.fragment.emoticon.EmoticonFragment;
 
 import java.util.HashMap;
 
@@ -40,27 +46,30 @@ public class SetThreadsActivity extends AppCompatActivity {
 	private static final int TEXT_IS_NOT_EMPTY_AND_GIVE_UP_THREADS = 0;
 	private static final int TEXT_IS_NOT_EMPTY_AND_SET_THREADS = 1;
 
-	private static final int THREADS_TITLE_MIN = 6;
+	private static final int THREADS_TITLE_MIN = 5;
 	private static final int THREADS_TITLE_MAX = 80;
-	private static final int THREADS_CONTENT_MIN = 6;
+	private static final int THREADS_CONTENT_MIN = 5;
 	private static final int THREADS_CONTENT_MAX = 10000;
 
 	private Toolbar mToolbar;
 	private EditText mTilteEdit;
 	private EditText mContentEdit;
-	private Button mPostBtn;
-	private ImageButton mEmoticonBtn;
-	private ImageButton mPicBtn;
+
 	private String mFid;
 	private String mFormhash;
 	private String mTitle;
 	private String mContent;
-	private LinearLayout mMoveLinearLayout;
-//	private TextInputLayout mTextinput;
 
-	private View mContentView;
-	private int mScreenHeight;
-	private int mHeightDifference;
+	private boolean mEmoticonOk;
+
+	private boolean mPostOk;
+
+	private LinearLayout mMoveLinearLayout;
+	private View mRootView;
+	private FrameLayout mEmoticonView;
+	private EmoticonFragment emoticonFragment;
+	private int mMoveLLHeight;
+	private View mDivideLinear;
 
 	public static void actionStart(Context context, String fid, String formhash) {
 		Intent intent = new Intent(context, SetThreadsActivity.class);
@@ -76,48 +85,138 @@ public class SetThreadsActivity extends AppCompatActivity {
 		getStringExtra();
 		initViews();
 		setToolbar();
-		setPicBtnOnClick();
-		setPostBtnOnClick();
-		mContentView = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
+		getChangeHeight();
+		onEditTextChangedListener();
+		setEditTextFocusChangeListener();
+		setEditTextClickListener();
+	}
 
-		mContentView.getViewTreeObserver().addOnGlobalLayoutListener(
+	/**
+	 * 获得系统各个 view 的高宽度
+	 */
+	private void getChangeHeight() {
+		mRootView.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
-
 					@Override
 					public void onGlobalLayout() {
 						Rect r = new Rect();
-						mContentView.getWindowVisibleDisplayFrame(r);
+						mRootView.getWindowVisibleDisplayFrame(r);
+						int screenHeight = mRootView.getRootView().getHeight();
+						//键盘高度
+						int heightDifference = screenHeight - (r.bottom - r.top);
+						//状态栏高度
+						int statusBarHight = r.top;
+						//appbar高度
+						int toolBarHight = r.height() - mRootView.getHeight();
 
-						mScreenHeight = mContentView.getRootView().getHeight();
-
-						mHeightDifference = mScreenHeight - (r.bottom - r.top);
-
-						Log.e("Keyboard Size", "Size: " + mHeightDifference);
+						DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+						int emoticonHeight = displayMetrics.widthPixels / 8 * 4;
+						mMoveLLHeight = displayMetrics.heightPixels
+								- statusBarHight
+								- toolBarHight
+								- emoticonHeight;
 					}
-
 				});
-		mEmoticonBtn.setOnClickListener(new View.OnClickListener() {
+	}
+
+	/**
+	 * 通过监听 mEmoticonView visibiliity 的状态 来判断是否隐藏和弹出软键盘
+	 */
+	private void onEmoticonItem() {
+		if (mEmoticonView.getVisibility() == View.GONE) {
+			popSoftKeyboard(false);
+			mMoveLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.MATCH_PARENT, mMoveLLHeight));
+
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.replace(R.id.emoticon_fragment, emoticonFragment);
+			transaction.commitAllowingStateLoss();
+			mDivideLinear.setVisibility(View.VISIBLE);
+			mEmoticonView.setVisibility(View.VISIBLE);
+		} else if (mEmoticonView.getVisibility() == View.VISIBLE) {
+			popSoftKeyboard(true);
+
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.remove(emoticonFragment);
+			transaction.commitAllowingStateLoss();
+			mEmoticonView.setVisibility(View.GONE);
+			mDivideLinear.setVisibility(View.GONE);
+		}
+	}
+
+	private void popSoftKeyboard(boolean wantPop) {
+		InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+		if (wantPop) {
+//			mContentEdit.requestFocus();
+			setMoveParamsMatchPARENT();
+			imm.showSoftInput(mContentEdit, InputMethodManager.SHOW_IMPLICIT);
+		} else {
+			imm.hideSoftInputFromWindow(mContentEdit.getWindowToken(), 0);
+		}
+	}
+
+	private void setMoveParamsMatchPARENT() {
+		mMoveLinearLayout.setLayoutParams(new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT));
+	}
+
+	private void setEditTextFocusChangeListener() {
+		mTilteEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					setMoveParamsMatchPARENT();
+					mEmoticonView.setVisibility(View.GONE);
+					mEmoticonOk = false;
+					invalidateOptionsMenu();
+				}
+			}
+		});
+		mContentEdit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+			@Override
+			public void onFocusChange(View v, boolean hasFocus) {
+				if (hasFocus) {
+					setMoveParamsMatchPARENT();
+					mEmoticonView.setVisibility(View.GONE);
+					mEmoticonOk = true;
+					invalidateOptionsMenu();
+				}
+			}
+		});
+	}
+
+	private void setEditTextClickListener() {
+		mTilteEdit.setOnClickListener(new View.OnClickListener() {
+
 			@Override
 			public void onClick(View v) {
+				setMoveParamsMatchPARENT();
+				mEmoticonView.setVisibility(View.GONE);
+			}
+		});
+		mTilteEdit.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				setMoveParamsMatchPARENT();
+				mEmoticonView.setVisibility(View.GONE);
+				return false;
+			}
+		});
+		mContentEdit.setOnClickListener(new View.OnClickListener() {
 
-				mContentView.setLayoutParams(new LinearLayout
-						.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, mScreenHeight - mHeightDifference));
-
-
-//				InputMethodManager mInputMethodManager =
-//						(InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//
-//				if (rlayout_emoji.getVisibility() == View.VISIBLE) {
-//					iv_note_emoticon
-//							.setImageResource(R.drawable.btn_emoticon_selector);
-//					rlayout_emoji.setVisibility(View.GONE);
-//					getWindow()
-//							.setSoftInputMode(
-//									WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
-
-
-//			}
-//
+			@Override
+			public void onClick(View v) {
+				setMoveParamsMatchPARENT();
+				mEmoticonView.setVisibility(View.GONE);
+			}
+		});
+		mContentEdit.setOnLongClickListener(new View.OnLongClickListener() {
+			@Override
+			public boolean onLongClick(View v) {
+				setMoveParamsMatchPARENT();
+				mEmoticonView.setVisibility(View.GONE);
+				return false;
 			}
 		});
 	}
@@ -128,16 +227,14 @@ public class SetThreadsActivity extends AppCompatActivity {
 	}
 
 	private void initViews() {
+		mRootView = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
 		mToolbar = (Toolbar) findViewById(R.id.toolbar);
 		mTilteEdit = (EditText) findViewById(R.id.setthreads_title);
 		mContentEdit = (EditText) findViewById(R.id.setthreads_content);
-		mPostBtn = (Button) findViewById(R.id.setthreads_post);
-		mEmoticonBtn = (ImageButton) findViewById(R.id.setthreads_emoticon);
-		mPicBtn = (ImageButton) findViewById(R.id.setthreads_pic);
 		mMoveLinearLayout = (LinearLayout) findViewById(R.id.move_linearlayout);
-//		mTextinput = (TextInputLayout) findViewById(R.id.textinput);
-
-		View xx = (View) findViewById(R.id.action_mode_bar);
+		mEmoticonView = (FrameLayout) findViewById(R.id.emoticon_fragment);
+		emoticonFragment = new EmoticonFragment();
+		mDivideLinear = (View) findViewById(R.id.linear_view);
 	}
 
 	private void setToolbar() {
@@ -150,76 +247,42 @@ public class SetThreadsActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
-//	@Override
-//	public void onSupportActionModeStarted(ActionMode mode) {
-//		super.onSupportActionModeStarted(mode);
-//		this.mToolbar.setVisibility(View.GONE);
-
-//		LinearLayout.LayoutParams params = new LinearLayout
-//				.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-//				LinearLayout.LayoutParams.MATCH_PARENT);
-//		params.setMargins(0, 0, 0, 0);
-//		mMoveLinearLayout.setLayoutParams(params);
-//	}
-
-//	@Override
-//	public void onSupportActionModeFinished(ActionMode mode) {
-//		super.onSupportActionModeFinished(mode);
-//		this.mToolbar.setVisibility(View.VISIBLE);
-
-//		LinearLayout.LayoutParams params = new LinearLayout
-//				.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-//				LinearLayout.LayoutParams.MATCH_PARENT);
-//		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-//		float move = displayMetrics.density * 25;
-//		params.setMargins(0, (int) move, 0, 0);
-//		mMoveLinearLayout.setLayoutParams(params);
-//	}
-
-	private void setPicBtnOnClick() {
-		mPicBtn.setOnClickListener(new View.OnClickListener() {
+	private void onEditTextChangedListener() {
+		mTilteEdit.addTextChangedListener(new TextWatcher() {
 			@Override
-			public void onClick(View v) {
-				Toast.makeText(SetThreadsActivity.this,
-						getString(R.string.set_pic),
-						Toast.LENGTH_SHORT).show();
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				invalidateOptionsMenu();
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
+		mContentEdit.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				invalidateOptionsMenu();
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
 			}
 		});
 	}
 
-	private void setPostBtnOnClick() {
-		mPostBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				mTitle = mTilteEdit.getText().toString();
-				mContent = mContentEdit.getText().toString();
-
-				if (!TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(mContent)) {
-					if (mContent.length() < THREADS_CONTENT_MIN || mContent.length() > THREADS_CONTENT_MAX) {
-						Toast.makeText(SetThreadsActivity.this,
-								getString(R.string.the_word_too_much_or_too_little),
-								Toast.LENGTH_SHORT).show();
-					} else if (mTitle.length() < THREADS_TITLE_MIN) {
-						Toast.makeText(SetThreadsActivity.this,
-								getString(R.string.title_word_too_much),
-								Toast.LENGTH_SHORT).show();
-					} else if (mTitle.length() > THREADS_TITLE_MAX) {
-						Toast.makeText(SetThreadsActivity.this,
-								getString(R.string.title_word_too_little),
-								Toast.LENGTH_SHORT).show();
-					} else {
-						if (!IsFastClickBtn.isFastClick()) {
-							dialog(TEXT_IS_NOT_EMPTY_AND_SET_THREADS);
-						}
-					}
-				} else if (TextUtils.isEmpty(mTitle) || TextUtils.isEmpty(mContent)) {
-					Toast.makeText(SetThreadsActivity.this,
-							getString(R.string.please_intput_title_or_body),
-							Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-	}
 
 	/**
 	 * onBackPressed and postButton share one dialog
@@ -329,10 +392,50 @@ public class SetThreadsActivity extends AppCompatActivity {
 	}
 
 	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		//表情 menu
+		MenuItem emoticonItem = menu.add(Menu.NONE, 1, 100, "表情");
+		Drawable emoticonDrawable = getDrawable(R.drawable.emoticon);
+		emoticonDrawable.setTint(getResources().getColor(R.color.translucence_white));
+		if (mEmoticonOk) {
+			emoticonDrawable.setTint(getResources().getColor(R.color.white));
+		}
+		emoticonItem.setEnabled(mEmoticonOk);
+		emoticonItem.setIcon(emoticonDrawable);
+		emoticonItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		//发送 menu
+		MenuItem postItem = menu.add(Menu.NONE, 2, 100, "发帖");
+		Drawable postDrawable = getDrawable(R.drawable.ok);
+		//drawable 染成半透明颜色
+		postDrawable.setTint(getResources().getColor(R.color.translucence_white));
+		mPostOk = false;
+		//最后发送时 异步线程任务所需要的信息
+		mTitle = mTilteEdit.getText().toString();
+		mContent = mContentEdit.getText().toString();
+		if (mTitle.length() > THREADS_TITLE_MIN && mTitle.length() < THREADS_TITLE_MAX
+				&& mContent.length() > THREADS_CONTENT_MIN && mContent.length() < THREADS_CONTENT_MAX) {
+			postDrawable.setTint(getResources().getColor(R.color.white));
+			mPostOk = true;
+		}
+		postItem.setEnabled(mPostOk);
+		postItem.setIcon(postDrawable);
+		postItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 			case android.R.id.home:
 				onBackPressed();
+				return true;
+			case 1:
+				onEmoticonItem();
+				return true;
+			case 2:
+				if (!IsFastClickBtn.isFastClick()) {
+					dialog(TEXT_IS_NOT_EMPTY_AND_SET_THREADS);
+				}
 				return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -340,10 +443,16 @@ public class SetThreadsActivity extends AppCompatActivity {
 
 	@Override
 	public void onBackPressed() {
-		if (!TextUtils.isEmpty(mContentEdit.getText().toString())) {
-			dialog(TEXT_IS_NOT_EMPTY_AND_GIVE_UP_THREADS);
-		} else if (TextUtils.isEmpty(mContentEdit.getText().toString())) {
-			super.onBackPressed();
+		if (mEmoticonView.getVisibility() == View.VISIBLE) {
+			mDivideLinear.setVisibility(View.GONE);
+			mEmoticonView.setVisibility(View.GONE);
+			setMoveParamsMatchPARENT();
+		}else {
+			if (!TextUtils.isEmpty(mContentEdit.getText().toString())) {
+				dialog(TEXT_IS_NOT_EMPTY_AND_GIVE_UP_THREADS);
+			} else if (TextUtils.isEmpty(mContentEdit.getText().toString())) {
+				super.onBackPressed();
+			}
 		}
 	}
 }

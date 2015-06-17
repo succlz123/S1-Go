@@ -38,12 +38,12 @@
             android:theme="@style/TranslucentTheme"/>
 
         <activity
-            android:name=".ui.activity.ImageViewActivity"
+            android:name=".ui.activity.PicActivity"
             android:theme="@style/TranslucentTheme"/>
 
         <activity
             android:name=".ui.activity.SetThreadsActivity"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
 
         <activity
             android:name=".ui.activity.SetReviewsActivity"

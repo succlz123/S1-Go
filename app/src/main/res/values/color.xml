@@ -7,7 +7,7 @@
 
     <color name="base">#1e88e5</color>
     <color name="basebackground">#125289</color>
-    <color name="androidbase">#e0e0e0</color>
+    <color name="androidbase">#E5E5E5</color>
     <color name="hehe">#3a3a3b</color>
     <color name="ziti">#464e76</color>
     <color name="text">#212121</color>
@@ -21,6 +21,9 @@
     <color name="shadow">#66C0C0C0</color>
 
 
+    <color name="translucence_white">#80FFFFFF</color>
+
+    <color name="bb">#F6F6F6</color>
 
 
     <color name="white">#FFFFFF</color><!--白色 -->

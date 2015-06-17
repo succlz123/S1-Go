@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:my="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:my="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/androidbase">
 
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/swipyrefreshlayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        my:direction="both">
-
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         >
 
         <ListView
             android:layout_width="match_parent"
@@ -19,10 +18,31 @@
             android:divider="@color/androidbase"
             android:dividerHeight="3dp"
             android:paddingTop="5dp"
+            android:paddingLeft="2.5dp"
+            android:paddingRight="2.5dp"
             android:paddingBottom="5dp"
             android:clipToPadding="false"/>
 
-
     </com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout>
 
-</LinearLayout>
+    <com.melnykov.fab.FloatingActionButton
+        android:id="@+id/reviews_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right|bottom"
+        android:layout_margin="16dp"
+        android:visibility="gone"
+        android:src="@drawable/ic_action_edit_dark"/>
+
+    <org.succlz123.s1go.app.support.widget.swingindicator.SwingIndicator
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bb"
+        android:id="@+id/reviews_progress"
+        android:visibility="visible"
+        my:circleColor="@color/base"
+        my:circleRadius="7dp"
+        my:swingRadius="50dp"
+        my:cycle="400"/>
+
+</FrameLayout>

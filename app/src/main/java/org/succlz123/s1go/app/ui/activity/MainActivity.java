@@ -35,7 +35,7 @@ import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.support.asynctask.LoginAsyncTask;
 import org.succlz123.s1go.app.support.bean.login.LoginVariables;
 import org.succlz123.s1go.app.support.db.UserDB;
-import org.succlz123.s1go.app.support.io.ImageLoader;
+import org.succlz123.s1go.app.support.utils.ImageLoader;
 import org.succlz123.s1go.app.support.utils.AppSize;
 import org.succlz123.s1go.app.support.utils.DeEnCode;
 import org.succlz123.s1go.app.support.utils.S1UidToAvatarUrl;

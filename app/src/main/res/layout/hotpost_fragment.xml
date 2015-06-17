@@ -5,19 +5,17 @@
               android:layout_height="match_parent">
 
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
-            android:id="@+id/swipyrefreshlayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="56dp"
-            my:direction="both">
+        android:id="@+id/swipyrefreshlayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        my:direction="both">
 
-    <ListView
+        <ListView
             android:id="@+id/hostpost_listview"
             android:drawSelectorOnTop="true"
             android:divider="@color/androidbase"
             android:paddingTop="5dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
             android:clipToPadding="false"
             android:dividerHeight="1dp"
             android:layout_width="match_parent"
