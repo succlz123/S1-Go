@@ -1,0 +1,40 @@
+Applications Memory Usage (kB):
+Uptime: 76737398 Realtime: 150977416
+
+** MEMINFO in pid 28795 [org.succlz123.s1go.app] **
+                   Pss  Private  Private  Swapped     Heap     Heap     Heap
+                 Total    Dirty    Clean    Dirty     Size    Alloc     Free
+                ------   ------   ------   ------   ------   ------   ------
+  Native Heap     7339     7308        0        0    16384    10035     6348
+  Dalvik Heap     9794     9512        0        0    27445    25793     1652
+ Dalvik Other     1024     1024        0        0                           
+        Stack      244      244        0        0                           
+      Gfx dev     5036     5036        0        0                           
+    Other dev        4        0        4        0                           
+     .so mmap     1163      312      268        0                           
+    .apk mmap       63        0        4        0                           
+    .ttf mmap        6        0        0        0                           
+    .dex mmap     1864        0     1864        0                           
+    .oat mmap     1342        0      616        0                           
+    .art mmap      933      692       44        0                           
+   Other mmap      463        4      424        0                           
+   EGL mtrack    39808    39808        0        0                           
+    GL mtrack     8588     8588        0        0                           
+      Unknown      152      152        0        0                           
+        TOTAL    77823    72680     3224        0    43829    35828     8000
+ 
+ Objects
+               Views:      255         ViewRootImpl:        2
+         AppContexts:        4           Activities:        2
+              Assets:        2        AssetManagers:        2
+       Local Binders:       10        Proxy Binders:       16
+       Parcel memory:        5         Parcel count:       22
+    Death Recipients:        0      OpenSSL Sockets:        0
+ 
+ SQL
+         MEMORY_USED:      119
+  PAGECACHE_OVERFLOW:       40          MALLOC_SIZE:       62
+ 
+ DATABASES
+      pgsz     dbsz   Lookaside(b)          cache  Dbname
+         4       20             34        44/19/5  /data/data/org.succlz123.s1go.app/databases/imagecache.db
