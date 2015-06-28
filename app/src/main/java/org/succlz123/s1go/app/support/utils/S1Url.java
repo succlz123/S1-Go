@@ -8,7 +8,7 @@ public class S1Url {
 	public static final String HOT_POST = "http://bbs.saraba1st.com/2b/api/mobile/index.php?mobile=no&version=1&module=hotthread";
 
 	public static final String S1_BASE = "http://bbs.saraba1st.com/2b/api/mobile/index.php?mobile=no&version=1";
-	public static final String GET_THREADS = "&module=forumdisplay&submodule=checkpost&tpp=100&fid=";
+	public static final String GET_THREADS = "&module=forumdisplay&submodule=checkpost&tpp=100&page=&fid=";
 //	public static final String GET_THREADS = "&module=forumdisplay&submodule=checkpost&fid=&page=1&tpp=50&orderby=dateline";
 	public static final String GET_REVIEWS = "&module=viewthread&submodule=checkpost&tid=&ppp=30&page=";
 

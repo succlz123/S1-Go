@@ -25,7 +25,7 @@ public class PicActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.pic_activity);
+		setContentView(R.layout.activity_pic);
 		mSubsamplingScaleImageView = (SubsamplingScaleImageView) findViewById(R.id.touch_imageview);
 		mSubsamplingScaleImageView.setMinimumScaleType(3);
 //        subsamplingScaleImageView.setMinScale(1f);

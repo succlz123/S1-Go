@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -53,7 +52,7 @@ public class SetReviewsActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.setreviews_activity);
+		setContentView(R.layout.activity_setreviews);
 		getStringExtra();
 		initViews();
 		setToolbar();
@@ -73,9 +72,6 @@ public class SetReviewsActivity extends AppCompatActivity {
 
 	private void setToolbar() {
 		mToolbar.setTitle(getString(R.string.set_reviews));
-		mToolbar.setTitleTextColor(Color.WHITE);
-		mToolbar.setSubtitleTextColor(Color.WHITE);
-		mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitle);
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

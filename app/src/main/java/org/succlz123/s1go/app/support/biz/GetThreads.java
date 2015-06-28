@@ -10,8 +10,9 @@ import java.util.HashMap;
  */
 public class GetThreads {
 
-	public static ThreadsObject getThreads(String fid, HashMap<String, String> paramss) {
+	public static ThreadsObject getThreads(String fid, int page, HashMap<String, String> paramss) {
 		String url = S1Url.S1_BASE + S1Url.GET_THREADS.replace("fid=", "fid=" + fid);
+		url = url.replace("page=", "page=" + page);
 		String json = MyOkHttp.getInstance().doGet(url, paramss);
 		ThreadsObject threadsObject = ThreadsObject.parseJson(json);
 		return threadsObject;

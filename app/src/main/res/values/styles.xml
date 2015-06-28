@@ -22,6 +22,11 @@
         <item name="android:actionModeBackground">@color/base</item>
         <!--ActionBar item 样式-->
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <!--ActionBar menu 文字显示样式-->
+        <item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>
+        <!--ActionBar title 文字显示样式-->
+        <item name="android:titleTextAppearance">@style/ToolbarTitleAppearance</item>
+        <!--<item name="android:preferenceStyle">@style/xx</item>-->
     </style>
 
     <!--DrawerToggle配置-->
@@ -30,10 +35,20 @@
     </style>
 
     <!--ToolBar 字体配置-->
-    <style name="ToolbarSubtitle">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">normal</item>
+    <style name="ToolbarTitleAppearance">
+        <item name="android:textSize">20sp</item>
+        <!--<item name="android:textStyle">normal</item>-->
+        <item name="android:textColor">@color/white</item>
     </style>
+
+    <style name="MenuTextStyle">
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <!--<style name="xx" parent="@android:style/Widget.PreferenceFrameLayout">-->
+        <!--<item name="@android:style/borderTop">156dip</item>-->
+    <!--</style>-->
 
     <!--toolbar 主题的颜色配置-->
     <style name="ActionBarTheme" parent="ThemeOverlay.AppCompat.Light">

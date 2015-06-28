@@ -8,8 +8,7 @@
     <com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout
         android:id="@+id/swipyrefreshlayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-         >
+        android:layout_height="match_parent">
 
         <ListView
             android:layout_width="match_parent"
@@ -18,8 +17,8 @@
             android:divider="@color/androidbase"
             android:dividerHeight="3dp"
             android:paddingTop="5dp"
-            android:paddingLeft="2.5dp"
-            android:paddingRight="2.5dp"
+            android:paddingLeft="1.5dp"
+            android:paddingRight="1.5dp"
             android:paddingBottom="5dp"
             android:clipToPadding="false"/>
 

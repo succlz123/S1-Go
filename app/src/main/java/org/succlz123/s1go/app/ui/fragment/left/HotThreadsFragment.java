@@ -40,7 +40,7 @@ public class HotThreadsFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mView = inflater.inflate(R.layout.hotpost_fragment, container, false);
+		mView = inflater.inflate(R.layout.fragment_hotpost, container, false);
 		initViews();
 		setSwipyRefreshLayout();
  		new HotThreadsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -104,7 +104,7 @@ public class HotThreadsFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
-				convertView = getActivity().getLayoutInflater().inflate(R.layout.hotpost_listview_item, parent, false);
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.fragment_hotpost_listview_item, parent, false);
 				holder = new ViewHolder();
 
 				holder.mTitle = (TextView) convertView.findViewById(R.id.hotpost_listview_title);

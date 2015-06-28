@@ -56,7 +56,7 @@ public class ImageCacheDB extends SQLiteOpenHelper {
 	}
 
 	public void execInsert(String url, File localCache) {
-//		trimToSize();
+		trimToSize();
 		SQLiteDatabase db = getWritableDatabase();
 		ContentValues cv = new ContentValues();
 		long time = System.currentTimeMillis();

@@ -46,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                android:textColor="@color/hehe"
                 android:layout_marginLeft="5dp"
                 android:id="@+id/threads_listview_name"
                 android:layout_gravity="center_vertical"/>
@@ -53,6 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                android:textColor="@color/hehe"
                 android:id="@+id/threads_listview_time"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="3dp"/>
@@ -64,6 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                android:textColor="@color/hehe"
                 android:id="@+id/threads_listview_last_poster"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="3dp"/>
@@ -71,6 +74,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                android:textColor="@color/hehe"
                 android:id="@+id/threads_listview_last_post_time"
                 android:layout_gravity="center_vertical"
                 android:layout_marginRight="2dp"/>
@@ -83,6 +87,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
+                android:textColor="@color/ziti"
                 android:id="@+id/threads_listview_reply"
                 android:layout_marginLeft="2dp"
                 android:layout_gravity="center_vertical"/>
@@ -96,6 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
+                android:textColor="@color/ziti"
                 android:id="@+id/threads_listview_click"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="2dp"

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:title="标题-然而并没有什么卵用" >
+
+    <PreferenceCategory
+        android:summary="字体显示"
+        android:title="@string/text_style_show" >
+
+        <!--对话框标题-->
+        <!--Values对应的字符串数组-->
+        <!--默认选择的Values值-->
+        <!--Preference对于选择的Values值-->
+        <!--Preference对于选择的Key值-->
+        <!--显示标题 上面深色字体-->
+        <!--显示提示 下面浅色字体-->
+
+        <ListPreference
+            android:dialogTitle="@string/please_select_text_size"
+            android:entries="@array/select_text_size"
+            android:defaultValue="@string/select_text_size_value_default"
+            android:entryValues="@array/select_text_size_value"
+            android:key="text_size"
+            android:title="@string/text_size"
+            android:summary="%s"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:summary="图片显示"
+        android:title="@string/pic_show" >
+
+        <ListPreference
+            android:dialogTitle="@string/please_select_avatar_display_mode"
+            android:entries="@array/select_avatar_display_mode"
+            android:defaultValue="@string/select_avatar_display_mode_value_default"
+            android:entryValues="@array/select_avatar_mode_value"
+            android:key="avatar_display_mode"
+            android:title="@string/avatar_display_mode"
+            android:summary="%s"/>
+
+        <ListPreference
+            android:dialogTitle="@string/please_select_pic_display_mode"
+            android:entries="@array/select_pic_display_mode"
+            android:defaultValue="@string/select_pic_display_mode_value_default"
+            android:entryValues="@array/select_pic_mode_value"
+            android:key="pic_display_mode"
+            android:title="@string/pic_display_mode"
+            android:summary="%s"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:summary="其他"
+        android:title="@string/other">
+
+        <Preference android:title="@string/clean_pic_cache"
+                    android:key="clean_pic_cache"/>
+
+        <Preference android:title="@string/about"
+                    android:key="about"/>
+
+    </PreferenceCategory>
+
+
+
+    <!--<PreferenceCategory-->
+        <!--android:summary="分组3"-->
+        <!--android:title="分组2标题" >-->
+        <!--<SwitchPreference-->
+            <!--android:key="fly"-->
+            <!--android:summaryOff="已关闭飞行模式"-->
+            <!--android:summaryOn="已开启飞行模式"-->
+            <!--android:switchTextOff="关闭"-->
+            <!--android:switchTextOn="开启"-->
+            <!--android:title="飞行模式" >-->
+        <!--</SwitchPreference>-->
+        <!--<EditTextPreference-->
+            <!--android:defaultValue="zhangsan"-->
+            <!--android:dialogTitle="编辑姓名"-->
+            <!--android:key="name"-->
+            <!--android:summary="编辑您的姓名"-->
+            <!--android:title="编辑" >-->
+        <!--</EditTextPreference>-->
+    <!--</PreferenceCategory>-->
+
+    <!--<CheckBoxPreference-->
+        <!--android:key="doubi"-->
+        <!--android:summaryOff="逗比模式关闭"-->
+        <!--android:summaryOn="逗比模式开启"-->
+        <!--android:title="逗比模式" >-->
+    <!--</CheckBoxPreference>-->
+
+</PreferenceScreen>

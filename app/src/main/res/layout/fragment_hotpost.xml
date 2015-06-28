@@ -8,8 +8,7 @@
         android:id="@+id/swipyrefreshlayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        my:direction="both">
+        android:layout_marginTop="56dp">
 
         <ListView
             android:id="@+id/hostpost_listview"

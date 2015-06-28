@@ -81,7 +81,7 @@ public class SetThreadsActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.setthreads_activity);
+		setContentView(R.layout.activity_setthreads);
 		getStringExtra();
 		initViews();
 		setToolbar();
@@ -240,8 +240,6 @@ public class SetThreadsActivity extends AppCompatActivity {
 	private void setToolbar() {
 		mToolbar.setTitle(getString(R.string.set_threads));
 		mToolbar.setTitleTextColor(Color.WHITE);
-		mToolbar.setSubtitleTextColor(Color.WHITE);
-		mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitle);
 		setSupportActionBar(mToolbar);
 		getSupportActionBar().setHomeButtonEnabled(true);
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);

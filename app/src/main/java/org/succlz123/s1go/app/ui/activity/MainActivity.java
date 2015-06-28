@@ -2,7 +2,6 @@ package org.succlz123.s1go.app.ui.activity;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,12 +31,11 @@ import com.github.siyamed.shapeimageview.CircularImageView;
 
 import org.succlz123.s1go.app.MyApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.support.asynctask.LoginAsyncTask;
 import org.succlz123.s1go.app.support.bean.login.LoginVariables;
 import org.succlz123.s1go.app.support.db.UserDB;
-import org.succlz123.s1go.app.support.utils.ImageLoader;
 import org.succlz123.s1go.app.support.utils.AppSize;
 import org.succlz123.s1go.app.support.utils.DeEnCode;
+import org.succlz123.s1go.app.support.utils.ImageLoader;
 import org.succlz123.s1go.app.support.utils.S1UidToAvatarUrl;
 import org.succlz123.s1go.app.ui.fragment.left.HotAreaFragment;
 import org.succlz123.s1go.app.ui.fragment.left.HotThreadsFragment;
@@ -114,9 +112,6 @@ public class MainActivity extends AppCompatActivity {
 
 	private void setToolbar() {
 		mToolbar.setTitle(getString(R.string.app_name));
-		mToolbar.setTitleTextColor(Color.WHITE);
-		mToolbar.setSubtitleTextColor(Color.WHITE);
-		mToolbar.setSubtitleTextAppearance(this, R.style.ToolbarSubtitle);
 		setSupportActionBar(mToolbar);
 		//设置返回键可用
 		getSupportActionBar().setHomeButtonEnabled(true);
@@ -171,6 +166,10 @@ public class MainActivity extends AppCompatActivity {
 					public void run() {
 						MainActivity.this.mPosition = position;
 						FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+						if (position == 6) {
+							SettingActivity.actionStart(MainActivity.this);
+							return;
+						}
 						for (int i = 0; i < mFragmentList.size(); i++) {
 							Fragment fragment = mFragmentList.get(i);
 							if (i == position) {
@@ -207,11 +206,11 @@ public class MainActivity extends AppCompatActivity {
 
 	private void setUserInfo() {
 //		mUserInfo = MyApplication.getInstance().getUserInfo();
-		mUserInfo= UserDB.getInstance().execSelect();
+		mUserInfo = UserDB.getInstance().execSelect();
 		if (mUserInfo != null) {
 			String name = mUserInfo.getMember_username();
 			String password = DeEnCode.code(mUserInfo.getPassword());
-			LoginAsyncTask mLoginAsyncTask = new LoginAsyncTask(name, password);
+			LoginDiaLogFragment.LoginAsyncTask mLoginAsyncTask = new LoginDiaLogFragment.LoginAsyncTask(name, password);
 			mLoginAsyncTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 		}
 		onUserInfoChanged(mUserInfo);
@@ -308,7 +307,7 @@ public class MainActivity extends AppCompatActivity {
 
 		@Override
 		public int getCount() {
-			return 6;
+			return 7;
 		}
 
 		@Override
@@ -325,6 +324,8 @@ public class MainActivity extends AppCompatActivity {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			convertView = getLayoutInflater().inflate(R.layout.drawerlayout_listview_item, parent, false);
 			TextView textView = (TextView) convertView.findViewById(R.id.fourm_drawerlayout_text);
+			ImageView imageView = (ImageView) convertView.findViewById(R.id.fourm_drawerlayout_img);
+
 			if (position == 0) {
 				textView.setText("主论坛");
 			} else if (position == 1) {
@@ -335,12 +336,13 @@ public class MainActivity extends AppCompatActivity {
 				textView.setText("子论坛");
 			} else if (position == 4) {
 				textView.setText("小黑屋");
-				ImageView xiaoheiwu = (ImageView) convertView.findViewById(R.id.fourm_drawerlayout_img);
-				xiaoheiwu.setBackgroundResource(R.drawable.xiaoheiwu);
+				imageView.setBackgroundResource(R.drawable.xiaoheiwu);
 			} else if (position == 5) {
 				textView.setText("论坛热帖");
-				ImageView hotPost = (ImageView) convertView.findViewById(R.id.fourm_drawerlayout_img);
-				hotPost.setBackgroundResource(R.drawable.hot);
+				imageView.setBackgroundResource(R.drawable.hot);
+			} else if (position == 6) {
+				textView.setText("设置");
+				imageView.setBackgroundResource(R.drawable.settings);
 			}
 			return convertView;
 		}
@@ -348,8 +350,8 @@ public class MainActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.menu_main, menu);
-//		MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "搜索");
+//		getMenuInflater().inflate(R.menu.menu_main, menu);
+		MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "搜索");
 //		item.setIcon(R.drawable.search);
 //		item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 		return super.onCreateOptionsMenu(menu);

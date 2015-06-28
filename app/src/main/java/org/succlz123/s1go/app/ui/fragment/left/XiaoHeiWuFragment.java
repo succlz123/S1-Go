@@ -15,7 +15,7 @@ public class XiaoHeiWuFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.forum_fragment, container, false);
+        mView = inflater.inflate(R.layout.fragment_forum, container, false);
 
 
 //        AppImageLoader.getInstance().loadBitmap(url, xx, new AppImageLoader.Callback() {

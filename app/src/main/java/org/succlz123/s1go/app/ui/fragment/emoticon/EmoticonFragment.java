@@ -24,7 +24,7 @@ public class EmoticonFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mView = inflater.inflate(R.layout.emoticon_gridview, container, false);
+		mView = inflater.inflate(R.layout.gridview_emoticon, container, false);
 		GridView gridView = (GridView) mView.findViewById(R.id.emoticon_gridview);
 
 		gridView.setNumColumns(8);
@@ -64,7 +64,7 @@ public class EmoticonFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = getActivity().getLayoutInflater().inflate(R.layout.emoticon_gridview_item, parent, false);
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.gridview_emoticon_item, parent, false);
 				holder = new ViewHolder();
 				holder.icon = (ImageView) convertView.findViewById(R.id.emoticon_gridview_imageview);
 				convertView.setTag(holder);

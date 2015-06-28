@@ -28,6 +28,26 @@
     <string name="title">标题 (最少6字)</string>
     <string name="content">正文 (最少6字)</string>
     <string name="set">发送</string>
+    <string name="louzhu">楼主</string>
+    <string name="lou">楼</string>
+    <string name="other">其他</string>
+    <string name="about">关于</string>
+    <string name="clean_pic_cache">清空图片缓存</string>
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
+    <!--<string name="set_reviews">正文字数过多或少</string>-->
+    <!--<string name="set_reviews">发帖</string>-->
     <!--<string name="set_reviews">正文字数过多或少</string>-->
     <!--<string name="set_reviews">发帖</string>-->
     <!--<string name="set_reviews">正文字数过多或少</string>-->
@@ -35,5 +55,51 @@
     <!--<string name="set_reviews">正文字数过多或少</string>-->
     <!--<string name="set_reviews">发帖</string>-->
 
+
+    <string name="text_style_show">字体显示</string>
+
+    <string name="text_size">字体大小</string>
+    <string name="please_select_text_size">请选择字体大小(没用)</string>
+    <string-array name="select_text_size">
+        <item>大</item>
+        <item>中</item>
+        <item>小</item>
+    </string-array>
+    <string-array name="select_text_size_value">
+        <item>big</item>
+        <item>normal</item>
+        <item>small</item>
+    </string-array>
+    <string name="select_text_size_value_default">normal</string>
+
+    <string name="pic_show">图片显示</string>
+
+    <string name="avatar_display_mode">头像显示模式</string>
+    <string name="please_select_avatar_display_mode">请选择头像显示模式</string>
+    <string-array name="select_avatar_display_mode">
+        <item>头像大图</item>
+        <item>头像小图</item>
+        <item>不加载头像</item>
+    </string-array>
+    <string-array name="select_avatar_mode_value">
+        <item>big_avatar</item>
+        <item>small_avatar</item>
+        <item>no_avatar</item>
+    </string-array>
+    <string name="select_avatar_display_mode_value_default">big_avatar</string>
+
+    <string name="pic_display_mode">图片显示模式</string>
+    <string name="please_select_pic_display_mode">请选择图片显示模式</string>
+    <string-array name="select_pic_display_mode">
+        <item>WiFi连接时显示</item>
+        <item>显示</item>
+        <item>不显示</item>
+    </string-array>
+    <string-array name="select_pic_mode_value">
+        <item>wifi</item>
+        <item>display</item>
+        <item>no_display</item>
+    </string-array>
+    <string name="select_pic_display_mode_value_default">display</string>
 
 </resources>

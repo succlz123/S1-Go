@@ -50,21 +50,6 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/s1"/>
 
-            <!--<com.makeramen.roundedimageview.RoundedImageView-->
-            <!--android:layout_width="80dp"-->
-            <!--android:layout_height="80dp"-->
-            <!--android:id="@+id/avatar_drawerlayout_img"-->
-            <!--android:layout_gravity="left|bottom"-->
-            <!--android:layout_marginBottom="40dp"-->
-            <!--android:layout_marginLeft="20dp"-->
-            <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-            <!--app:riv_corner_radius="100dip"-->
-            <!--app:riv_mutate_background="true"-->
-            <!--app:riv_tile_mode="repeat"-->
-            <!--app:riv_oval="true"-->
-            <!--android:src="@drawable/noavatar"-->
-            <!--/>-->
-
             <com.github.siyamed.shapeimageview.CircularImageView
                     android:layout_width="82dp"
                     android:layout_height="82dp"
@@ -117,7 +102,7 @@
                 android:layout_weight="1"
                 android:id="@+id/listView"
                 android:layout_marginTop="10dp"
-                android:background="#ffffff"
+                android:background="@color/bb"
                 android:divider="@null"/>
 
         <!--<LinearLayout-->

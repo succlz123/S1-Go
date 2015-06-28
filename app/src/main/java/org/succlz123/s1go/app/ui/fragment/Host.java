@@ -88,7 +88,7 @@
 //        @Override
 //        public AppViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 //            // 创建一个View，简单起见直接使用系统提供的布局，就是一个TextView
-//            View view = View.inflate(parent.getContext(), R.layout.hotpost_listview_item, null);
+//            View view = View.inflate(parent.getContext(), R.layout.fragment_hotpost_listview_item, null);
 //            RecyclerView.LayoutParams layoutParams = new RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 //            //不设置layoutprarams 默认 高宽都是 wrap 无法占满整个屏幕
 //            layoutParams.setMargins(7, 4, 7, 4);

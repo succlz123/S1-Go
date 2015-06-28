@@ -24,7 +24,7 @@ public class SubforumFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mView = inflater.inflate(R.layout.forum_fragment, container, false);
+		mView = inflater.inflate(R.layout.fragment_forum, container, false);
 		initViews();
 		setListView();
 		return mView;
@@ -66,7 +66,7 @@ public class SubforumFragment extends Fragment {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			convertView = getActivity().getLayoutInflater().inflate(R.layout.forum_fragment_listview_item, parent, false);
+			convertView = getActivity().getLayoutInflater().inflate(R.layout.fragment_forum_listview_item, parent, false);
 			TextView textView = (TextView) convertView.findViewById(R.id.forum_base_fragment_listview_item_title);
 			ImageView imageView = (ImageView) convertView.findViewById(R.id.forum_base_fragment_listview_item_forum_img);
 

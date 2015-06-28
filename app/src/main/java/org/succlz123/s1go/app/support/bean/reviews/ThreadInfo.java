@@ -33,7 +33,7 @@ public class ThreadInfo {
     private String pushedaid;
     private String rate;
     private String readperm;
-    private String replies;//帖子回复数
+    private int replies;//帖子回复数
     private String short_subject;//帖子短标题
     private String subject;//帖子标题
     private String subjectenc;
@@ -275,11 +275,11 @@ public class ThreadInfo {
         this.readperm = readperm;
     }
 
-    public String getReplies() {
+    public int getReplies() {
         return replies;
     }
 
-    public void setReplies(String replies) {
+    public void setReplies(int replies) {
         this.replies = replies;
     }
 

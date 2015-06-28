@@ -1,5 +1,6 @@
-package org.succlz123.s1go.app.ui.fragment.list;
+package org.succlz123.s1go.app.ui.fragment.listview;
 
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.net.Uri;
@@ -10,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +18,6 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
@@ -56,13 +55,12 @@ public class ReviewsListFragment extends Fragment {
 	private ReviewsListViewAdapter mReviewsListViewAdapter;
 	private List<ReviewsList> mReviewsList;
 	private View mView;
+	private ReviewsListListener mReviewsListListener;
 
 	private AppSize mAppSize;
 	private SwingIndicator mSwingIndicator;
 	private FloatingActionButton mFloatingActionButton;
 	private SwipyRefreshLayout mSwipyRefreshLayout;
-
-	private ViewPagerNumCallback mViewPagerNumCallback;
 
 	public static ReviewsListFragment newInstance(String tid, int currentpagerNum, int totalPagerNum) {
 		ReviewsListFragment reviewsListFragment = new ReviewsListFragment();
@@ -77,7 +75,7 @@ public class ReviewsListFragment extends Fragment {
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mView = inflater.inflate(R.layout.reviews_fragment_listview, container, false);
+		mView = inflater.inflate(R.layout.fragment_reviews_listview, container, false);
 		initData();
 		initViews();
 		if (mTid != null) {
@@ -85,6 +83,9 @@ public class ReviewsListFragment extends Fragment {
 		}
 		setFloatingActionButton();
 		setSwipyRefreshLayout();
+
+		mReviewsListViewAdapter = new ReviewsListViewAdapter();
+		mListView.setAdapter(mReviewsListViewAdapter);
 
 		return mView;
 	}
@@ -106,7 +107,8 @@ public class ReviewsListFragment extends Fragment {
 		mFloatingActionButton.setShadow(true);
 		mFloatingActionButton.setType(FloatingActionButton.TYPE_NORMAL);
 		mFloatingActionButton.setColorNormal(getResources().getColor(R.color.base));
-		mFloatingActionButton.attachToListView(mListView);//把listview和浮动imagebutton组合
+		//把listview和浮动imagebutton组合
+		mFloatingActionButton.attachToListView(mListView);
 		mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -122,27 +124,17 @@ public class ReviewsListFragment extends Fragment {
 				android.R.color.holo_red_light,
 				android.R.color.holo_orange_light,
 				android.R.color.holo_green_light);
-
-//		mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.TOP);
 		mSwipyRefreshLayout.setEnabled(false);
-//		mSwipyRefreshLayout.setRefreshing();
-		if (mCurrentpagerNum == mTotalPagerNum){
+		if (mCurrentpagerNum == mTotalPagerNum) {
 			mSwipyRefreshLayout.setEnabled(true);
-
 			mSwipyRefreshLayout.setDirection(SwipyRefreshLayoutDirection.BOTTOM);
 		}
-
 		mSwipyRefreshLayout.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
 			@Override
 			public void onRefresh(SwipyRefreshLayoutDirection direction) {
-				if (direction == SwipyRefreshLayoutDirection.TOP) {
-					Toast.makeText(getActivity(), "3333333", Toast.LENGTH_SHORT).show();
-					mSwipyRefreshLayout.setRefreshing(false);
-				} else
 				if (direction == SwipyRefreshLayoutDirection.BOTTOM) {
-//					new GetReviewsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-					Toast.makeText(getActivity(),"123123",Toast.LENGTH_SHORT).show();
-					mSwipyRefreshLayout.setRefreshing(false);
+					new GetReviewsAsyncTask().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
 				}
 			}
 		});
@@ -156,7 +148,6 @@ public class ReviewsListFragment extends Fragment {
 		int screenWidth = size.x;
 		int screenHeight = size.y / 2;
 		mAppSize = new AppSize(screenWidth, screenHeight);
-		Log.e("ReviewsActivity W_H", mAppSize.getWidth() + "_" + mAppSize.getHeight());
 	}
 
 	private class ReviewsListViewAdapter extends BaseAdapter {
@@ -182,6 +173,11 @@ public class ReviewsListFragment extends Fragment {
 			return null;
 		}
 
+//		@Override
+//		public boolean hasStableIds() {
+//			return true;
+//		}
+
 		@Override
 		public long getItemId(int position) {
 			return 0;
@@ -191,7 +187,7 @@ public class ReviewsListFragment extends Fragment {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder = null;
 			if (convertView == null) {
-				convertView = getActivity().getLayoutInflater().inflate(R.layout.reviews_listview_item, parent, false);
+				convertView = getActivity().getLayoutInflater().inflate(R.layout.fragment_reviews_listview_item, parent, false);
 				holder = new ViewHolder();
 				holder.mAvatarImg = (ImageView) convertView.findViewById(R.id.reviews_listview_item_img);
 				holder.mName = (TextView) convertView.findViewById(R.id.reviews_listview_item_name);
@@ -209,6 +205,7 @@ public class ReviewsListFragment extends Fragment {
 			holder.mAvatarImg.setImageResource(R.drawable.noavatar);
 			if (mAppSize != null) {
 				final ViewHolder finalHolder = holder;
+
 				ImageLoader.getInstance().loadBitmap(mAvatarUrl, mAppSize, new ImageLoader.CallBack() {
 					@Override
 					public void onLoad(String url, Bitmap bitmap) {
@@ -226,12 +223,12 @@ public class ReviewsListFragment extends Fragment {
 			holder.mTime.setText(Html.fromHtml(mReviewsList.get(position).getDateline()));
 			if (mCurrentpagerNum == 1) {
 				if (position == 0) {
-					holder.mNum.setText("楼主");
+					holder.mNum.setText(getString(R.string.louzhu));
 				} else if (position > 0) {
-					holder.mNum.setText("" + position + "楼");
+					holder.mNum.setText("" + position + getString(R.string.lou));
 				}
 			} else {
-				holder.mNum.setText("" + ((30 * (mCurrentpagerNum - 1)) + position) + "楼");
+				holder.mNum.setText("" + ((30 * (mCurrentpagerNum - 1)) + position) + getString(R.string.lou));
 			}
 			holder.mReviews.setMovementMethod(ImageLinkParser.getInstance());
 			String reply = mReviewsList.get(position).getMessage();
@@ -242,6 +239,23 @@ public class ReviewsListFragment extends Fragment {
 				holder.mReviews.setText(spanned);
 			}
 			return convertView;
+		}
+	}
+
+	/**
+	 * 跟activity绑定时 获取ativity并强转成callback
+	 * 如果activity没有实现callback接口 抛出异常
+	 *
+	 * @param activity
+	 */
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		try {
+			mReviewsListListener = (ReviewsListListener) activity;
+		} catch (ClassCastException e) {
+			throw new ClassCastException(activity.toString()
+					+ "must implement reviewsListCallback");
 		}
 	}
 
@@ -269,13 +283,13 @@ public class ReviewsListFragment extends Fragment {
 		protected void onPostExecute(ReviewsObject aVoid) {
 			super.onPostExecute(aVoid);
 			reviewsObject = aVoid;
-			mReviewsListViewAdapter = new ReviewsListViewAdapter();
-			mListView.setAdapter(mReviewsListViewAdapter);
 			mReviewsListViewAdapter.notifyDataSetChanged();
+			//每次刷新时获得的回帖数
+			int replies = aVoid.getVariables().getThread().getReplies();
+			//回调回帖数给activity的viewpager
+			mReviewsListListener.onReplies(replies);
 
-			ViewPagerNumCallback callback = (ViewPagerNumCallback) getActivity();
-
-
+			mSwipyRefreshLayout.setRefreshing(false);
 			mSwingIndicator.setVisibility(View.GONE);
 			mFloatingActionButton.setVisibility(View.VISIBLE);
 		}

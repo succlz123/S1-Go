@@ -5,9 +5,9 @@
 
     <!-- network access -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- get gsm network info -->
+    <!-- gsm网络信息 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- get wifi network info -->
+    <!-- wifi网路信息  -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!-- write sdcard -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -30,12 +30,10 @@
         </activity>
 
         <activity
-            android:name=".ui.activity.ThreadsActivity"
-            android:theme="@style/TranslucentTheme"/>
+            android:name=".ui.activity.ThreadsActivity"/>
 
         <activity
-            android:name=".ui.activity.ReviewsActivity"
-            android:theme="@style/TranslucentTheme"/>
+            android:name=".ui.activity.ReviewsActivity"/>
 
         <activity
             android:name=".ui.activity.PicActivity"
@@ -49,10 +47,14 @@
             android:name=".ui.activity.SetReviewsActivity"
             android:windowSoftInputMode="adjustResize"/>
 
+        <!--<activity-->
+            <!--android:name=".ui.activity.SearchActivity"-->
+            <!--android:launchMode="singleTop">-->
+        <!--</activity>-->
+
         <activity
-            android:name=".ui.activity.SearchActivity"
-            android:launchMode="singleTop">
-        </activity>
+            android:name=".ui.activity.SettingActivity"
+            android:theme="@style/TranslucentTheme"/>
 
         <!--透明主题-->
         <!--android:theme="@style/Theme.AppCompat.Translucent"-->
