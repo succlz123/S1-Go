@@ -282,13 +282,14 @@ public class ReviewsListFragment extends Fragment {
 		@Override
 		protected void onPostExecute(ReviewsObject aVoid) {
 			super.onPostExecute(aVoid);
-			reviewsObject = aVoid;
-			mReviewsListViewAdapter.notifyDataSetChanged();
-			//每次刷新时获得的回帖数
-			int replies = aVoid.getVariables().getThread().getReplies();
-			//回调回帖数给activity的viewpager
-			mReviewsListListener.onReplies(replies);
-
+			if(aVoid!=null){
+				reviewsObject = aVoid;
+				mReviewsListViewAdapter.notifyDataSetChanged();
+				//每次刷新时获得的回帖数
+				int replies = aVoid.getVariables().getThread().getReplies();
+				//回调回帖数给activity的viewpager
+				mReviewsListListener.onReplies(replies);
+			}
 			mSwipyRefreshLayout.setRefreshing(false);
 			mSwingIndicator.setVisibility(View.GONE);
 			mFloatingActionButton.setVisibility(View.VISIBLE);
