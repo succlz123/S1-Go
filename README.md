@@ -9,5 +9,4 @@ S1论坛 Android 5.0+ 客户端
 #感谢
 Stage1  
 S1 Next  
-Discuz!掌上论坛  
 [ZetaSlasher](http://bbs.saraba1st.com/2b/space-uid-142441.html "") 默认S1娘头像
