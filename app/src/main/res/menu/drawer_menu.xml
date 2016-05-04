@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item android:id="@+id/home_new"
+              android:checked="true"
+              android:icon="@drawable/ic_clear_all_white_48dp"
+              android:title="热贴"/>
+
+        <item android:id="@+id/home_main"
+              android:checked="true"
+              android:icon="@drawable/ic_all_inclusive_white_48dp"
+              android:title="节点"/>
+
+    </group>
+
+    <item android:title="我的">
+
+        <menu>
+
+            <item android:icon="@drawable/ic_swap_calls_white_48dp"
+                  android:id="@+id/my_favorites"
+                  android:title="收藏"/>
+
+            <item android:icon="@drawable/ic_hdr_weak_white_48dp"
+                  android:id="@+id/my_message"
+                  android:title="消息"/>
+
+            <item android:icon="@drawable/ic_panorama_fish_eye_white_48dp"
+                  android:id="@+id/my_setting"
+                  android:title="设置"/>
+
+        </menu>
+
+    </item>
+
+</menu>

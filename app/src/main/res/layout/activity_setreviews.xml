@@ -6,7 +6,7 @@
               android:background="@color/bb">
 
     <include
-        layout="@layout/toolbar"/>
+        layout="@layout/layout_toolbar"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -33,7 +33,7 @@
             android:layout_gravity="center_vertical"
             android:id="@+id/setreviews_emoticon"
             android:layout_marginLeft="10dp"
-            android:background="@drawable/emoticon"/>
+          />
 
         <Button
             android:layout_width="37dp"
@@ -41,7 +41,7 @@
             android:id="@+id/setreviews_pic"
             android:layout_marginLeft="20dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/pic"/>
+        />
 
         <Space
             android:layout_width="0dp"
@@ -56,7 +56,7 @@
             android:text="发送"
             android:textSize="16sp"
             android:textColor="@color/bb"
-            android:background="@color/base"
+            android:background="@color/theme_base"
             android:layout_marginRight="10dp"/>
 
     </LinearLayout>

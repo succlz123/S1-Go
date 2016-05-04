@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:id="@+id/loading"
+              android:layout_width="match_parent"
+              android:gravity="center_horizontal"
+              android:layout_height="match_parent">
+
+    <include layout="@layout/layout_toolbar"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:text="Stage-1st"
+              android:textSize="28sp"
+              android:textStyle="bold"
+              android:textColor="@color/text"
+              android:layout_marginTop="30dp"
+              android:layout_height="wrap_content"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:text="国内知名“宅”社区 STAGE1"
+              android:textSize="20sp"
+              android:textColor="@color/text"
+              android:layout_marginTop="20dp"
+              android:layout_height="wrap_content"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="用户名"
+            android:background="@null"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp"
+            android:id="@+id/login_username"/>
+
+    <EditText
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:hint="密码"
+            android:gravity="center"
+            android:background="@null"
+            android:inputType="textPassword"
+            android:textSize="20sp"
+            android:id="@+id/login_password"/>
+
+    <Button
+            android:layout_width="100dp"
+            android:text="登陆"
+            android:textSize="20sp"
+            android:id="@+id/login"
+            android:textColor="@color/white"
+            android:layout_marginTop="15dp"
+            android:background="@color/theme_color_primary"
+            android:layout_height="40dp"/>
+
+</LinearLayout>

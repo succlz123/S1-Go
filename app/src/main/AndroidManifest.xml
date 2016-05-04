@@ -1,63 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
-    package="org.succlz123.s1go.app"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        package="org.succlz123.s1go.app">
 
-    <!-- network access -->
     <uses-permission android:name="android.permission.INTERNET"/>
-    <!-- gsm网络信息 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <!-- wifi网路信息  -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <!-- write sdcard -->
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
-        android:name=".MyApplication"
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+            android:name=".MainApplication"
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
 
         <activity
-            android:name=".ui.activity.MainActivity"
-            android:theme="@style/DrawerlayoutTheme"
-            android:label="@string/app_name">
+                android:name=".ui.main.MainActivity"
+                android:theme="@style/TranslucentDrawerLayoutTheme"
+                android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
-        <activity
-            android:name=".ui.activity.ThreadsActivity"/>
+        <activity android:name=".ui.thread.ThreadListActivity"/>
 
-        <activity
-            android:name=".ui.activity.ReviewsActivity"/>
+        <activity android:name=".ui.thread.ThreadInfoActivity"/>
 
-        <activity
-            android:name=".ui.activity.PicActivity"
-            android:theme="@style/TranslucentTheme"/>
+        <activity android:name=".ui.picture.PictureActivity"/>
 
-        <activity
-            android:name=".ui.activity.SetThreadsActivity"
-            android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
+        <activity android:name=".ui.send.SendThreadsActivity"
+                  android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
 
-        <activity
-            android:name=".ui.activity.SetReviewsActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity android:name=".ui.send.SendReplyActivity"
+                  android:windowSoftInputMode="adjustResize"/>
 
-        <!--<activity-->
-            <!--android:name=".ui.activity.SearchActivity"-->
-            <!--android:launchMode="singleTop">-->
-        <!--</activity>-->
+        <activity android:name=".ui.login.LoginActivity"
+                  android:launchMode="singleTop">
+        </activity>
 
-        <activity
-            android:name=".ui.activity.SettingActivity"
-            android:theme="@style/TranslucentTheme"/>
+        <activity android:name=".ui.setting.SettingActivity"/>
 
-        <!--透明主题-->
-        <!--android:theme="@style/Theme.AppCompat.Translucent"-->
     </application>
 
 </manifest>

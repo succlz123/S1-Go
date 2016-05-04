@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/toolbar"/>
+            layout="@layout/layout_toolbar"/>
 
         <EditText
             android:layout_width="match_parent"

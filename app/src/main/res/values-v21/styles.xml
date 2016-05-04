@@ -1,0 +1,20 @@
+<resources>
+
+    <style name="AppTheme" parent="BaseTheme">
+
+    </style>
+
+    <style name="TranslucentDrawerLayoutTheme" parent="BaseTheme">
+        <!--drawableLayout覆盖在toolbar上-->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <!--状态栏透明-->
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+
+    <!--底部导航栏透明 -->
+    <style name="TranslucentNavigationTheme" parent="AppTheme">
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+</resources>
