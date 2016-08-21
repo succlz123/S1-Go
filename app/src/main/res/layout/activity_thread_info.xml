@@ -9,6 +9,6 @@
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/reviews_activity_viewpager"/>
+        android:id="@+id/viewpager"/>
 
 </LinearLayout>

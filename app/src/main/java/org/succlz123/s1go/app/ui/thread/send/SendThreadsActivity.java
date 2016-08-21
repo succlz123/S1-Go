@@ -1,14 +1,17 @@
-package org.succlz123.s1go.app.ui.send;
+package org.succlz123.s1go.app.ui.thread.send;
+
+import org.succlz123.s1go.app.R;
+import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
+import org.succlz123.s1go.app.ui.emoticon.EmoticonFragment;
+import org.succlz123.s1go.app.utils.common.SysUtils;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -22,12 +25,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
-
-import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.config.S1GoConfig;
-import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
-import org.succlz123.s1go.app.ui.emoticon.EmoticonFragment;
-import org.succlz123.s1go.app.utils.common.SysUtils;
 
 
 /**
@@ -44,7 +41,6 @@ public class SendThreadsActivity extends BaseToolbarActivity {
 
     public static final String KEY_FID = "key_post_fid";
 
-    private Toolbar mToolbar;
     private EditText mTilteEdit;
     private EditText mContentEdit;
 
@@ -64,10 +60,9 @@ public class SendThreadsActivity extends BaseToolbarActivity {
     private int mMoveLLHeight;
     private View mDivideLinear;
 
-    public static void newInstance(Context context, String fid, String formhash) {
+    public static void start(Context context, String fid) {
         Intent intent = new Intent(context, SendThreadsActivity.class);
         intent.putExtra(KEY_FID, fid);
-        intent.putExtra(S1GoConfig.FORM_HASH, formhash);
         context.startActivity(intent);
     }
 
@@ -75,11 +70,12 @@ public class SendThreadsActivity extends BaseToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setthreads);
+
         mFid = getIntent().getStringExtra(KEY_FID);
-        mFormhash = getIntent().getStringExtra(S1GoConfig.FORM_HASH);
+//        mFormhash = getIntent().getStringExtra(S1GoConfig.FORM_HASH);
+//        intent.putExtra(S1GoConfig.FORM_HASH, formhash);
 
         mRootView = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-        mToolbar = f(R.id.toolbar);
         mTilteEdit = f(R.id.setthreads_title);
         mContentEdit = f(R.id.setthreads_content);
         mMoveLinearLayout = f(R.id.move_linearlayout);
@@ -318,32 +314,32 @@ public class SendThreadsActivity extends BaseToolbarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         //表情 menu
-        MenuItem emoticonItem = menu.add(Menu.NONE, 1, 100, "表情");
-        Drawable emoticonDrawable = getDrawable(0);
-        emoticonDrawable.setTint(getResources().getColor(R.color.translucence_white));
-        if (mEmoticonOk) {
-            emoticonDrawable.setTint(getResources().getColor(R.color.white));
-        }
-        emoticonItem.setEnabled(mEmoticonOk);
-        emoticonItem.setIcon(emoticonDrawable);
-        emoticonItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        //发送 menu
-        MenuItem postItem = menu.add(Menu.NONE, 2, 100, "发帖");
-        Drawable postDrawable = getDrawable(0);
-        //drawable 染成半透明颜色
-        postDrawable.setTint(getResources().getColor(R.color.translucence_white));
-        mPostOk = false;
-        //最后发送时 异步线程任务所需要的信息
-        mTitle = mTilteEdit.getText().toString();
-        mContent = mContentEdit.getText().toString();
-        if (mTitle.length() > THREADS_TITLE_MIN && mTitle.length() < THREADS_TITLE_MAX
-                && mContent.length() > THREADS_CONTENT_MIN && mContent.length() < THREADS_CONTENT_MAX) {
-            postDrawable.setTint(getResources().getColor(R.color.white));
-            mPostOk = true;
-        }
-        postItem.setEnabled(mPostOk);
-        postItem.setIcon(postDrawable);
-        postItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        MenuItem emoticonItem = menu.add(Menu.NONE, 1, 100, "表情");
+//        Drawable emoticonDrawable = getDrawable(0);
+//        emoticonDrawable.setTint(getResources().getColor(R.color.translucence_white));
+//        if (mEmoticonOk) {
+//            emoticonDrawable.setTint(getResources().getColor(R.color.white));
+//        }
+//        emoticonItem.setEnabled(mEmoticonOk);
+//        emoticonItem.setIcon(emoticonDrawable);
+//        emoticonItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        //发送 menu
+//        MenuItem postItem = menu.add(Menu.NONE, 2, 100, "发帖");
+//        Drawable postDrawable = getDrawable(0);
+//        //drawable 染成半透明颜色
+//        postDrawable.setTint(getResources().getColor(R.color.translucence_white));
+//        mPostOk = false;
+//        //最后发送时 异步线程任务所需要的信息
+//        mTitle = mTilteEdit.getText().toString();
+//        mContent = mContentEdit.getText().toString();
+//        if (mTitle.length() > THREADS_TITLE_MIN && mTitle.length() < THREADS_TITLE_MAX
+//                && mContent.length() > THREADS_CONTENT_MIN && mContent.length() < THREADS_CONTENT_MAX) {
+//            postDrawable.setTint(getResources().getColor(R.color.white));
+//            mPostOk = true;
+//        }
+//        postItem.setEnabled(mPostOk);
+//        postItem.setIcon(postDrawable);
+//        postItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         return super.onCreateOptionsMenu(menu);
     }
 

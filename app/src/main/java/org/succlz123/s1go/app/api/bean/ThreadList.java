@@ -279,7 +279,6 @@ public class ThreadList {
              * 175 : 青黑无脑不要游戏只求一战
              */
 
-            public TypesEntity types;
             /**
              * 1 :
              * 12 :
@@ -303,7 +302,6 @@ public class ThreadList {
              * 175 :
              */
 
-            public IconsEntity icons;
             /**
              * 1 : null
              * 12 : null
@@ -326,137 +324,6 @@ public class ThreadList {
              * 13 : null
              * 175 : null
              */
-
-            public ModeratorsEntity moderators;
-
-            public static class TypesEntity {
-                @com.alibaba.fastjson.annotation.JSONField(name = "1")
-                public String value1;
-                @com.alibaba.fastjson.annotation.JSONField(name = "12")
-                public String value12;
-                @com.alibaba.fastjson.annotation.JSONField(name = "234")
-                public String value234;
-                @com.alibaba.fastjson.annotation.JSONField(name = "235")
-                public String value235;
-                @com.alibaba.fastjson.annotation.JSONField(name = "236")
-                public String value236;
-                @com.alibaba.fastjson.annotation.JSONField(name = "77")
-                public String value77;
-                @com.alibaba.fastjson.annotation.JSONField(name = "128")
-                public String value128;
-                @com.alibaba.fastjson.annotation.JSONField(name = "3")
-                public String value3;
-                @com.alibaba.fastjson.annotation.JSONField(name = "11")
-                public String value11;
-                @com.alibaba.fastjson.annotation.JSONField(name = "232")
-                public String value232;
-                @com.alibaba.fastjson.annotation.JSONField(name = "5")
-                public String value5;
-                @com.alibaba.fastjson.annotation.JSONField(name = "7")
-                public String value7;
-                @com.alibaba.fastjson.annotation.JSONField(name = "8")
-                public String value8;
-                @com.alibaba.fastjson.annotation.JSONField(name = "233")
-                public String value233;
-                @com.alibaba.fastjson.annotation.JSONField(name = "73")
-                public String value73;
-                @com.alibaba.fastjson.annotation.JSONField(name = "10")
-                public String value10;
-                @com.alibaba.fastjson.annotation.JSONField(name = "9")
-                public String value9;
-                @com.alibaba.fastjson.annotation.JSONField(name = "238")
-                public String value238;
-                @com.alibaba.fastjson.annotation.JSONField(name = "13")
-                public String value13;
-                @com.alibaba.fastjson.annotation.JSONField(name = "175")
-                public String value175;
-            }
-
-            public static class IconsEntity {
-                @com.alibaba.fastjson.annotation.JSONField(name = "1")
-                public String value1;
-                @com.alibaba.fastjson.annotation.JSONField(name = "12")
-                public String value12;
-                @com.alibaba.fastjson.annotation.JSONField(name = "234")
-                public String value234;
-                @com.alibaba.fastjson.annotation.JSONField(name = "235")
-                public String value235;
-                @com.alibaba.fastjson.annotation.JSONField(name = "236")
-                public String value236;
-                @com.alibaba.fastjson.annotation.JSONField(name = "77")
-                public String value77;
-                @com.alibaba.fastjson.annotation.JSONField(name = "128")
-                public String value128;
-                @com.alibaba.fastjson.annotation.JSONField(name = "3")
-                public String value3;
-                @com.alibaba.fastjson.annotation.JSONField(name = "11")
-                public String value11;
-                @com.alibaba.fastjson.annotation.JSONField(name = "232")
-                public String value232;
-                @com.alibaba.fastjson.annotation.JSONField(name = "5")
-                public String value5;
-                @com.alibaba.fastjson.annotation.JSONField(name = "7")
-                public String value7;
-                @com.alibaba.fastjson.annotation.JSONField(name = "8")
-                public String value8;
-                @com.alibaba.fastjson.annotation.JSONField(name = "233")
-                public String value233;
-                @com.alibaba.fastjson.annotation.JSONField(name = "73")
-                public String value73;
-                @com.alibaba.fastjson.annotation.JSONField(name = "10")
-                public String value10;
-                @com.alibaba.fastjson.annotation.JSONField(name = "9")
-                public String value9;
-                @com.alibaba.fastjson.annotation.JSONField(name = "238")
-                public String value238;
-                @com.alibaba.fastjson.annotation.JSONField(name = "13")
-                public String value13;
-                @com.alibaba.fastjson.annotation.JSONField(name = "175")
-                public String value175;
-            }
-
-            public static class ModeratorsEntity {
-                @com.alibaba.fastjson.annotation.JSONField(name = "1")
-                public Object value1;
-                @com.alibaba.fastjson.annotation.JSONField(name = "12")
-                public Object value12;
-                @com.alibaba.fastjson.annotation.JSONField(name = "234")
-                public Object value234;
-                @com.alibaba.fastjson.annotation.JSONField(name = "235")
-                public Object value235;
-                @com.alibaba.fastjson.annotation.JSONField(name = "236")
-                public Object value236;
-                @com.alibaba.fastjson.annotation.JSONField(name = "77")
-                public Object value77;
-                @com.alibaba.fastjson.annotation.JSONField(name = "128")
-                public Object value128;
-                @com.alibaba.fastjson.annotation.JSONField(name = "3")
-                public Object value3;
-                @com.alibaba.fastjson.annotation.JSONField(name = "11")
-                public Object value11;
-                @com.alibaba.fastjson.annotation.JSONField(name = "232")
-                public Object value232;
-                @com.alibaba.fastjson.annotation.JSONField(name = "5")
-                public Object value5;
-                @com.alibaba.fastjson.annotation.JSONField(name = "7")
-                public Object value7;
-                @com.alibaba.fastjson.annotation.JSONField(name = "8")
-                public Object value8;
-                @com.alibaba.fastjson.annotation.JSONField(name = "233")
-                public Object value233;
-                @com.alibaba.fastjson.annotation.JSONField(name = "73")
-                public Object value73;
-                @com.alibaba.fastjson.annotation.JSONField(name = "10")
-                public Object value10;
-                @com.alibaba.fastjson.annotation.JSONField(name = "9")
-                public Object value9;
-                @com.alibaba.fastjson.annotation.JSONField(name = "238")
-                public Object value238;
-                @com.alibaba.fastjson.annotation.JSONField(name = "13")
-                public Object value13;
-                @com.alibaba.fastjson.annotation.JSONField(name = "175")
-                public Object value175;
-            }
         }
 
         public static class ForumThreadlistEntity {

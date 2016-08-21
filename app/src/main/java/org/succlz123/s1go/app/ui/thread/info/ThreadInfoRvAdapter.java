@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.thread;
+package org.succlz123.s1go.app.ui.thread.info;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -6,14 +6,11 @@ import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.api.bean.ThreadInfo;
 import org.succlz123.s1go.app.ui.base.BaseRvViewHolder;
-import org.succlz123.s1go.app.widget.AppSize;
-import org.succlz123.s1go.app.utils.s1.S1UidToAvatarUrl;
-import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.fromhtml.ImageLinkParser;
 import org.succlz123.s1go.app.utils.fromhtml.SpannedImageGetter;
+import org.succlz123.s1go.app.utils.s1.S1UidToAvatarUrl;
+import org.succlz123.s1go.app.widget.AppSize;
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -103,25 +100,6 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View view = layoutInflater.inflate(R.layout.recycler_view_item_thread_info, parent, false);
             return new ThreadInfoRvViewHolder(view);
-        }
-    }
-
-    public static class ItemDecoration extends RecyclerView.ItemDecoration {
-
-        @Override
-        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            super.onDraw(c, parent, state);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
-            int margin = SysUtils.dp2px(parent.getContext(), 5);
-            if (position == 0) {
-                outRect.set(0, margin, 0, margin);
-            } else {
-                outRect.set(0, 0, 0, margin);
-            }
         }
     }
 }

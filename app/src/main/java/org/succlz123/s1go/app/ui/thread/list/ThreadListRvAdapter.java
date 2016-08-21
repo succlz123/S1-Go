@@ -1,7 +1,8 @@
-package org.succlz123.s1go.app.ui.thread;
+package org.succlz123.s1go.app.ui.thread.list;
 
 import org.succlz123.s1go.app.api.bean.ThreadList;
 import org.succlz123.s1go.app.ui.base.BaseThreadListRvViewHolder;
+import org.succlz123.s1go.app.ui.thread.info.ThreadInfoActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 
 import android.graphics.Canvas;

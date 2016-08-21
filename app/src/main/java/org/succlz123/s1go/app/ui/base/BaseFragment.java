@@ -13,18 +13,17 @@ import rx.subscriptions.CompositeSubscription;
  * Created by succlz123 on 2015/7/8.
  */
 public abstract class BaseFragment extends Fragment {
-
-    protected boolean mIsVisible;
-    protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
+    protected boolean isVisible;
+    protected CompositeSubscription compositeSubscription = new CompositeSubscription();
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         if (getUserVisibleHint()) {
-            mIsVisible = true;
+            isVisible = true;
             onVisible();
         } else {
-            mIsVisible = false;
+            isVisible = false;
             onInvisible();
         }
     }
@@ -42,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mCompositeSubscription.unsubscribe();
+        compositeSubscription.unsubscribe();
         RefWatcher refWatcher = MainApplication.getInstance().refWatcher;
         refWatcher.watch(this);
     }

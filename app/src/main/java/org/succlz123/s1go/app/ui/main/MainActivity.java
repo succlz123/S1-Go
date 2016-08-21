@@ -5,9 +5,9 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.api.bean.LoginInfo;
-import org.succlz123.s1go.app.ui.area.ForumAreaFragment;
+import org.succlz123.s1go.app.ui.drawer.area.ForumAreaFragment;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
-import org.succlz123.s1go.app.ui.hot.HotFragment;
+import org.succlz123.s1go.app.ui.drawer.hot.HotFragment;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
 import org.succlz123.s1go.app.ui.setting.SettingActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
@@ -17,7 +17,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -108,7 +107,6 @@ public class MainActivity extends BaseToolbarActivity {
     private void setUserInfo() {
         LoginInfo.VariablesEntity userInfo = MainApplication.getInstance().getLoginInfo();
         if (userInfo != null) {
-
         }
         onUserInfoChanged(userInfo);
     }
@@ -140,18 +138,18 @@ public class MainActivity extends BaseToolbarActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "搜索");
-        item.setIcon(R.drawable.ic_swap_calls_white_48dp);
-        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "搜索");
+//        item.setIcon(R.drawable.ic_swap_calls_white_48dp);
+//        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 }

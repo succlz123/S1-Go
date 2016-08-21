@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.area;
+package org.succlz123.s1go.app.ui.drawer.area;
 
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.ui.base.BaseFragment;
@@ -44,7 +44,7 @@ public class ForumAreaFragment extends BaseFragment {
 //            @Override
 //            public void onClick(View view, String partitionType) {
 //                AcPartitionActivity.startActivity(getActivity(), partitionType);
-        //                ThreadListActivity.newInstance(getActivity(), fidList.get(position));
+        //                ThreadListActivity.start(getActivity(), fidList.get(position));
 
 //            }
 //        });

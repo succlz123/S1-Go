@@ -18,11 +18,12 @@ import java.util.List;
  * Created by fashi on 2015/4/13.
  */
 public class MainApplication extends Application {
-    public  LoginInfo.VariablesEntity loginInfo;
-    private List<LoginInfoListener> mLoginListenerList = new ArrayList<LoginInfoListener>();
-
+    public LoginInfo.VariablesEntity loginInfo;
     public RefWatcher refWatcher;
+
     private static MainApplication sInstance;
+
+    private List<LoginInfoListener> mLoginListenerList = new ArrayList<LoginInfoListener>();
 
     public static MainApplication getInstance() {
         return sInstance;
@@ -41,7 +42,7 @@ public class MainApplication extends Application {
         this.mLoginListenerList.add(LoginInfoListener);
     }
 
-    public  LoginInfo.VariablesEntity getLoginInfo() {
+    public LoginInfo.VariablesEntity getLoginInfo() {
         if (loginInfo == null) {
             loginInfo = UserDatabase.getInstance().execSelect();
         }

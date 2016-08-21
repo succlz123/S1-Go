@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.thread;
+package org.succlz123.s1go.app.ui.thread.list;
 
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
@@ -16,6 +16,7 @@ public class ThreadListActivity extends BaseToolbarActivity {
     public static final String KEY_THREAD_ACTIVITY_FID = "key_activity_thread_fid";
 
     private String mFid;
+    private ThreadListFragment mThreadListFragment;
 
     public static void actionStart(Context context, String fid) {
         Intent intent = new Intent(context, ThreadListActivity.class);
@@ -27,29 +28,22 @@ public class ThreadListActivity extends BaseToolbarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_thread_list);
-
         mFid = getIntent().getStringExtra(KEY_THREAD_ACTIVITY_FID);
         showBackButton();
         setCustomTitle(S1Fid.getS1Fid(Integer.valueOf(mFid)));
-
-        setFloatingActionButton();
-
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment,
-                ThreadListFragment.newInstance(mFid)).commit();
+        setUpFragment();
     }
 
-    private void setFloatingActionButton() {
-//		mFloatingActionButton.setShadow(true);
-//		mFloatingActionButton.setType(FloatingActionButton.TYPE_NORMAL);
-//		mFloatingActionButton.setColorNormal(getResources().getColor(R.color.base));
-//		mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				SendThreadsActivity.newInstance(ThreadListActivity.this, fid,
-//						MainApplication.getInstance().getLoginInfo().getFormhash());
-//
-//			}
-//		});
+    private void setUpFragment() {
+        if (mThreadListFragment == null) {
+            mThreadListFragment = ThreadListFragment.newInstance(mFid);
+        }
+        if (!mThreadListFragment.isAdded()) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.content, mThreadListFragment)
+                    .commit();
+        }
     }
 
     @Override

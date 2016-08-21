@@ -1,8 +1,8 @@
-package org.succlz123.s1go.app.ui.area;
+package org.succlz123.s1go.app.ui.drawer.area;
 
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.ui.base.BaseRvViewHolder;
-import org.succlz123.s1go.app.ui.thread.ThreadListActivity;
+import org.succlz123.s1go.app.ui.thread.list.ThreadListActivity;
 import org.succlz123.s1go.app.utils.s1.S1Fid;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 

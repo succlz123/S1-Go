@@ -235,7 +235,7 @@ public class ThreadInfo {
             public String lastpost;
             public String lastposter;
             public String views;//查看次数
-            public String replies;//帖子回复数
+            public int replies;//帖子回复数
             public String displayorder;
             public String highlight;
             public String digest;//回复数

@@ -17,7 +17,6 @@ import android.os.Environment;
 import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.telephony.TelephonyManager;
-import android.text.TextUtils;
 import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -26,7 +25,6 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -42,50 +40,6 @@ import java.util.Iterator;
  * Created by succlz123 on 2015/7/6.
  */
 public class SysUtils {
-    private static Toast toast;
-
-    /**
-     * 全局Toast
-     */
-    private synchronized static void globalToast(Context context, String tip, int duration) {
-        if (toast != null) {
-            toast.setText(tip);
-            toast.setDuration(duration);
-        } else {
-            toast = Toast.makeText(context, tip, duration);
-        }
-        toast.show();
-    }
-
-    /**
-     * 显示Toast 时间为short
-     */
-    public static void showToastShort(String tip) {
-        if (TextUtils.isEmpty(tip)) {
-            tip = "unknown error";
-        }
-//        if (context == null) {
-//            globalToast(MainApplication.getInstance().getApplicationContext(), tip, Toast.LENGTH_SHORT);
-//        } else {
-//            globalToast(context.getApplicationContext(), tip, Toast.LENGTH_SHORT);
-//        }
-        globalToast(MainApplication.getInstance().getApplicationContext(), tip, Toast.LENGTH_SHORT);
-    }
-
-    /**
-     * 显示Toast 时间为long
-     */
-    public static void showToastLong(String tip) {
-        if (TextUtils.isEmpty(tip)) {
-            tip = "unknown error";
-        }
-//        if (context == null) {
-//            globalToast(MainApplication.getInstance().getApplicationContext(), tip, Toast.LENGTH_LONG);
-//        } else {
-//            globalToast(context.getApplicationContext(), tip, Toast.LENGTH_LONG);
-//        }
-        globalToast(MainApplication.getInstance().getApplicationContext(), tip, Toast.LENGTH_LONG);
-    }
 
     /**
      * 是否有SDCard

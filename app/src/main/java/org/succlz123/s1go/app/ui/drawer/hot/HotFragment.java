@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.hot;
+package org.succlz123.s1go.app.ui.drawer.hot;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.api.bean.HotPost;
@@ -57,7 +57,7 @@ public class HotFragment extends BaseSwipeRecyclerFragment {
     }
 
     private void loadInfo() {
-        setRefreshStart();
+        setRefreshing();
 
         LoginInfo.VariablesEntity loginInfo = MainApplication.getInstance().getLoginInfo();
         if (loginInfo != null) {
@@ -87,6 +87,6 @@ public class HotFragment extends BaseSwipeRecyclerFragment {
                         setRefreshCompleted();
                     }
                 });
-        mCompositeSubscription.add(subscription);
+        compositeSubscription.add(subscription);
     }
 }

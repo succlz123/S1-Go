@@ -83,7 +83,7 @@ public abstract class BaseToolbarActivity extends BaseActivity {
 
     public void setCustomTitle(CharSequence title) {
         ensureToolbar();
-        getSupportActionBar().setTitle(title);
+        setTitle(title);
     }
 
     public void setCustomView(View view) {

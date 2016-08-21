@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.blackhouse;
+package org.succlz123.s1go.app.ui.drawer.blackhouse;
 
 import org.succlz123.s1go.app.R;
 

@@ -1,7 +1,5 @@
 package org.succlz123.s1go.app.config;
 
-import com.facebook.stetho.okhttp3.StethoInterceptor;
-
 import org.succlz123.s1go.app.MainApplication;
 
 import java.io.File;
@@ -31,7 +29,7 @@ public class OkHttpClientManager {
                 okHttpClientBuilder.cache(new Cache(cacheDir, HTTP_RESPONSE_DISK_CACHE_MAX_SIZE));
             }
 
-            okHttpClientBuilder.networkInterceptors().add(new StethoInterceptor());
+//            okHttpClientBuilder.networkInterceptors().add(new StethoInterceptor());
 
             okHttpClient = okHttpClientBuilder.build();
         }

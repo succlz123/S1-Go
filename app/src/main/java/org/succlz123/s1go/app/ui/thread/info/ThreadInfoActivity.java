@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.thread;
+package org.succlz123.s1go.app.ui.thread.info;
 
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
@@ -8,25 +8,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.ViewGroup;
 
 /**
  * Created by fashi on 2015/4/15.
  */
-public class ThreadInfoActivity extends BaseToolbarActivity  {
-
+public class ThreadInfoActivity extends BaseToolbarActivity {
     public static final String TID = "tid";
     public static final String TITLE = "title";
     public static final String TOTAL_PAGER_NUM = "totalPagerNum";
 
     private String mTid;
-    private String mToolbarTitle;
-    private Toolbar mToolbar;
     private int mReply;
     private int mTotalPagerNum;
     private int mViewPagerNum = 1;
@@ -55,14 +50,15 @@ public class ThreadInfoActivity extends BaseToolbarActivity  {
         showBackButton();
         setCustomTitle(getIntent().getStringExtra(TITLE));
 
-
-        mViewPager = (ViewPager) findViewById(R.id.reviews_activity_viewpager);
+        mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mReviewsViewPagerAdapter = new ReviewsViewPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mReviewsViewPagerAdapter);
+        mViewPager.setOffscreenPageLimit(3);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             /**
-             * position :当前页面，及你点击滑动的页面 offset:当前页面偏移的百分比
-             * offsetPixels:当前页面偏移的像素位置
+             * position: 当前页
+             * offset: 偏移的百分比
+             * offsetPixels: 偏移的像素位置
              */
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -94,7 +90,7 @@ public class ThreadInfoActivity extends BaseToolbarActivity  {
 //        invalidateOptionsMenu();
 //    }
 
-    private class ReviewsViewPagerAdapter extends FragmentPagerAdapter {
+    private class ReviewsViewPagerAdapter extends FragmentStatePagerAdapter {
 
         public ReviewsViewPagerAdapter(FragmentManager fm) {
             super(fm);
@@ -116,24 +112,23 @@ public class ThreadInfoActivity extends BaseToolbarActivity  {
             return ThreadInfoFragment.newInstance(mTid, position + 1, mTotalPagerNum);
         }
 
-        //初始化每个页卡选项 PagerAapter选择哪个对象放在当前的ViewPager中
-        @Override
-        public Object instantiateItem(ViewGroup container, int position) {
-            return super.instantiateItem(container, position);
-        }
-
-
-//		//判断是否由该对象生成界面
-//		@Override
-//		public boolean isViewFromObject(View view, Object object) {
-//			return false;
-//		}
+//        //初始化每个页卡选项 PagerAapter选择哪个对象放在当前的ViewPager中
+//        @Override
+//        public Object instantiateItem(ViewGroup container, int position) {
+//            return super.instantiateItem(container, position);
+//        }
 //
-//		//从viewPager中移动当前的view
-//		@Override
-//		public void destroyItem(ViewGroup container, int position, Object object) {
-//			super.destroyItem(container, position, object);
-//		}
+//        //判断是否由该对象生成界面
+//        @Override
+//        public boolean isViewFromObject(View view, Object object) {
+//            return false;
+//        }
+//
+//        //从viewPager中移动当前的view
+//        @Override
+//        public void destroyItem(ViewGroup container, int position, Object object) {
+//            super.destroyItem(container, position, object);
+//        }
     }
 
     @Override

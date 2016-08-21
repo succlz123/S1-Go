@@ -2,4 +2,8 @@
 <resources>
     <dimen name="elevation">5dp</dimen>
     <dimen name="statusbarHeight">25dp</dimen>
+
+
+    <dimen name="fab_margin">0dp</dimen>
+
 </resources>

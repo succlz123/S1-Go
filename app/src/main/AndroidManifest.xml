@@ -24,16 +24,16 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.thread.ThreadListActivity"/>
+        <activity android:name=".ui.thread.list.ThreadListActivity"/>
 
-        <activity android:name=".ui.thread.ThreadInfoActivity"/>
+        <activity android:name=".ui.thread.info.ThreadInfoActivity"/>
 
         <activity android:name=".ui.picture.PictureActivity"/>
 
-        <activity android:name=".ui.send.SendThreadsActivity"
+        <activity android:name=".ui.thread.send.SendThreadsActivity"
                   android:windowSoftInputMode="adjustResize|stateAlwaysVisible"/>
 
-        <activity android:name=".ui.send.SendReplyActivity"
+        <activity android:name=".ui.thread.send.SendReplyActivity"
                   android:windowSoftInputMode="adjustResize"/>
 
         <activity android:name=".ui.login.LoginActivity"

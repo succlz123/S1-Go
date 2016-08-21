@@ -1,8 +1,8 @@
-package org.succlz123.s1go.app.ui.hot;
+package org.succlz123.s1go.app.ui.drawer.hot;
 
 import org.succlz123.s1go.app.api.bean.HotPost;
 import org.succlz123.s1go.app.ui.base.BaseThreadListRvViewHolder;
-import org.succlz123.s1go.app.ui.thread.ThreadInfoActivity;
+import org.succlz123.s1go.app.ui.thread.info.ThreadInfoActivity;
 import org.succlz123.s1go.app.utils.s1.S1Fid;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 

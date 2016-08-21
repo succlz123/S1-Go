@@ -39,21 +39,7 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements S
         mLastRefreshStartTime = SystemClock.elapsedRealtime();
     }
 
-    public final void setRefreshCompleted() {
-        swipeRefreshLayout.removeCallbacks(mRefreshAction);
-        int delta = (int) (SystemClock.elapsedRealtime() - mLastRefreshStartTime);
-        if (0 <= delta && delta < 500) {
-            swipeRefreshLayout.postDelayed(mRefreshCompletedAction, 500 - delta);
-        } else {
-            swipeRefreshLayout.post(mRefreshCompletedAction);
-        }
-    }
-
-    public final void setRefreshStart() {
-        swipeRefreshLayout.post(mRefreshAction);
-    }
-
-   private Runnable mRefreshAction = new Runnable() {
+    private Runnable mRefreshAction = new Runnable() {
         @Override
         public void run() {
             if (swipeRefreshLayout != null) {
@@ -81,7 +67,21 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements S
         }
     }
 
-    protected void hideSwipeRefreshLayout() {
+    public void setRefreshing() {
+        swipeRefreshLayout.post(mRefreshAction);
+    }
+
+    public void setRefreshCompleted() {
+        swipeRefreshLayout.removeCallbacks(mRefreshAction);
+        int delta = (int) (SystemClock.elapsedRealtime() - mLastRefreshStartTime);
+        if (0 <= delta && delta < 500) {
+            swipeRefreshLayout.postDelayed(mRefreshCompletedAction, 500 - delta);
+        } else {
+            swipeRefreshLayout.post(mRefreshCompletedAction);
+        }
+    }
+
+    public void hideSwipeRefreshLayout() {
         if (swipeRefreshLayout != null) {
             swipeRefreshLayout.setEnabled(false);
         }
