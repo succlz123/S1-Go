@@ -160,4 +160,8 @@ public class ViewUtils {
                 .setNegativeButton("取消", null)
                 .show();
     }
+
+    public static <T extends View> T f(View view, int resId) {
+        return (T) view.findViewById(resId);
+    }
 }

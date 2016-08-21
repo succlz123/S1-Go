@@ -4,13 +4,12 @@ import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.api.bean.HotPost;
 import org.succlz123.s1go.app.api.bean.LoginInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
-import org.succlz123.s1go.app.ui.base.BaseSwipeRecyclerFragment;
+import org.succlz123.s1go.app.ui.base.BaseSwipeRefreshRvFragment;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -25,10 +24,9 @@ import rx.schedulers.Schedulers;
 /**
  * Created by fashi on 2015/4/12.
  */
-public class HotFragment extends BaseSwipeRecyclerFragment {
-    public static final String TAG = HotFragment.class.getName();
+public class HotFragment extends BaseSwipeRefreshRvFragment {
+    public static final String TAG = "HotFragment";
 
-    private SwipeRefreshLayout mSwipeRefreshLayout;
     private HotRvAdapter mAdapter;
 
     public static HotFragment newInstance() {

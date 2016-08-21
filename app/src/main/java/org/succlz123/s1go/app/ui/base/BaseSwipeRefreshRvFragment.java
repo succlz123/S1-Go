@@ -10,13 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 /**
- * Created by succlz123 on 16/4/29.
+ * Created by succlz123 on 16/4/22.
  */
-public class BaseSwipeRecyclerFragment extends BaseSwipeRefreshFragment {
+public abstract class BaseSwipeRefreshRvFragment extends BaseSwipeRefreshFragment {
     protected RecyclerView recyclerView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, SwipeRefreshLayout layout, Bundle savedInstanceState) {
+    protected View onCreateView(LayoutInflater inflater, SwipeRefreshLayout layout, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.layout_recycler_view, layout, false);
     }
 
@@ -35,5 +35,21 @@ public class BaseSwipeRecyclerFragment extends BaseSwipeRefreshFragment {
     @Override
     protected void lazyLoad() {
 
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+
+    public void setRefreshing() {
+        super.setRefreshing();
+    }
+
+    public void setRefreshCompleted() {
+        super.setRefreshCompleted();
+    }
+
+    public void setRefreshError() {
+        super.setRefreshCompleted();
     }
 }

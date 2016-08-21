@@ -1,8 +1,8 @@
 package org.succlz123.s1go.app.ui.drawer.area;
 
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.ui.base.BaseRvViewHolder;
 import org.succlz123.s1go.app.ui.thread.list.ThreadListActivity;
+import org.succlz123.s1go.app.utils.common.ViewUtils;
 import org.succlz123.s1go.app.utils.s1.S1Fid;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 
@@ -72,12 +72,12 @@ public class ForumAreaRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         return mFidList.size();
     }
 
-    private static class ForumAreaVH extends BaseRvViewHolder {
+    private static class ForumAreaVH extends RecyclerView.ViewHolder {
         private TextView mName;
 
         public ForumAreaVH(View itemView) {
             super(itemView);
-            mName = f(itemView, R.id.name);
+            mName = ViewUtils.f(itemView, R.id.name);
         }
 
         public static ForumAreaVH create(ViewGroup parent) {

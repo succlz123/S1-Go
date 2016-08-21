@@ -1,7 +1,9 @@
 package org.succlz123.s1go.app.ui.base;
 
 import org.succlz123.s1go.app.R;
+import org.succlz123.s1go.app.utils.common.ViewUtils;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,7 @@ import android.widget.TextView;
 /**
  * Created by succlz123 on 16/4/24.
  */
-public class BaseThreadListRvViewHolder extends BaseRvViewHolder {
+public class BaseThreadListRvViewHolder extends RecyclerView.ViewHolder {
     public TextView title;
     public TextView fid;
     public TextView lastPoster;
@@ -20,13 +22,13 @@ public class BaseThreadListRvViewHolder extends BaseRvViewHolder {
 
     public BaseThreadListRvViewHolder(View itemView) {
         super(itemView);
-        title = f(itemView, R.id.title);
-        fid = f(itemView, R.id.fid);
+        title = ViewUtils.f(itemView, R.id.title);
+        fid = ViewUtils.f(itemView, R.id.fid);
 
-        lastPoster = f(itemView, R.id.last_poster);
-        lastTime = f(itemView, R.id.last_post_time);
-        views = f(itemView, R.id.views);
-        reply = f(itemView, R.id.reply);
+        lastPoster = ViewUtils.f(itemView, R.id.last_poster);
+        lastTime = ViewUtils.f(itemView, R.id.last_post_time);
+        views = ViewUtils.f(itemView, R.id.views);
+        reply = ViewUtils.f(itemView, R.id.reply);
 
         itemView.setFocusable(true);
     }

@@ -5,7 +5,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.api.bean.ThreadInfo;
-import org.succlz123.s1go.app.ui.base.BaseRvViewHolder;
+import org.succlz123.s1go.app.utils.common.ViewUtils;
 import org.succlz123.s1go.app.utils.fromhtml.ImageLinkParser;
 import org.succlz123.s1go.app.utils.fromhtml.SpannedImageGetter;
 import org.succlz123.s1go.app.utils.s1.S1UidToAvatarUrl;
@@ -80,7 +80,7 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
-    private static class ThreadInfoRvViewHolder extends BaseRvViewHolder {
+    private static class ThreadInfoRvViewHolder extends RecyclerView.ViewHolder {
         private SimpleDraweeView mAvatarImg;
         private TextView mName;
         private TextView mTime;
@@ -89,11 +89,11 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         public ThreadInfoRvViewHolder(View itemView) {
             super(itemView);
-            mAvatarImg = f(itemView, R.id.author_img);
-            mName = f(itemView, R.id.author_name);
-            mTime = f(itemView, R.id.author_time);
-            mNum = f(itemView, R.id.author_num);
-            mReviews = f(itemView, R.id.author_content);
+            mAvatarImg = ViewUtils.f(itemView, R.id.author_img);
+            mName = ViewUtils.f(itemView, R.id.author_name);
+            mTime = ViewUtils.f(itemView, R.id.author_time);
+            mNum = ViewUtils.f(itemView, R.id.author_num);
+            mReviews = ViewUtils.f(itemView, R.id.author_content);
         }
 
         public static ThreadInfoRvViewHolder create(ViewGroup parent) {
