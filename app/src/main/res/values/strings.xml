@@ -9,7 +9,7 @@
     <string name="confirm">确定</string>
     <string name="please_input_un_pw">请输入用户名和密码</string>
     <string name="cancel">取消</string>
-    <string name="sorry">抱歉，网络异常或者您尚未登录</string>
+    <string name="sorry">抱歉,网络异常或者您尚未登录!</string>
     <string name="set_threads">发帖</string>
     <string name="set_reviews">回帖</string>
     <string name="too_little_words">回复字数过少</string>

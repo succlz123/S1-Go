@@ -1,6 +1,7 @@
 package org.succlz123.s1go.app.ui.base;
 
 import org.succlz123.s1go.app.R;
+import org.succlz123.s1go.app.utils.common.ViewUtils;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,7 +23,7 @@ public abstract class BaseRecyclerViewFragment extends BaseFragment {
 
     @Override
     public final void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        recyclerView = f(view, R.id.recycler_view);
+        recyclerView = ViewUtils.f(view, R.id.recycler_view);
         if (recyclerView == null) {
             throw new NullPointerException("RecyclerView not found");
         }

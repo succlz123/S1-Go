@@ -8,41 +8,32 @@
     <color name="theme_base">#1e88e5</color>
     <color name="theme_base_dark">#125289</color>
     <color name="window_background">#f2f2f2</color>
-    <color name="hehe">#1D1E1E</color>
-    <color name="ziti">#464e76</color>
     <color name="text">#212121</color>
 
     <color name="nga1">#fff8e7</color>
     <color name="nga2">#ffedc3</color>
     <color name="nga3">#ac6f42</color>
 
-    <color name="baidulianjie">#5178b4</color>
-
     <color name="shadow">#66C0C0C0</color>
-
-
-    <color name="translucence_white">#80FFFFFF</color>
-
-    <color name="bb">#F6F6F6</color>
 
     <!-- ============ relative colors pool ============ -->
     <!-- for multiple theme, another copy in values-night -->
-    <color name="theme_color_primary">#fb7299</color>
-    <color name="theme_color_primary_dark">#b85671</color>
-    <color name="theme_color_primary_light">#b87891</color>
-    <color name="theme_color_primary_trans">#99f0486c</color>
-    <color name="theme_color_secondary">#fb7299</color>
-    <color name="theme_color_secondary_dark">#b85671</color>
+    <color name="theme_color_primary">#1e88e5</color>
+    <color name="theme_color_primary_dark">#125289</color>
+    <color name="theme_color_primary_light">#125289</color>
+    <color name="theme_color_primary_trans">#1e88e5</color>
+    <color name="theme_color_secondary">#1e88e5</color>
+    <color name="theme_color_secondary_dark">#125289</color>
     <color name="theme_color_window_background">#f2f2f2</color>
     <color name="theme_color_view_background">#fafafa</color>
     <color name="theme_color_text_primary">#333333</color>
     <color name="theme_color_text_tertiary">#bbbbbb</color>
     <color name="theme_color_text_hint">#757575</color>
-    <color name="theme_color_text_highlight">#99f0486c</color>
+    <color name="theme_color_text_highlight">#1e88e5</color>
     <color name="theme_color_dividing_line">#dcdcdc</color>
     <color name="theme_color_card">#fafafa</color>
     <color name="theme_color_card_2">#fefefe</color>
-    <color name="theme_color_navigation_profilecover">#99f0486c</color>
+    <color name="theme_color_navigation_profilecover">#1e88e5</color>
 
     <!-- ============ pure colors pool ============ -->
     <!-- for independent use without multiple theme -->
@@ -78,20 +69,6 @@
     <color name="green_light">#5ECA31</color>
 
     <color name="blue_light">#21c1fc</color>
-
-    <!-- ============ functional colors pool ============ -->
-    <!-- author layout_progressbar color -->
-    <color name="level_progressbar_bg">#77000000</color>
-    <color name="level_progressbar_lv0">#bfbfbf</color>
-    <color name="level_progressbar_lv1">#bfbfbf</color>
-    <color name="level_progressbar_lv2">#95ddb2</color>
-    <color name="level_progressbar_lv3">#92d1e5</color>
-    <color name="level_progressbar_lv4">#ffb37c</color>
-    <color name="level_progressbar_lv5">#ff6c00</color>
-    <color name="level_progressbar_lv6">#ff0000</color>
-    <color name="level_progressbar_lv7">#e52fec</color>
-    <color name="level_progressbar_lv8">#841cf9</color>
-    <color name="level_progressbar_lv9">#151515</color>
 
     <!-- gay pink theme -->
     <color name="pink">#fb7299</color>

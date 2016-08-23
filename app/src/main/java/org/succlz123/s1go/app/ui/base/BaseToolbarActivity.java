@@ -45,31 +45,32 @@ public abstract class BaseToolbarActivity extends BaseActivity {
         return toolbar;
     }
 
-    private void ensureToolbar() {
+    public void ensureToolbar() {
         if (toolbar == null) {
-            View toolbar = findViewById(R.id.toolbar);
-            if (toolbar == null) {
-                toolbar = getLayoutInflater().inflate(R.layout.layout_toolbar, (ViewGroup) findViewById(android.R.id.content));
-                this.toolbar = (Toolbar) toolbar.findViewById(R.id.toolbar);
+            View findToolbar = findViewById(R.id.toolbar);
+            if (findToolbar == null) {
+                findToolbar = getLayoutInflater().inflate(R.layout.layout_toolbar, (ViewGroup) findViewById(android.R.id.content));
+                toolbar = (Toolbar) findToolbar.findViewById(R.id.toolbar);
             } else {
-                this.toolbar = (Toolbar) toolbar;
+                toolbar = (Toolbar) findToolbar;
             }
-            this.toolbar.setContentInsetsAbsolute(0, 0);
-            setSupportActionBar(this.toolbar);
+            toolbar.setContentInsetsAbsolute(0, 0);
+            setSupportActionBar(toolbar);
         }
     }
 
     public void showBackButton() {
-        //设置返回键可用
-        getSupportActionBar().setHomeButtonEnabled(true);
-        //创建返回键，并实现打开开关监听
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-//        layout_toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onBackPressed();
-//            }
-//        });
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // wtf! why can dispatch click event on stopped activity?!
+                if (isFragmentStateSaved()) {
+                    return;
+                }
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -79,11 +80,6 @@ public abstract class BaseToolbarActivity extends BaseActivity {
             toolbar = null;
         }
         super.onDestroy();
-    }
-
-    public void setCustomTitle(CharSequence title) {
-        ensureToolbar();
-        setTitle(title);
     }
 
     public void setCustomView(View view) {

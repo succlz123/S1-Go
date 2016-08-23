@@ -3,7 +3,7 @@ package org.succlz123.s1go.app.utils.s1;
 import java.lang.reflect.Field;
 
 /**
- * Created by fashi on 2015/4/12.
+ * Created by succlz123 on 2015/4/12.
  */
 public class S1Fid {
     /**

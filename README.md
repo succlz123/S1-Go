@@ -3,9 +3,9 @@
 (https://play.google.com/store/apps/details?id=org.succlz123.s1go.app "")  
 S1论坛 Android 5.0+ 客户端  
 
-![1](https://github.com/succlz123/S1-Go/blob/master/screenshot/device-2015-06-28-151508.jpg "")
-![2](https://github.com/succlz123/S1-Go/blob/master/screenshot/device-2015-06-28-151601.jpg "")
-![3](https://github.com/succlz123/S1-Go/blob/master/screenshot/device-2015-06-28-151727.jpg "")
+![1](https://github.com/succlz123/S1-Go/blob/master/screenshot/1.jpg "")
+![2](https://github.com/succlz123/S1-Go/blob/master/screenshot/2.jpg "")
+![3](https://github.com/succlz123/S1-Go/blob/master/screenshot/3.jpg "")
 #感谢
 Stage1  
 S1 Next  

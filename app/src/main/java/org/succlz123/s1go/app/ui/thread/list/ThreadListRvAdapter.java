@@ -3,10 +3,7 @@ package org.succlz123.s1go.app.ui.thread.list;
 import org.succlz123.s1go.app.api.bean.ThreadList;
 import org.succlz123.s1go.app.ui.base.BaseThreadListRvViewHolder;
 import org.succlz123.s1go.app.ui.thread.info.ThreadInfoActivity;
-import org.succlz123.s1go.app.utils.common.SysUtils;
 
-import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
@@ -16,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by fashi on 2015/6/26.
+ * Created by succlz123 on 2015/6/26.
  */
 public class ThreadListRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ThreadList.VariablesEntity.ForumThreadlistEntity> mThreadListList = new ArrayList<>();
@@ -64,24 +61,5 @@ public class ThreadListRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     public void setData(List<ThreadList.VariablesEntity.ForumThreadlistEntity> threadList) {
         mThreadListList.addAll(threadList);
         notifyDataSetChanged();
-    }
-
-    public static class ItemDecoration extends RecyclerView.ItemDecoration {
-
-        @Override
-        public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
-            super.onDraw(c, parent, state);
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
-            int margin = SysUtils.dp2px(parent.getContext(), 5);
-            if (position == 0) {
-                outRect.set(0, margin, 0, margin);
-            } else {
-                outRect.set(0, 0, 0, margin);
-            }
-        }
     }
 }

@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 /**
- * Created by fashi on 2015/4/12.
+ * Created by succlz123 on 2015/4/12.
  */
 public class HotPost {
 

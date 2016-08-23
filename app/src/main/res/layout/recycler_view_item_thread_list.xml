@@ -3,14 +3,15 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/white_lighter"
+              android:foreground="?attr/selectableItemBackground"
+              android:background="@color/theme_color_view_background"
               android:elevation="1dp">
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="17sp"
-            android:textColor="@color/hehe"
+            android:textColor="@color/theme_color_text_primary"
             android:maxLines="3"
             android:ellipsize="end"
             android:id="@+id/title"
@@ -31,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
-                android:textColor="@color/ziti"
+                android:textColor="@color/theme_color_primary_dark"
                 android:id="@+id/fid"
                 android:layout_marginRight="5dp"/>
 

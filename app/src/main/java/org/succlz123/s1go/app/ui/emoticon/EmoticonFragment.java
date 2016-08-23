@@ -16,7 +16,7 @@ import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.utils.s1.S1Emoticon;
 
 /**
- * Created by fashi on 2015/6/5.
+ * Created by succlz123 on 2015/6/5.
  */
 public class EmoticonFragment extends Fragment {
 	private View mView;

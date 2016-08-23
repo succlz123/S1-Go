@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.widget;
 
 /**
- * Created by fashi on 2015/4/26.
+ * Created by succlz123 on 2015/4/26.
  */
 public final class AppSize {
     /**

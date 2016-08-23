@@ -74,37 +74,7 @@ public class SysUtils {
         return width + "x" + height;
     }
 
-    /**
-     * dp转px
-     */
-    public static int dp2px(Context context, float dpVal) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dpVal, displayMetrics);
-    }
 
-    /**
-     * sp转px
-     */
-    public static int sp2px(Context context, float spVal) {
-        DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, spVal, displayMetrics);
-    }
-
-    /**
-     * px转dp
-     */
-    public static float px2dp(Context context, float pxVal) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (pxVal / scale);
-    }
-
-    /**
-     * px转sp
-     */
-    public static float px2sp(Context context, float pxVal) {
-        float scaledDensity = context.getResources().getDisplayMetrics().scaledDensity;
-        return (pxVal / scaledDensity);
-    }
 
     /**
      * 获取版本号和版本次数

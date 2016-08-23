@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.api;
 
 import org.succlz123.s1go.app.api.bean.HotPost;
-import org.succlz123.s1go.app.api.bean.LoginInfo;
+import org.succlz123.s1go.app.api.bean.UserInfo;
 import org.succlz123.s1go.app.api.bean.ThreadInfo;
 import org.succlz123.s1go.app.api.bean.ThreadList;
 
@@ -23,7 +23,7 @@ public interface ApiService {
      */
     @FormUrlEncoded
     @POST("index.php?mobile=no&version=1&module=login&loginsubmit=yes&loginfield=auto&submodule=checkpost")
-    Observable<LoginInfo> login(@Field("username") String username, @Field("password") String password);
+    Observable<UserInfo> login(@Field("username") String username, @Field("password") String password);
 
     /**
      * 热门帖子

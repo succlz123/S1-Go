@@ -2,7 +2,7 @@ package org.succlz123.s1go.app.ui.login;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.api.bean.LoginInfo;
+import org.succlz123.s1go.app.api.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
@@ -29,7 +29,7 @@ import rx.schedulers.Schedulers;
  */
 public class LoginActivity extends BaseToolbarActivity {
 
-    public static void newInstance(Context activity) {
+    public static void start(Context activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
@@ -39,7 +39,8 @@ public class LoginActivity extends BaseToolbarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         showBackButton();
-        setCustomTitle("登陆");
+        ensureToolbar();
+        setTitle("登陆");
 
         final EditText usernameEt = (EditText) findViewById(R.id.login_username);
         final EditText passwordEt = (EditText) findViewById(R.id.login_password);
@@ -60,21 +61,50 @@ public class LoginActivity extends BaseToolbarActivity {
                 }
             }
         });
+
+//        private void setFragment() {
+//        mHotFragment = (HotFragment) getSupportFragmentManager().findFragmentByTag(HotFragment.TAG);
+//        if (mHotFragment == null) {
+//            mHotFragment = HotFragment.newInstance();
+//            getSupportFragmentManager().beginTransaction().add(R.id.content, mHotFragment, HotFragment.TAG).commit();
+//        } else {
+//            getSupportFragmentManager().beginTransaction().hide(mForumAreaFragment).show(mHotFragment).commit();
+//        }
+//        mForumAreaFragment = (ForumAreaFragment) getSupportFragmentManager().findFragmentByTag(ForumAreaFragment.TAG);
+//        if (mForumAreaFragment == null) {
+//            mForumAreaFragment = ForumAreaFragment.newInstance();
+//            getSupportFragmentManager().beginTransaction().hide(mHotFragment).add(R.id.content, mForumAreaFragment, ForumAreaFragment.TAG).commit();
+//        } else {
+//            getSupportFragmentManager().beginTransaction().hide(mHotFragment).show(mForumAreaFragment).commit();
+//        }
+//        }
+//        mUserImg = (SimpleDraweeView) navigationView.getHeaderView(0).findViewById(R.id.img);
+//        mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
+//        mUid = (TextView) navigationView.getHeaderView(0).findViewById(R.id.uid);
+//        else {
+//            mUserName.setText("点击头像登陆");
+//            mUserImg.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    LoginActivity.newInstance(MainActivity.this);
+//                }
+//            });
+//        }
     }
 
     private void login(String username, final String password) {
-        Observable<LoginInfo> observable = RetrofitManager.apiService().login(username, password);
+        Observable<UserInfo> observable = RetrofitManager.apiService().login(username, password);
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .filter(new Func1<LoginInfo, Boolean>() {
+                .filter(new Func1<UserInfo, Boolean>() {
                     @Override
-                    public Boolean call(LoginInfo loginInfo) {
+                    public Boolean call(UserInfo loginInfo) {
                         return SysUtils.isActivityLive(LoginActivity.this);
                     }
                 })
-                .subscribe(new Action1<LoginInfo>() {
+                .subscribe(new Action1<UserInfo>() {
                     @Override
-                    public void call(LoginInfo loginInfo) {
+                    public void call(UserInfo loginInfo) {
                         //login succeed > messageStr = welcome back
                         //login failed > messageStr = the number of you can try
                         String messageStr = loginInfo.Message.messagestr;
@@ -87,7 +117,7 @@ public class LoginActivity extends BaseToolbarActivity {
                             String hint = getString(R.string.welcome) + loginInfo.Variables.member_username;
                             Toast.makeText(LoginActivity.this, hint, Toast.LENGTH_SHORT).show();
                             loginInfo.Variables.password = password;
-                            MainApplication.getInstance().addLoginInfo(loginInfo);
+                            MainApplication.getInstance().addUserInfo(loginInfo);
                             finish();
                         } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
                             Toast.makeText(LoginActivity.this, messageStr, Toast.LENGTH_SHORT).show();
@@ -99,6 +129,6 @@ public class LoginActivity extends BaseToolbarActivity {
                         Toast.makeText(LoginActivity.this, "网络异常,请重试!", Toast.LENGTH_LONG).show();
                     }
                 });
-        mCompositeSubscription.add(subscription);
+        compositeSubscription.add(subscription);
     }
 }

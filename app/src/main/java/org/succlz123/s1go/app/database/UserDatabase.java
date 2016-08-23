@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.database;
 
 import org.succlz123.s1go.app.MainApplication;
-import org.succlz123.s1go.app.api.bean.LoginInfo;
+import org.succlz123.s1go.app.api.bean.UserInfo;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 /**
- * Created by fashi on 2015/4/18.
+ * Created by succlz123 on 2015/4/18.
  */
 public class UserDatabase extends SQLiteOpenHelper {
     private static final int VERSION = 1;
@@ -63,18 +63,18 @@ public class UserDatabase extends SQLiteOpenHelper {
 
     }
 
-    public void execInsert(LoginInfo loginInfo) {
+    public void execInsert(UserInfo userInfo) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_AUTH, loginInfo.Variables.auth);
-        cv.put(COLUMN_COOKIEPRE, loginInfo.Variables.cookiepre);
-        cv.put(COLUMN_FORMHASH, loginInfo.Variables.formhash);
-        cv.put(COLUMN_GROUPID, loginInfo.Variables.groupid);
-        cv.put(COLUMN_MEMBER_UID, loginInfo.Variables.member_uid);
-        cv.put(COLUMN_MEMBER_USERNAME, loginInfo.Variables.member_username);
-        cv.put(COLUMN_READACCESS, loginInfo.Variables.readaccess);
-        cv.put(COLUMN_SALTKEY, loginInfo.Variables.saltkey);
-        cv.put(COLUMN_PASSWORD, loginInfo.Variables.password);
+        cv.put(COLUMN_AUTH, userInfo.Variables.auth);
+        cv.put(COLUMN_COOKIEPRE, userInfo.Variables.cookiepre);
+        cv.put(COLUMN_FORMHASH, userInfo.Variables.formhash);
+        cv.put(COLUMN_GROUPID, userInfo.Variables.groupid);
+        cv.put(COLUMN_MEMBER_UID, userInfo.Variables.member_uid);
+        cv.put(COLUMN_MEMBER_USERNAME, userInfo.Variables.member_username);
+        cv.put(COLUMN_READACCESS, userInfo.Variables.readaccess);
+        cv.put(COLUMN_SALTKEY, userInfo.Variables.saltkey);
+        cv.put(COLUMN_PASSWORD, userInfo.Variables.password);
         db.replace(TABLE_NAME, null, cv);
     }
 
@@ -84,13 +84,13 @@ public class UserDatabase extends SQLiteOpenHelper {
         Log.e("user database delete : ", "" + number);
     }
 
-    public LoginInfo.VariablesEntity execSelect() {
+    public UserInfo.Variables execSelect() {
         SQLiteDatabase db = getWritableDatabase();
         Cursor cursor = db.query(TABLE_NAME, null, null, null, null, null, null);
-        LoginInfo.VariablesEntity loginInfo = null;
+        UserInfo.Variables loginInfo = null;
 
         if (cursor.moveToFirst()) {
-            loginInfo = new LoginInfo.VariablesEntity();
+            loginInfo = new UserInfo.Variables();
             loginInfo.auth = (cursor.getString(cursor.getColumnIndex(COLUMN_AUTH)));
             loginInfo.cookiepre = (cursor.getString(cursor.getColumnIndex(COLUMN_COOKIEPRE)));
             loginInfo.formhash = (cursor.getString(cursor.getColumnIndex(COLUMN_FORMHASH)));

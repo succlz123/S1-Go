@@ -1,13 +1,17 @@
 package org.succlz123.s1go.app.ui.thread.list;
 
+import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.api.bean.ThreadList;
+import org.succlz123.s1go.app.api.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
-import org.succlz123.s1go.app.ui.base.BaseFloatingButtonSwipeRefreshRecyclerViewFragment;
-import org.succlz123.s1go.app.ui.thread.send.SendThreadsActivity;
+import org.succlz123.s1go.app.ui.base.BaseThreadRvFragment;
+import org.succlz123.s1go.app.ui.login.LoginActivity;
+import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastHelper;
 
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,9 +27,10 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by fashi on 2015/6/25.
+ * Created by succlz123 on 2015/6/25.
  */
-public class ThreadListFragment extends BaseFloatingButtonSwipeRefreshRecyclerViewFragment {
+public class ThreadListFragment extends BaseThreadRvFragment {
+    public static final String TAG = "ThreadListFragment";
     public static final String KEY_THREAD_FRAGMENT_FID = "key_fragment_thread_fid";
 
     private ThreadListRvAdapter mThreadListRvAdapter;
@@ -54,11 +59,20 @@ public class ThreadListFragment extends BaseFloatingButtonSwipeRefreshRecyclerVi
         recyclerView.setHasFixedSize(true);
         final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.addItemDecoration(new ThreadListRvAdapter.ItemDecoration());
-
+        recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
+            @Override
+            public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+                int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
+                int margin = MyUtils.dip2px(5);
+                if (position == 0) {
+                    outRect.set(0, margin, 0, margin);
+                } else {
+                    outRect.set(0, 0, 0, margin);
+                }
+            }
+        });
         mThreadListRvAdapter = new ThreadListRvAdapter();
         recyclerView.setAdapter(mThreadListRvAdapter);
-
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -73,22 +87,26 @@ public class ThreadListFragment extends BaseFloatingButtonSwipeRefreshRecyclerVi
                 }
             }
         });
-//        LoginVariables loginInfo = MainApplication.getInstance().loginInfo;
-//        if (loginInfo != null) {
-//            String cookie = loginInfo.getCookiepre();
-//            String auth = S1GoConfig.AUTH + "=" + Uri.encode(loginInfo.getAuth());
-//            String saltKey = S1GoConfig.SALT_KEY + "=" + loginInfo.getSaltkey();
-//            this.hearders.put(S1GoConfig.COOKIE, cookie + auth + ";" + cookie + saltKey + ";");
-//        }
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendThreadsActivity.start(getActivity(), mFid);
+                UserInfo.Variables loginInfo = MainApplication.getInstance().loginInfo;
+                if (loginInfo == null) {
+                    LoginActivity.start(getActivity());
+                } else {
+                    ToastHelper.showShort("额,有空在说.");
+//                    SendThreadsActivity.start(getActivity(), mFid);
+                }
             }
         });
         loadThreadList();
         setRefreshing();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mThreadListRvAdapter = null;
     }
 
     private void loadThreadList() {
@@ -108,7 +126,7 @@ public class ThreadListFragment extends BaseFloatingButtonSwipeRefreshRecyclerVi
                         mPager++;
                         mThreadListRvAdapter.setData(threadList.Variables.forum_threadlist);
                         mIsLoading = false;
-                        setRefreshComplete();
+                        setRefreshCompleted();
                     }
                 }, new Action1<Throwable>() {
                     @Override

@@ -1,11 +1,14 @@
 package org.succlz123.s1go.app.ui.thread.info;
 
 
+import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.api.bean.ThreadInfo;
+import org.succlz123.s1go.app.api.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
-import org.succlz123.s1go.app.ui.base.BaseFloatingButtonSwipeRefreshRecyclerViewFragment;
-import org.succlz123.s1go.app.ui.thread.send.SendReplyActivity;
+import org.succlz123.s1go.app.ui.base.BaseThreadRvFragment;
+import org.succlz123.s1go.app.ui.login.LoginActivity;
+import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastHelper;
 
@@ -24,9 +27,9 @@ import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by fashi on 2015/6/13.
+ * Created by succlz123 on 2015/6/13.
  */
-public class ThreadInfoFragment extends BaseFloatingButtonSwipeRefreshRecyclerViewFragment {
+public class ThreadInfoFragment extends BaseThreadRvFragment {
     public static final String BUNDLE_KEY_TID = "tid";
     public static final String BUNDLE_KEY_TOTAL_PAGER_NUM = "totalPagerNum";
     public static final String BUNDLE_KEY_CURRENT_PAGER_NUM = "currentPagerNum";
@@ -58,7 +61,6 @@ public class ThreadInfoFragment extends BaseFloatingButtonSwipeRefreshRecyclerVi
         if (mTid == null) {
             return;
         }
-
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -66,7 +68,7 @@ public class ThreadInfoFragment extends BaseFloatingButtonSwipeRefreshRecyclerVi
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
-                int margin = SysUtils.dp2px(parent.getContext(), 5);
+                int margin = MyUtils.dip2px(5);
                 if (position == 0) {
                     outRect.set(0, margin, 0, margin);
                 } else {
@@ -74,25 +76,27 @@ public class ThreadInfoFragment extends BaseFloatingButtonSwipeRefreshRecyclerVi
                 }
             }
         });
-
         mThreadInfoRvAdapter = new ThreadInfoRvAdapter();
         recyclerView.setAdapter(mThreadInfoRvAdapter);
-
-
-        loadThreadInfo();
-//        LoginVariables loginInfo = MainApplication.getInstance().loginInfo;
-//        if (loginInfo != null) {
-//            String cookie = loginInfo.getCookiepre();
-//            String auth = S1GoConfig.AUTH + "=" + Uri.encode(loginInfo.getAuth());
-//            String saltKey = S1GoConfig.SALT_KEY + "=" + loginInfo.getSaltkey();
-//            this.mHearders.put(S1GoConfig.COOKIE, cookie + auth + ";" + cookie + saltKey + ";");
-//        }
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SendReplyActivity.start(getActivity(), mTid);
+                UserInfo.Variables loginInfo = MainApplication.getInstance().loginInfo;
+                if (loginInfo == null) {
+                    LoginActivity.start(getActivity());
+                } else {
+                    ToastHelper.showShort("额,有空在说.");
+//                    SendReplyActivity.start(getActivity(), mTid);
+                }
             }
         });
+        loadThreadInfo();
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mThreadInfoRvAdapter = null;
     }
 
     private void loadThreadInfo() {
@@ -112,7 +116,7 @@ public class ThreadInfoFragment extends BaseFloatingButtonSwipeRefreshRecyclerVi
                         int replies = threadInfo.Variables.thread.replies;
 
                         mThreadInfoRvAdapter.setData(threadInfo.Variables.postlist);
-                        setRefreshComplete();
+                        setRefreshCompleted();
                     }
                 }, new Action1<Throwable>() {
                     @Override

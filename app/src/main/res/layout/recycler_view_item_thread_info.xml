@@ -4,8 +4,8 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:elevation="1dp"
-              android:layout_height="wrap_content"
-              android:background="@color/bb">
+              android:background="@color/theme_color_view_background"
+              android:layout_height="wrap_content">
 
     <RelativeLayout
             android:layout_width="match_parent"
@@ -60,7 +60,6 @@
             android:layout_margin="5dp"
             android:textIsSelectable="true"
             android:padding="5dp"
-            android:textColor="@color/hehe"
-            android:background="@color/bb"/>
+            android:textColor="@color/theme_color_text_primary"/>
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package org.succlz123.s1go.app.ui.thread.send;
 
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.config.S1GoConfig;
+import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 
 import android.app.AlertDialog;
@@ -9,7 +10,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -20,9 +20,9 @@ import android.widget.Toast;
 
 
 /**
- * Created by fashi on 2015/4/19.
+ * Created by succlz123 on 2015/4/19.
  */
-public class SendReplyActivity extends AppCompatActivity {
+public class SendReplyActivity extends BaseToolbarActivity {
     public static final String TID = "tid";
 
     private static final int TEXT_IS_NOT_EMPTY_AND_GIVE_UP_REVIEWS = 0;
@@ -45,15 +45,21 @@ public class SendReplyActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setreviews);
-        getStringExtra();
-        initViews();
-        setToolbar();
+        setContentView(R.layout.activity_set_reviews);
+
+        mTid = getIntent().getStringExtra(TID);
+        mFormhash = getIntent().getStringExtra(S1GoConfig.FORM_HASH);
+
+        mReviewsEdit = (EditText) findViewById(R.id.setreviews_content);
+        mPostBtn = (Button) findViewById(R.id.setreviews_post);
+
+        showBackButton();
+        setTitle(getString(R.string.set_reviews));
         setPostBtnOnClick();
 
-        //				String cookie = MainApplication.getInstance().getLoginInfo().getCookiepre();
-//				String auth = S1GoConfig.AUTH + "=" + Uri.encode(MainApplication.getInstance().getLoginInfo().getAuth());
-//				String saltkey = S1GoConfig.SALT_KEY + "=" + MainApplication.getInstance().getLoginInfo().getSaltkey();
+        //				String cookie = MainApplication.getInstance().getUserInfo().getCookiepre();
+//				String auth = S1GoConfig.AUTH + "=" + Uri.encode(MainApplication.getInstance().getUserInfo().getAuth());
+//				String saltkey = S1GoConfig.SALT_KEY + "=" + MainApplication.getInstance().getUserInfo().getSaltkey();
 
         String noticetrimstr = "";
         String message = mReviews;
@@ -72,24 +78,6 @@ public class SendReplyActivity extends AppCompatActivity {
 //		} else {
 //			Toast.makeText(SendReplyActivity.this, getString(R.string.set_failed), Toast.LENGTH_SHORT).show();
 //		}
-    }
-
-    private void getStringExtra() {
-        mTid = getIntent().getStringExtra(TID);
-        mFormhash = getIntent().getStringExtra(S1GoConfig.FORM_HASH);
-    }
-
-    private void initViews() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mReviewsEdit = (EditText) findViewById(R.id.setreviews_content);
-        mPostBtn = (Button) findViewById(R.id.setreviews_post);
-    }
-
-    private void setToolbar() {
-        mToolbar.setTitle(getString(R.string.set_reviews));
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setPostBtnOnClick() {

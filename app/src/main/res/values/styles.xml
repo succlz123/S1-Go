@@ -1,34 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="BaseTheme"/>
-
-    <style name="BaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!--Toolbar颜色 也是多任务切换的标题颜色-->
-        <item name="colorPrimary">@color/theme_color_primary</item>
-        <!--状态栏颜色-->
-        <item name="colorPrimaryDark">@color/theme_color_primary_dark</item>
-        <!--下划线 提示等一些组件的 着色-->
-        <item name="colorAccent">@color/theme_color_primary</item>
-
-        <!--android底色-->
-        <item name="android:windowBackground">@color/theme_color_window_background</item>
-        <!--ActionMode出现时 覆盖ActionBar-->
-        <item name="windowActionModeOverlay">true</item>
-
-        //text
-        <item name="android:textColorLink">@color/theme_color_secondary</item>
-        <item name="android:textColorSecondary">@color/gray_dark</item>
-
-        //v21
-        <item name="colorControlActivated">@color/theme_color_primary</item>
-        <item name="colorControlHighlight">@color/gray_trans</item>
-        <item name="colorControlNormal">@color/gray_dark</item>
+    <style name="TextAppearance.Toolbar.Title" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
-    <!--底部导航栏透明 -->
-    <style name="TranslucentNavigationTheme" parent="AppTheme">
-        <item name="android:windowTranslucentNavigation">true</item>
+    <style name="TextAppearance.Toolbar.Subtitle" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="titleTextAppearance">@style/TextAppearance.Toolbar.Title</item>
+        <item name="subtitleTextAppearance">@style/TextAppearance.Toolbar.Subtitle</item>
+        <item name="titleMargin">0dp</item>
+        <item name="android:elevation">3dp</item>
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <!--<item name="maxButtonHeight">?attr/navigationTopBarSize</item>-->
+        <!--<item name="android:minHeight">?attr/navigationTopBarSize</item>-->
     </style>
 
 </resources>

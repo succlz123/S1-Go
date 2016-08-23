@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 /**
- * Created by fashi on 2015/4/15.
+ * Created by succlz123 on 2015/4/15.
  */
 public class ThreadInfoActivity extends BaseToolbarActivity {
     public static final String TID = "tid";
@@ -48,18 +48,13 @@ public class ThreadInfoActivity extends BaseToolbarActivity {
         mReply = Integer.valueOf(getIntent().getStringExtra(TOTAL_PAGER_NUM));
 
         showBackButton();
-        setCustomTitle(getIntent().getStringExtra(TITLE));
+        setTitle(getIntent().getStringExtra(TITLE));
 
         mViewPager = (ViewPager) findViewById(R.id.viewpager);
         mReviewsViewPagerAdapter = new ReviewsViewPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mReviewsViewPagerAdapter);
         mViewPager.setOffscreenPageLimit(3);
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            /**
-             * position: 当前页
-             * offset: 偏移的百分比
-             * offsetPixels: 偏移的像素位置
-             */
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -83,54 +78,6 @@ public class ThreadInfoActivity extends BaseToolbarActivity {
         });
     }
 
-//    @Override
-//    public void onReplies(int replies) {
-//        this.mReply = replies;
-//        mReviewsViewPagerAdapter.notifyDataSetChanged();
-//        invalidateOptionsMenu();
-//    }
-
-    private class ReviewsViewPagerAdapter extends FragmentStatePagerAdapter {
-
-        public ReviewsViewPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        //返回当前分页数
-        @Override
-        public int getCount() {
-            if (mReply == 0) {
-                return 1;
-            }
-            mTotalPagerNum = (int) Math.ceil((double) mReply / (double) 30);
-            return mTotalPagerNum;
-        }
-
-        //得到每个item
-        @Override
-        public Fragment getItem(int position) {
-            return ThreadInfoFragment.newInstance(mTid, position + 1, mTotalPagerNum);
-        }
-
-//        //初始化每个页卡选项 PagerAapter选择哪个对象放在当前的ViewPager中
-//        @Override
-//        public Object instantiateItem(ViewGroup container, int position) {
-//            return super.instantiateItem(container, position);
-//        }
-//
-//        //判断是否由该对象生成界面
-//        @Override
-//        public boolean isViewFromObject(View view, Object object) {
-//            return false;
-//        }
-//
-//        //从viewPager中移动当前的view
-//        @Override
-//        public void destroyItem(ViewGroup container, int position, Object object) {
-//            super.destroyItem(container, position, object);
-//        }
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "" + mViewPagerNum + " / " + mTotalPagerNum);
@@ -146,5 +93,39 @@ public class ThreadInfoActivity extends BaseToolbarActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mReviewsViewPagerAdapter = null;
+    }
+
+    //    @Override
+//    public void onReplies(int replies) {
+//        this.mReply = replies;
+//        mReviewsViewPagerAdapter.notifyDataSetChanged();
+//        invalidateOptionsMenu();
+//    }
+
+    private class ReviewsViewPagerAdapter extends FragmentStatePagerAdapter {
+
+        public ReviewsViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public int getCount() {
+            if (mReply == 0) {
+                return 1;
+            }
+            mTotalPagerNum = (int) Math.ceil((double) mReply / (double) 30);
+            return mTotalPagerNum;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ThreadInfoFragment.newInstance(mTid, position + 1, mTotalPagerNum);
+        }
     }
 }

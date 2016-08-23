@@ -3,7 +3,7 @@ package org.succlz123.s1go.app.utils.s1;
 import java.lang.reflect.Field;
 
 /**
- * Created by fashi on 2015/4/15.
+ * Created by succlz123 on 2015/4/15.
  */
 public class S1TypeId {
     public static final String T276 = "赛事";

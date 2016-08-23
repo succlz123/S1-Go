@@ -9,7 +9,6 @@ import org.succlz123.s1go.app.utils.common.ViewUtils;
 import org.succlz123.s1go.app.utils.fromhtml.ImageLinkParser;
 import org.succlz123.s1go.app.utils.fromhtml.SpannedImageGetter;
 import org.succlz123.s1go.app.utils.s1.S1UidToAvatarUrl;
-import org.succlz123.s1go.app.widget.AppSize;
 
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
@@ -43,29 +42,29 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         if (viewHolder instanceof ThreadInfoRvViewHolder) {
 
             String url = S1UidToAvatarUrl.getAvatar(mThreadInfoList.get(position).authorid);
-            ((ThreadInfoRvViewHolder) viewHolder).mAvatarImg.setImageURI(Uri.parse(url));
+            ((ThreadInfoRvViewHolder) viewHolder).imgAvatar.setImageURI(Uri.parse(url));
 
-            ((ThreadInfoRvViewHolder) viewHolder).mName.setText(mThreadInfoList.get(position).author);
-            ((ThreadInfoRvViewHolder) viewHolder).mTime.setText(Html.fromHtml(mThreadInfoList.get(position).dateline));
+            ((ThreadInfoRvViewHolder) viewHolder).tvName.setText(mThreadInfoList.get(position).author);
+            ((ThreadInfoRvViewHolder) viewHolder).tvTime.setText(Html.fromHtml(mThreadInfoList.get(position).dateline));
 
             int mCurrentpagerNum = 1;
             if (mCurrentpagerNum == 1) {
                 if (position == 0) {
-                    ((ThreadInfoRvViewHolder) viewHolder).mNum.setText(MainApplication.getInstance().getString(R.string.louzhu));
+                    ((ThreadInfoRvViewHolder) viewHolder).tvNum.setText(MainApplication.getInstance().getString(R.string.louzhu));
                 } else if (position > 0) {
-                    ((ThreadInfoRvViewHolder) viewHolder).mNum.setText("" + position + MainApplication.getInstance().getString(R.string.lou));
+                    ((ThreadInfoRvViewHolder) viewHolder).tvNum.setText("" + position + MainApplication.getInstance().getString(R.string.lou));
                 }
             } else {
-                ((ThreadInfoRvViewHolder) viewHolder).mNum.setText("" + ((30 * (mCurrentpagerNum - 1)) + position) + MainApplication.getInstance().getString(R.string.lou));
+                ((ThreadInfoRvViewHolder) viewHolder).tvNum.setText("" + ((30 * (mCurrentpagerNum - 1)) + position) + MainApplication.getInstance().getString(R.string.lou));
             }
 
-            ((ThreadInfoRvViewHolder) viewHolder).mReviews.setMovementMethod(ImageLinkParser.getInstance());
+            ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setMovementMethod(ImageLinkParser.getInstance());
             String reply = mThreadInfoList.get(position).message;
             if (TextUtils.isEmpty(reply)) {
-                ((ThreadInfoRvViewHolder) viewHolder).mReviews.setText("null");
+                ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setText("null-null");
             } else {
-                Spanned spanned = Html.fromHtml(reply, new SpannedImageGetter(((ThreadInfoRvViewHolder) viewHolder).mReviews, new AppSize(4, 4)), null);
-                ((ThreadInfoRvViewHolder) viewHolder).mReviews.setText(spanned);
+                Spanned spanned = Html.fromHtml(reply, new SpannedImageGetter(((ThreadInfoRvViewHolder) viewHolder).tvReviews), null);
+                ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setText(spanned);
             }
         }
     }
@@ -81,19 +80,19 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     private static class ThreadInfoRvViewHolder extends RecyclerView.ViewHolder {
-        private SimpleDraweeView mAvatarImg;
-        private TextView mName;
-        private TextView mTime;
-        private TextView mNum;
-        private TextView mReviews;
+        public SimpleDraweeView imgAvatar;
+        public TextView tvName;
+        public TextView tvTime;
+        public TextView tvNum;
+        public TextView tvReviews;
 
         public ThreadInfoRvViewHolder(View itemView) {
             super(itemView);
-            mAvatarImg = ViewUtils.f(itemView, R.id.author_img);
-            mName = ViewUtils.f(itemView, R.id.author_name);
-            mTime = ViewUtils.f(itemView, R.id.author_time);
-            mNum = ViewUtils.f(itemView, R.id.author_num);
-            mReviews = ViewUtils.f(itemView, R.id.author_content);
+            imgAvatar = ViewUtils.f(itemView, R.id.author_img);
+            tvName = ViewUtils.f(itemView, R.id.author_name);
+            tvTime = ViewUtils.f(itemView, R.id.author_time);
+            tvNum = ViewUtils.f(itemView, R.id.author_num);
+            tvReviews = ViewUtils.f(itemView, R.id.author_content);
         }
 
         public static ThreadInfoRvViewHolder create(ViewGroup parent) {

@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.config;
 
 /**
- * Created by fashi on 2015/5/31.
+ * Created by succlz123 on 2015/5/31.
  */
 public class S1GoConfig {
 

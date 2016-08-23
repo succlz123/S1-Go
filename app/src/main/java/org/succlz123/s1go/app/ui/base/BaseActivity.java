@@ -6,7 +6,6 @@ import org.succlz123.s1go.app.MainApplication;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -14,24 +13,40 @@ import rx.subscriptions.CompositeSubscription;
  * Created by succlz123 on 2015/7/8.
  */
 public class BaseActivity extends AppCompatActivity {
-    public final String TAG = getClass().getName();
+    public CompositeSubscription compositeSubscription;
 
-    protected CompositeSubscription mCompositeSubscription = new CompositeSubscription();
+    private boolean mFragmentStateSaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        compositeSubscription = new CompositeSubscription();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mFragmentStateSaved = false;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mFragmentStateSaved = true;
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (compositeSubscription != null) {
+            compositeSubscription.unsubscribe();
+            compositeSubscription = null;
+        }
         RefWatcher refWatcher = MainApplication.getInstance().refWatcher;
         refWatcher.watch(this);
-        mCompositeSubscription.unsubscribe();
     }
 
-    protected <T extends View> T f(int resId) {
-        return (T) super.findViewById(resId);
+    public boolean isFragmentStateSaved() {
+        return mFragmentStateSaved;
     }
 }

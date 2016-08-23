@@ -3,7 +3,7 @@ package org.succlz123.s1go.app.deprecated;
 import android.util.Log;
 
 /**
- * Created by fashi on 2015/5/21.
+ * Created by succlz123 on 2015/5/21.
  */
 public class LogUtil {
 	public static final int VERBOSE = 1;

@@ -15,7 +15,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by fashi on 2015/4/13.
+ * Created by succlz123 on 2015/4/13.
  */
 public class S1Emoticon {
 	private static HashMap<String, Bitmap> iconBitmapList = new HashMap<String, Bitmap>();

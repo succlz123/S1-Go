@@ -13,7 +13,7 @@ import android.view.MotionEvent;
 import android.widget.TextView;
 
 /**
- * Created by fashi on 2015/4/17.
+ * Created by succlz123 on 2015/4/17.
  */
 public class ImageLinkParser extends LinkMovementMethod {
 

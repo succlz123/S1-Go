@@ -4,6 +4,7 @@ import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
 import org.succlz123.s1go.app.ui.emoticon.EmoticonFragment;
 import org.succlz123.s1go.app.utils.common.SysUtils;
+import org.succlz123.s1go.app.utils.common.ViewUtils;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -28,7 +29,7 @@ import android.widget.LinearLayout;
 
 
 /**
- * Created by fashi on 2015/4/19.
+ * Created by succlz123 on 2015/4/19.
  */
 public class SendThreadsActivity extends BaseToolbarActivity {
     private static final int TEXT_IS_NOT_EMPTY_AND_GIVE_UP_THREADS = 0;
@@ -69,31 +70,32 @@ public class SendThreadsActivity extends BaseToolbarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setthreads);
+        setContentView(R.layout.activity_set_threads);
 
         mFid = getIntent().getStringExtra(KEY_FID);
 //        mFormhash = getIntent().getStringExtra(S1GoConfig.FORM_HASH);
 //        intent.putExtra(S1GoConfig.FORM_HASH, formhash);
 
         mRootView = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
-        mTilteEdit = f(R.id.setthreads_title);
-        mContentEdit = f(R.id.setthreads_content);
-        mMoveLinearLayout = f(R.id.move_linearlayout);
-        mEmoticonView = f(R.id.emoticon_fragment);
+        mTilteEdit = ViewUtils.f(this, R.id.setthreads_title);
+        mContentEdit = ViewUtils.f(this, R.id.setthreads_content);
+        mMoveLinearLayout = ViewUtils.f(this, R.id.move_linearlayout);
+        mEmoticonView = ViewUtils.f(this, R.id.emoticon_fragment);
         emoticonFragment = new EmoticonFragment();
-        mDivideLinear = f(R.id.linear_view);
+        mDivideLinear = ViewUtils.f(this, R.id.linear_view);
 
-        setCustomTitle(getString(R.string.set_threads));
+        showBackButton();
+        setTitle(getString(R.string.set_threads));
 
         getChangeHeight();
         onEditTextChangedListener();
         setEditTextFocusChangeListener();
         setEditTextClickListener();
 
-        //				String cookie = MainApplication.getInstance().getLoginInfo().getCookiepre();
-//				String auth = "auth=" + Uri.encode(MainApplication.getInstance().getLoginInfo().getAuth());
-//				String saltkey = "saltkey=" + MainApplication.getInstance().getLoginInfo().getSaltkey();
-//				String formhash = MainApplication.getInstance().getLoginInfo().getFormhash();
+        //				String cookie = MainApplication.getInstance().getUserInfo().getCookiepre();
+//				String auth = "auth=" + Uri.encode(MainApplication.getInstance().getUserInfo().getAuth());
+//				String saltkey = "saltkey=" + MainApplication.getInstance().getUserInfo().getSaltkey();
+//				String formhash = MainApplication.getInstance().getUserInfo().getFormhash();
 
         String noticetrimstr = "";
         String subject = mTitle;

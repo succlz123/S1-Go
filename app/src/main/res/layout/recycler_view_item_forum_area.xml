@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="50dp"
-              android:elevation="1dp"
-              android:background="@color/white">
-
-    <!--<ImageView-->
-    <!--android:layout_width="25dp"-->
-    <!--android:layout_height="25dp"-->
-    <!--android:layout_marginLeft="10dp"-->
-    <!--android:layout_gravity="center_vertical"-->
-    <!--android:id="@+id/icon"/>-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="50dp"
+             android:elevation="1dp"
+             android:foreground="?attr/selectableItemBackground"
+             android:background="@color/theme_color_view_background">
 
     <TextView
             android:layout_width="match_parent"
@@ -20,6 +13,6 @@
             android:gravity="center"
             android:id="@+id/name"
             android:textSize="16sp"
-            android:textColor="@color/hehe"/>
+            android:textColor="@color/theme_color_text_primary"/>
 
-</LinearLayout>
+</FrameLayout>

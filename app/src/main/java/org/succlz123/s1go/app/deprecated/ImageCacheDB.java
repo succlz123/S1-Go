@@ -13,7 +13,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 /**
- * Created by fashi on 2015/4/25.
+ * Created by succlz123 on 2015/4/25.
  */
 public class ImageCacheDB extends SQLiteOpenHelper {
     private static final int VERSION = 1;

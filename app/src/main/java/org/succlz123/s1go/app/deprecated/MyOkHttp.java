@@ -11,7 +11,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 /**
- * Created by fashi on 2015/4/12.
+ * Created by succlz123 on 2015/4/12.
  */
 public class MyOkHttp {
 

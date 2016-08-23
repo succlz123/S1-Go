@@ -4,8 +4,9 @@ import com.squareup.leakcanary.RefWatcher;
 
 import org.succlz123.s1go.app.MainApplication;
 
+import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.View;
 
 import rx.subscriptions.CompositeSubscription;
 
@@ -13,8 +14,14 @@ import rx.subscriptions.CompositeSubscription;
  * Created by succlz123 on 2015/7/8.
  */
 public abstract class BaseFragment extends Fragment {
+    public CompositeSubscription compositeSubscription;
     protected boolean isVisible;
-    protected CompositeSubscription compositeSubscription = new CompositeSubscription();
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        compositeSubscription = new CompositeSubscription();
+    }
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
@@ -35,19 +42,17 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void lazyLoad();
 
     protected void onInvisible() {
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        compositeSubscription.unsubscribe();
+        if (compositeSubscription != null) {
+            compositeSubscription.unsubscribe();
+            compositeSubscription = null;
+        }
         RefWatcher refWatcher = MainApplication.getInstance().refWatcher;
         refWatcher.watch(this);
-    }
-
-    protected <T extends View> T f(View view, int resId) {
-        return (T) view.findViewById(resId);
     }
 }
 

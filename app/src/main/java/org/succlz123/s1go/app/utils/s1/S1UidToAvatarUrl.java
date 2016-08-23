@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.utils.s1;
 
 /**
- * Created by fashi on 2015/4/21.
+ * Created by succlz123 on 2015/4/21.
  */
 public class S1UidToAvatarUrl {
     public static final String USER_AVATAR = "http://bbs.saraba1st.com/2b/uc_server/avatar.php?uid=&size=small";

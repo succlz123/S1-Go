@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.api.bean;
 
 /**
- * Created by fashi on 2015/4/20.
+ * Created by succlz123 on 2015/4/20.
  */
 public class SendInfo {
 	private SetThreadsAndReviewsMessage Message;

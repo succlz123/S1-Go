@@ -1,32 +1,21 @@
-<android.support.v4.widget.DrawerLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/drawer_layout"
+        android:id="@+id/main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/layout_toolbar"/>
+
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
 
-        <include layout="@layout/layout_toolbar"/>
+    <org.succlz123.s1go.app.widget.BottomNavigationBar
+            android:layout_width="match_parent"
+            android:id="@+id/bottom_bar"
+            android:layout_height="56dp"/>
 
-        <FrameLayout
-                android:id="@+id/content"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
-
-    </LinearLayout>
-
-    <android.support.design.widget.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:headerLayout="@layout/drawer_header"
-            app:menu="@menu/drawer_menu"/>
-
-</android.support.v4.widget.DrawerLayout>
+</LinearLayout>

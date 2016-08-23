@@ -18,7 +18,7 @@
 //import java.lang.reflect.Field;
 //
 ///**
-// * Created by fashi on 2015/5/21.
+// * Created by succlz123 on 2015/5/21.
 // */
 //public class SearchActivity extends ActionBarActivity {
 //	private SearchManager mSearMan;

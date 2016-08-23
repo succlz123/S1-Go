@@ -21,9 +21,8 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements S
     @Nullable
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        swipeRefreshLayout = new SwipeRefreshLayout(inflater.getContext());
+        swipeRefreshLayout = (SwipeRefreshLayout) inflater.inflate(R.layout.layout_swipe_refresh_layout, container, false);
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.setId(R.id.loading);
         View view = onCreateView(inflater, swipeRefreshLayout, savedInstanceState);
         if (view.getParent() == null) {
             swipeRefreshLayout.addView(view, 0);
@@ -48,6 +47,7 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements S
             mLastRefreshStartTime = SystemClock.elapsedRealtime();
         }
     };
+
     private Runnable mRefreshCompletedAction = new Runnable() {
         @Override
         public void run() {
@@ -68,7 +68,9 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements S
     }
 
     public void setRefreshing() {
-        swipeRefreshLayout.post(mRefreshAction);
+        if (swipeRefreshLayout != null) {
+            swipeRefreshLayout.post(mRefreshAction);
+        }
     }
 
     public void setRefreshCompleted() {
