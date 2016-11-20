@@ -9,6 +9,7 @@ public class S1Fid {
     /**
      * 热门新区
      */
+    public static final String S140 = "页游S1官方联运";
     public static final String S134 = "热血魔兽";
     public static final String S138 = "DOTA";
     public static final String S118 = "真碉堡山 Diablo3";
@@ -29,6 +30,7 @@ public class S1Fid {
     public static final String S135 = "手游页游";
 
     public static final String S6 = "动漫论坛";
+    public static final String S144 = "欧美动漫";
     public static final String S83 = "动漫投票鉴赏";
     public static final String S130 = "番且炒弹";
 

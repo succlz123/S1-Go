@@ -21,6 +21,12 @@ public class ForumAreaRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private List<String> mFidList;
 
     public ForumAreaRvAdapter() {
+        String[] hahaForum =
+                {
+                        "140", "132", "138", "135", "111", "82",
+                        "4", "144", "6", "136", "48", "24", "51",
+                        "50", "31", "77", "75", "115", "27"
+                };
         String[] mainForum =
                 {
                         "4", "135", "6", "136", "48", "24",
@@ -42,7 +48,7 @@ public class ForumAreaRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                         "41", "43", "46", "33", "49", "61",
                         "60"
                 };
-        mFidList = Arrays.asList(mainForum);
+        mFidList = Arrays.asList(hahaForum);
     }
 
     @Override

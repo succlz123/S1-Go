@@ -18,6 +18,11 @@ package org.succlz123.s1go.app.utils.common;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.channels.FileChannel;
 import java.util.Comparator;
 import java.util.Locale;
 
@@ -79,5 +84,66 @@ public final class FileUtils {
 
     public static boolean isRoot(String path) {
         return path.equals(FileUtils.ROOT);
+    }
+
+    public static void copyFile(String oldPath, String newPath) {
+        copyFile(new File(oldPath), newPath);
+    }
+
+    public static void copyFile(File oldFile, String newPath) {
+        try {
+            int byteSum = 0;
+            int byteRead = 0;
+            if (oldFile.exists()) {
+                InputStream inStream = new FileInputStream(oldFile.getPath());
+                FileOutputStream fs = new FileOutputStream(newPath);
+                byte[] buffer = new byte[2048];
+                int length;
+                while ((byteRead = inStream.read(buffer)) != -1) {
+                    byteSum += byteRead;
+                    fs.write(buffer, 0, byteRead);
+                }
+                fs.flush();
+                inStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static boolean copyTo(File src, File newFile) {
+        FileInputStream fi = null;
+        FileOutputStream fo = null;
+        FileChannel in = null;
+        FileChannel out = null;
+        try {
+            fi = new FileInputStream(src);
+            in = fi.getChannel();
+            fo = new FileOutputStream(newFile);
+            out = fo.getChannel();
+            in.transferTo(0, in.size(), out);
+            return true;
+        } catch (IOException e) {
+            return false;
+        } finally {
+            try {
+                if (fi != null) {
+                    fi.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+                if (fo != null) {
+                    fo.close();
+                }
+                if (out != null) {
+                    out.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+        }
+
     }
 }

@@ -25,7 +25,13 @@ public class UrlDrawable extends BitmapDrawable {
 
     @Override
     public void draw(Canvas canvas) {
-        if (mDrawable != null && !getBitmap().isRecycled()) {
+        if (mDrawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapdrawable = (BitmapDrawable) mDrawable;
+            if (bitmapdrawable.getBitmap().isRecycled()) {
+                return;
+            }
+        }
+        if (mDrawable != null) {
             mDrawable.draw(canvas);
         } else {
             canvas.drawColor(Color.RED);

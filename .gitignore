@@ -1,26 +1,19 @@
-*.apk
-*.ap_
 *.dex
 *.class
 
 local.properties
 proguard/
-*.log
-.idea
-*.iml
 
 # Generated files
 bin/
 gen/
 
-# Gradle files
-.gradle/
-build/
-/*/build/
-
 # IntelliJ IDEA
 *.ipr
 *.iws
+*.log
+.idea
+*.iml
 
 # Gradle
 .gradle
@@ -37,7 +30,6 @@ jacoco.exec
 # Android Studio Navigation editor temp files
 .navigation/
 out
-lib
 
 # Eclipse project files
 .classpath
@@ -49,3 +41,5 @@ eclipsebin
 #NDK
 obj/
 jniLibs
+app/app-release.apk
+app/src/main/java/org/succlz123/s1go/app/test/

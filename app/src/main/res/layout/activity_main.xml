@@ -1,6 +1,7 @@
-<LinearLayout
+<com.bilibili.magicasakura.widgets.TintLinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/main_layout"
+        android:background="@color/theme_color_view_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -18,4 +19,4 @@
             android:id="@+id/bottom_bar"
             android:layout_height="56dp"/>
 
-</LinearLayout>
+</com.bilibili.magicasakura.widgets.TintLinearLayout>

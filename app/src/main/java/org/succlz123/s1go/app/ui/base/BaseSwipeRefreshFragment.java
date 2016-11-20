@@ -27,7 +27,7 @@ public abstract class BaseSwipeRefreshFragment extends BaseFragment implements S
         if (view.getParent() == null) {
             swipeRefreshLayout.addView(view, 0);
         }
-        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.theme_color_secondary));
+        swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.theme_color_primary));
         return swipeRefreshLayout;
     }
 

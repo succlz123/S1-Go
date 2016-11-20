@@ -1,19 +1,50 @@
 package org.succlz123.s1go.app.ui.picture;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.binaryresource.BinaryResource;
+import com.facebook.binaryresource.FileBinaryResource;
+import com.facebook.cache.common.CacheKey;
+import com.facebook.common.executors.CallerThreadExecutor;
+import com.facebook.common.references.CloseableReference;
+import com.facebook.datasource.DataSource;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.cache.DefaultCacheKeyFactory;
+import com.facebook.imagepipeline.core.ImagePipeline;
+import com.facebook.imagepipeline.core.ImagePipelineFactory;
+import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
+import com.facebook.imagepipeline.image.CloseableImage;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
+import org.qiibeta.bitmapview.BitmapSource;
+import org.qiibeta.bitmapview.GestureBitmapView;
+import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
+import org.succlz123.s1go.app.utils.common.FileUtils;
+import org.succlz123.s1go.app.utils.common.ToastUtils;
 import org.succlz123.s1go.app.utils.common.ViewUtils;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.support.annotation.Nullable;
+import android.text.TextUtils;
+import android.view.Menu;
 import android.view.MenuItem;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
+import static android.os.Environment.DIRECTORY_PICTURES;
 
 /**
  * Created by succlz123 on 2015/4/17.
  */
 public class PictureActivity extends BaseToolbarActivity {
+    private String mUrl;
+    private Bitmap mBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,10 +54,39 @@ public class PictureActivity extends BaseToolbarActivity {
         ensureToolbar();
         showBackButton();
         setTitle("看图");
-        String url = getIntent().getStringExtra("imageurl");
+        mUrl = getIntent().getStringExtra("imageurl");
 
-        SimpleDraweeView simpleDraweeView = ViewUtils.f(this, R.id.img);
-        simpleDraweeView.setImageURI(Uri.parse(url));
+        final GestureBitmapView imageView = ViewUtils.f(this, R.id.img);
+        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(mUrl)).build();
+        ImagePipeline imagePipeline = Fresco.getImagePipeline();
+        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, this);
+        dataSource.subscribe(new BaseBitmapDataSubscriber() {
+            @Override
+            public void onNewResultImpl(@Nullable final Bitmap bitmap) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (PictureActivity.this.isFinishing() || PictureActivity.this.isDestroyed()) {
+                            return;
+                        }
+                        mBitmap = bitmap;
+                        imageView.setBitmapSource(BitmapSource.newInstance(Uri.parse(mUrl), mBitmap));
+                    }
+                });
+            }
+
+            @Override
+            public void onFailureImpl(DataSource dataSource) {
+            }
+        }, CallerThreadExecutor.getInstance());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuItem item = menu.add(Menu.NONE, 100, 102, "保存图片到/SDCard/Pictures");
+        item.setIcon(R.drawable.ic_near_me_white_48dp);
+        item.setShowAsAction(MenuItem.SHOW_AS_ACTION_WITH_TEXT);
+        return true;
     }
 
     @Override
@@ -35,8 +95,74 @@ public class PictureActivity extends BaseToolbarActivity {
             case android.R.id.home:
                 onBackPressed();
                 return true;
+            case 100:
+                savePic();
+                return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mUrl = null;
+        if (mBitmap != null) {
+            mBitmap.recycle();
+            mBitmap = null;
+        }
+    }
+
+    private void savePic() {
+        if (TextUtils.isEmpty(mUrl)) {
+            return;
+        }
+        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(Uri.parse(mUrl)), MainApplication.getInstance());
+        File file = getCachedImageOnDisk(cacheKey);
+
+        File appDir = Environment.getExternalStoragePublicDirectory(DIRECTORY_PICTURES);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String desc = String.valueOf(mUrl.hashCode()) + mUrl.length();
+        String fileName = desc + ".jpg";
+        File newFile = new File(appDir, fileName);
+
+        if (file == null || !file.exists()) {
+            if (mBitmap != null) {
+                try {
+                    FileOutputStream fos = new FileOutputStream(newFile);
+                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                    fos.flush();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    ToastUtils.showToastShort(this, "保存图片失败");
+                }
+            } else {
+                ToastUtils.showToastShort(this, "保存图片失败");
+                return;
+            }
+        } else {
+            if (!FileUtils.copyTo(file, newFile)) {
+                ToastUtils.showToastShort(this, "保存图片失败");
+                return;
+            }
+        }
+        ToastUtils.showToastShort(this, "保存图片成功");
+    }
+
+    public File getCachedImageOnDisk(CacheKey cacheKey) {
+        File localFile = null;
+        if (cacheKey != null) {
+            if (ImagePipelineFactory.getInstance().getMainFileCache().hasKey(cacheKey)) {
+                BinaryResource resource = ImagePipelineFactory.getInstance().getMainFileCache().getResource(cacheKey);
+                localFile = ((FileBinaryResource) resource).getFile();
+            } else if (ImagePipelineFactory.getInstance().getSmallImageFileCache().hasKey(cacheKey)) {
+                BinaryResource resource = ImagePipelineFactory.getInstance().getSmallImageFileCache().getResource(cacheKey);
+                localFile = ((FileBinaryResource) resource).getFile();
+            }
+        }
+        return localFile;
     }
 }
 

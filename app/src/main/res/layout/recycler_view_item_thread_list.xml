@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:foreground="?attr/selectableItemBackground"
-              android:background="@color/theme_color_view_background"
-              android:elevation="1dp">
+<com.bilibili.magicasakura.widgets.TintLinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?attr/selectableItemBackground"
+        android:background="@color/theme_color_view_background"
+        android:elevation="1dp">
 
-    <TextView
+    <com.bilibili.magicasakura.widgets.TintTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="17sp"
@@ -28,11 +29,11 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"/>
 
-        <TextView
+        <com.bilibili.magicasakura.widgets.TintTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="13sp"
-                android:textColor="@color/theme_color_primary_dark"
+                android:textColor="@color/theme_color_secondary_dark"
                 android:id="@+id/fid"
                 android:layout_marginRight="5dp"/>
 
@@ -44,18 +45,20 @@
             android:orientation="horizontal"
             android:layout_margin="5dp">
 
-        <TextView
+        <com.bilibili.magicasakura.widgets.TintTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:id="@+id/last_poster"
+                android:textColor="@color/theme_color_text_primary"
                 android:layout_gravity="center_vertical"/>
 
-        <TextView
+        <com.bilibili.magicasakura.widgets.TintTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:id="@+id/last_post_time"
+                android:textColor="@color/theme_color_text_primary"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="5dp"/>
 
@@ -64,33 +67,37 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
-        <TextView
+        <com.bilibili.magicasakura.widgets.TintTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:text="回复"
+                android:textColor="@color/theme_color_text_primary"
                 android:layout_gravity="center_vertical"/>
 
-        <TextView
+        <com.bilibili.magicasakura.widgets.TintTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:id="@+id/reply"
+                android:textColor="@color/theme_color_text_primary"
                 android:layout_marginLeft="2dp"
                 android:layout_gravity="center_vertical"/>
 
-        <TextView
+        <com.bilibili.magicasakura.widgets.TintTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
                 android:text="点击"
+                android:textColor="@color/theme_color_text_primary"
                 android:layout_marginLeft="5dp"
                 android:layout_gravity="center_vertical"/>
 
-        <TextView
+        <com.bilibili.magicasakura.widgets.TintTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="10sp"
+                android:textColor="@color/theme_color_text_primary"
                 android:id="@+id/views"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="2dp"
@@ -98,4 +105,4 @@
 
     </LinearLayout>
 
-</LinearLayout>
+</com.bilibili.magicasakura.widgets.TintLinearLayout>

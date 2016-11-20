@@ -1,26 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:padding="8dp"
-              android:elevation="1dp"
-              android:gravity="center_vertical"
-              android:foreground="?attr/selectableItemBackground"
-              android:background="@color/theme_color_view_background">
+<com.bilibili.magicasakura.widgets.TintTextView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/title"
+        android:textSize="16sp"
+        android:elevation="1dp"
+        android:gravity="center"
+        android:foreground="?attr/selectableItemBackground"
+        android:background="@color/theme_color_view_background"
+        android:textColor="@color/theme_color_text_primary"/>
 
-    <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:backgroundTint="@color/gray"
-            android:id="@+id/icon"/>
-
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/title"
-            android:textSize="16sp"
-            android:layout_marginLeft="12dp"
-            android:textColor="@color/theme_color_text_primary"/>
-
-</LinearLayout>

@@ -3,7 +3,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.1.2'
+        classpath 'com.android.tools.build:gradle:2.2.2'
     }
 }
 
@@ -14,18 +14,19 @@ allprojects {
 }
 
 ext {
-    buildToolsVersion = '24.0.2'
-    targetSdkVersion = 24
+    buildToolsVersion = '25.0.0'
+    targetSdkVersion = 23
     compileSdkVersion = targetSdkVersion
     minSdkVersion = 21
 
-    androidSupportLibraryVersion = '24.2.0'
+    androidSupportLibraryVersion = '25.0.0'
 
-    robolectricVersion = '3.1.1'
-    powermockVersion = '1.6.4'
-    mockitoVersion = '1.10.19'
-    espressoVersion = '2.2.2'
+    okhttpVersion = '3.4.1'
+    gsonVersion = '2.7'
+    retrofitVersion = '2.1.0'
+    frescoVersion = '0.13.0'
+    leakcanaryVersion = '1.5'
+    buglyVersion = '2.2.2'
+
     jUnitVersion = '4.12'
-    assertJVersion = '1.1.1'
-    buglyVersion = '2.1.9'
 }

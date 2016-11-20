@@ -9,7 +9,7 @@ import org.succlz123.s1go.app.ui.base.BaseThreadRvFragment;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.SysUtils;
-import org.succlz123.s1go.app.utils.common.ToastHelper;
+import org.succlz123.s1go.app.utils.common.ToastUtils;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -94,7 +94,7 @@ public class ThreadListFragment extends BaseThreadRvFragment {
                 if (loginInfo == null) {
                     LoginActivity.start(getActivity());
                 } else {
-                    ToastHelper.showShort("额,有空在说.");
+                    ToastUtils.showToastShort(getContext(), "额,有空在说.");
 //                    SendThreadsActivity.start(getActivity(), mFid);
                 }
             }
@@ -132,7 +132,7 @@ public class ThreadListFragment extends BaseThreadRvFragment {
                     @Override
                     public void call(Throwable throwable) {
                         setRefreshError();
-                        ToastHelper.showShort(R.string.sorry);
+                        ToastUtils.showToastShort(getContext(), R.string.sorry);
                     }
                 });
         compositeSubscription.add(subscription);

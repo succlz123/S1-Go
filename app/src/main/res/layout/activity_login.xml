@@ -29,6 +29,8 @@
             android:hint="用户名"
             android:background="@null"
             android:gravity="center"
+            android:textColor="@color/theme_color_text_primary"
+            android:textColorHint="@color/theme_color_text_primary"
             android:layout_marginTop="20dp"
             android:textSize="20sp"
             android:id="@+id/login_username"/>
@@ -39,6 +41,8 @@
             android:hint="密码"
             android:gravity="center"
             android:background="@null"
+            android:textColor="@color/theme_color_text_primary"
+            android:textColorHint="@color/theme_color_text_primary"
             android:inputType="textPassword"
             android:textSize="20sp"
             android:id="@+id/login_password"/>

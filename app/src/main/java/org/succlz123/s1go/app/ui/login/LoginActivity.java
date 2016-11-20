@@ -8,7 +8,7 @@ import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -29,9 +29,14 @@ import rx.schedulers.Schedulers;
  */
 public class LoginActivity extends BaseToolbarActivity {
 
-    public static void start(Context activity) {
+    public static void start(Activity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
+    }
+
+    public static void startForResult(Activity activity, int requestCode) {
+        Intent intent = new Intent(activity, LoginActivity.class);
+        activity.startActivityForResult(intent, requestCode);
     }
 
     @Override
@@ -118,6 +123,7 @@ public class LoginActivity extends BaseToolbarActivity {
                             Toast.makeText(LoginActivity.this, hint, Toast.LENGTH_SHORT).show();
                             loginInfo.Variables.password = password;
                             MainApplication.getInstance().addUserInfo(loginInfo);
+                            setResult(Activity.RESULT_OK);
                             finish();
                         } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
                             Toast.makeText(LoginActivity.this, messageStr, Toast.LENGTH_SHORT).show();

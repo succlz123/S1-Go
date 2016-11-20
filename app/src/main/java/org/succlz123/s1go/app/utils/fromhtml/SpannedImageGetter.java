@@ -79,6 +79,9 @@ public class SpannedImageGetter implements Html.ImageGetter {
     }
 
     private void refresh(UrlDrawable urlDrawable, Bitmap bitmap) {
+        if (bitmap == null) {
+            return;
+        }
         final TextView tvShow = mTextViewWeakReference.get();
         if (tvShow == null) {
             return;

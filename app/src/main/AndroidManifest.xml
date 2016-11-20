@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.READ_LOGS"/>
 
     <application
             android:name=".MainApplication"
@@ -26,6 +28,8 @@
         <activity android:name=".ui.thread.list.ThreadListActivity"/>
 
         <activity android:name=".ui.thread.info.ThreadInfoActivity"/>
+
+        <activity android:name=".ui.blackList.BlackListActivity"/>
 
         <activity android:name=".ui.picture.PictureActivity"/>
 

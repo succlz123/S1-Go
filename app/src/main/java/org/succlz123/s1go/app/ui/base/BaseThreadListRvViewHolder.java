@@ -29,8 +29,6 @@ public class BaseThreadListRvViewHolder extends RecyclerView.ViewHolder {
         lastTime = ViewUtils.f(itemView, R.id.last_post_time);
         views = ViewUtils.f(itemView, R.id.views);
         reply = ViewUtils.f(itemView, R.id.reply);
-
-        itemView.setFocusable(true);
     }
 
     public static BaseThreadListRvViewHolder create(ViewGroup parent) {

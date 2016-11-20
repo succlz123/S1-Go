@@ -6,7 +6,7 @@
 
     <include layout="@layout/layout_toolbar"/>
 
-    <com.facebook.drawee.view.SimpleDraweeView
+    <org.qiibeta.bitmapview.GestureBitmapView
             android:id="@+id/img"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

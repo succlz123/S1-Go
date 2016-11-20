@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ============ relative colors pool ============ -->
+    <!-- for multiple theme, another copy in values -->
+    <color name="theme_color_primary">#2d2d2d</color>
+    <color name="theme_color_primary_dark">#242424</color>
+    <color name="theme_color_primary_light">#3d3d3d</color>
+    <color name="theme_color_primary_trans">#992d2d2d</color>
+    <color name="theme_color_secondary">#1e88e5</color>
+    <color name="theme_color_secondary_dark">#125289</color>
+    <color name="theme_color_window_background">#1b1b1b</color>
+    <color name="theme_color_view_background">#2d2d2d</color>
+    <color name="theme_color_view_background_darker">#262626</color>
+    <color name="theme_color_view_light_background">@null</color>
+    <color name="theme_color_text_primary">#99ffffff</color>
+    <color name="theme_color_text_tertiary">#44999999</color>
+    <color name="theme_color_text_hint">#616161</color>
+    <color name="theme_color_text_highlight">#b85671</color>
+    <color name="theme_color_dividing_line">#404040</color>
+    <color name="theme_color_vip_dialog_stroke">#666666</color>
+    <color name="theme_color_vip_dialog_text">#666666</color>
+    <color name="theme_color_dividing_line_lighter">#3f3f3f</color>
+    <color name="theme_color_card">#2d2d2d</color>
+    <color name="theme_color_navigation_profilecover">#66000000</color>
+    <color name="theme_color_gray_pressed">#535353</color>
+    <color name="theme_color_white_alpha10">#2d2d2d</color>
+    <color name="theme_color_pink_day_black_night">#242424</color>
+    <color name="theme_color_gray_day_black_night">#262626</color>
+    <color name="theme_color_gray_stroke_bg">#535353</color>
+    <color name="theme_color_pink">#b85671</color>
+    <color name="theme_color_pink_day_white_night">#ffffff</color>
+</resources>

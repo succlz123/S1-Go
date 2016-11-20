@@ -10,7 +10,7 @@ import org.succlz123.s1go.app.ui.base.BaseThreadRvFragment;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.SysUtils;
-import org.succlz123.s1go.app.utils.common.ToastHelper;
+import org.succlz123.s1go.app.utils.common.ToastUtils;
 
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -76,7 +76,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                 }
             }
         });
-        mThreadInfoRvAdapter = new ThreadInfoRvAdapter();
+        mThreadInfoRvAdapter = new ThreadInfoRvAdapter(mCurrentPagerNum);
         recyclerView.setAdapter(mThreadInfoRvAdapter);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,7 +85,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                 if (loginInfo == null) {
                     LoginActivity.start(getActivity());
                 } else {
-                    ToastHelper.showShort("额,有空在说.");
+                    ToastUtils.showToastShort(getContext(), "额,有空在说.");
 //                    SendReplyActivity.start(getActivity(), mTid);
                 }
             }
@@ -114,7 +114,6 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                     public void call(ThreadInfo threadInfo) {
                         //每次刷新时获得的回帖数
                         int replies = threadInfo.Variables.thread.replies;
-
                         mThreadInfoRvAdapter.setData(threadInfo.Variables.postlist);
                         setRefreshCompleted();
                     }
@@ -122,7 +121,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                     @Override
                     public void call(Throwable throwable) {
                         setRefreshError();
-                        ToastHelper.showShort(R.string.sorry);
+                        ToastUtils.showToastShort(getContext(), R.string.sorry);
                     }
                 });
         compositeSubscription.add(subscription);
