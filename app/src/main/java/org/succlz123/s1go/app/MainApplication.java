@@ -8,6 +8,8 @@ import com.tencent.bugly.crashreport.CrashReport;
 
 import org.qiibeta.bitmapview.image.TileImage;
 import org.succlz123.s1go.app.api.bean.UserInfo;
+import org.succlz123.s1go.app.config.RetrofitManager;
+import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.database.UserDatabase;
 import org.succlz123.s1go.app.ui.login.LoginInfoListener;
 import org.succlz123.s1go.app.utils.ThemeHelper;
@@ -16,12 +18,20 @@ import org.succlz123.s1go.app.utils.s1.S1Emoticon;
 
 import android.app.Application;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.text.TextUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by succlz123 on 2015/4/13.
@@ -39,29 +49,56 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
         return sInstance;
     }
 
+    public static Context getContext() {
+        return MainApplication.getInstance().getApplicationContext();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        sInstance = this;
         if (LeakCanary.isInAnalyzerProcess(this)) {
             // This process is dedicated to LeakCanary for heap analysis.
             // You should not init your app in this process.
             return;
         }
+        sInstance = this;
         refWatcher = LeakCanary.install(this);
         Fresco.initialize(this);
-        S1Emoticon.initEmoticon();
         ImageLoader.init();
         ThemeUtils.setSwitchColor(this);
         CrashReport.initCrashReport(this, "900017373", BuildConfig.DEBUG);
 
-        //        LoginVariables loginInfo = MainApplication.getInstance().loginInfo;
-//        if (loginInfo != null) {
-//            String cookie = loginInfo.getCookiepre();
-//            String auth = S1GoConfig.AUTH + "=" + Uri.encode(loginInfo.getAuth());
-//            String saltKey = S1GoConfig.SALT_KEY + "=" + loginInfo.getSaltkey();
-//            this.mHearders.put(S1GoConfig.COOKIE, cookie + auth + ";" + cookie + saltKey + ";");
-//        }
+        UserInfo.Variables userInfo = getUserInfo();
+        if (userInfo != null) {
+            Observable<UserInfo> observable = RetrofitManager.apiService().login(userInfo.member_username, userInfo.password);
+            observable.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<UserInfo>() {
+                        @Override
+                        public void call(UserInfo loginInfo) {
+                            String messageVal = loginInfo.Message.messageval;
+                            if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_SUCCEED))) {
+                                loginInfo.Variables.password = getUserInfo().password;
+                                MainApplication.getInstance().addUserInfo(loginInfo);
+                            } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
+                                logout();
+                            }
+                        }
+                    }, new Action1<Throwable>() {
+                        @Override
+                        public void call(Throwable throwable) {
+                            logout();
+                        }
+                    });
+        }
+        Observable.fromCallable(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                S1Emoticon.initEmoticon();
+
+                return null;
+            }
+        }).subscribeOn(Schedulers.io()).subscribe();
     }
 
     @Override
@@ -92,6 +129,17 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
     public void logout() {
         UserDatabase.getInstance().execDelete();
         loginInfo = null;
+    }
+
+    public String getCookie() {
+        UserInfo.Variables userInfo = MainApplication.getInstance().getUserInfo();
+        if (userInfo == null) {
+            return "";
+        }
+        String cookie = userInfo.cookiepre;
+        String auth = S1GoConfig.AUTH + "=" + Uri.encode(userInfo.auth);
+        String saltKey = S1GoConfig.SALT_KEY + "=" + userInfo.saltkey;
+        return cookie + auth + ";" + cookie + saltKey + ";";
     }
 
     public void runOnUiThread(Runnable runnable) {

@@ -40,6 +40,8 @@ public class ThreadListFragment extends BaseThreadRvFragment {
     private boolean mHasNextPage = true;
     private boolean mIsLoading;
 
+    private String mCookie;
+
     public static ThreadListFragment newInstance(String tid) {
         ThreadListFragment threadListFragment = new ThreadListFragment();
         Bundle bundle = new Bundle();
@@ -71,6 +73,7 @@ public class ThreadListFragment extends BaseThreadRvFragment {
                 }
             }
         });
+        mCookie = MainApplication.getInstance().getCookie();
         mThreadListRvAdapter = new ThreadListRvAdapter();
         recyclerView.setAdapter(mThreadListRvAdapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -111,7 +114,7 @@ public class ThreadListFragment extends BaseThreadRvFragment {
 
     private void loadThreadList() {
         mIsLoading = true;
-        Observable<ThreadList> observable = RetrofitManager.apiService().getThreadList(mPager, mFid);
+        Observable<ThreadList> observable = RetrofitManager.apiService().getThreadList(mCookie, mPager, mFid);
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<ThreadList, Boolean>() {

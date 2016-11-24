@@ -75,7 +75,6 @@ public class SysUtils {
     }
 
 
-
     /**
      * 获取版本号和版本次数
      */
@@ -391,10 +390,6 @@ public class SysUtils {
 
     /**
      * 滑动改变亮度
-     *
-     * @param activity
-     * @param change
-     * @return
      */
     public static float onBrightnessSlide(Activity activity, float change) {
         Window window = activity.getWindow();
@@ -424,12 +419,6 @@ public class SysUtils {
 
     /**
      * 滑动改变音量
-     *
-     * @param audioManager
-     * @param stepVolume
-     * @param distanceY
-     * @param change
-     * @return
      */
     public static int onVolumeSlide(AudioManager audioManager, int stepVolume, float distanceY, float change) {
         int maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -461,14 +450,6 @@ public class SysUtils {
 
     /**
      * 滑动改变进度
-     *
-     * @param distanceX
-     * @param distanceY
-     * @param setupDp
-     * @param changeSetup
-     * @param position
-     * @param duration
-     * @return
      */
     public static long onProgressSlide(float distanceX, float distanceY, int setupDp, int changeSetup, long position, long duration) {
         // distanceX=lastScrollPositionX-currentScrollPositionX
@@ -610,8 +591,8 @@ public class SysUtils {
 
     public synchronized static boolean isFastClick() {
         long time = System.currentTimeMillis();
-        if (time - lastClickTime < 1000) {
-//            Toast.makeText(MainApplication.getInstance(), "骚年 你点太快了", Toast.LENGTH_SHORT).show();
+        if (time - lastClickTime < 700) {
+            ToastUtils.showToastShort(MainApplication.getContext(), "骚年,你点太快了!");
             return true;
         }
         lastClickTime = time;

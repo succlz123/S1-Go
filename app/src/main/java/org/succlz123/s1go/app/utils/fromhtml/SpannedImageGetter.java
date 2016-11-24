@@ -12,7 +12,9 @@ import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
+import org.succlz123.s1go.app.utils.PicHelper;
 import org.succlz123.s1go.app.utils.common.MyUtils;
+import org.succlz123.s1go.app.utils.network.NetworkManager;
 import org.succlz123.s1go.app.utils.s1.S1Emoticon;
 
 import android.content.res.Resources;
@@ -27,6 +29,10 @@ import android.text.Html;
 import android.widget.TextView;
 
 import java.lang.ref.WeakReference;
+
+import static org.succlz123.s1go.app.utils.PicHelper.PIC_NOT_DISPLAY;
+import static org.succlz123.s1go.app.utils.PicHelper.PIC_WIFI;
+import static org.succlz123.s1go.app.utils.network.NetworkManager.NETWORK_TYPE_WIFI;
 
 /**
  * Created by succlz123 on 2015/4/15.
@@ -57,6 +63,15 @@ public class SpannedImageGetter implements Html.ImageGetter {
         urlDrawable.setActualDrawable(drawable);
         urlDrawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
 
+        int displayType = PicHelper.getPicType(MainApplication.getInstance().getApplicationContext());
+        if ((displayType == PIC_WIFI) && (NetworkManager.getNetworkType(MainApplication.getInstance().getApplicationContext()) != NETWORK_TYPE_WIFI)) {
+            return urlDrawable;
+        }
+
+        if (displayType == PIC_NOT_DISPLAY) {
+            return null;
+        }
+
         ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(source)).build();
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
         DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, MainApplication.getInstance().getResources());
@@ -75,6 +90,7 @@ public class SpannedImageGetter implements Html.ImageGetter {
                 refresh(urlDrawable, bitmap);
             }
         }, CallerThreadExecutor.getInstance());
+
         return urlDrawable;
     }
 

@@ -8,6 +8,7 @@ import org.succlz123.s1go.app.api.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.ui.base.BaseThreadRvFragment;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
+import org.succlz123.s1go.app.ui.thread.send.SendReplyActivity;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
@@ -35,8 +36,10 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
     public static final String BUNDLE_KEY_CURRENT_PAGER_NUM = "currentPagerNum";
 
     private String mTid;
+    private String mFormHash;
     private int mCurrentPagerNum;
     private int mTotalPagerNum;
+    private String mCookie;
     private ThreadInfoRvAdapter mThreadInfoRvAdapter;
 
     public static ThreadInfoFragment newInstance(String tid, int currentPagerNum, int totalPagerNum) {
@@ -61,6 +64,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
         if (mTid == null) {
             return;
         }
+        swipeRefreshLayout.setEnabled(false);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
@@ -76,6 +80,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                 }
             }
         });
+        mCookie = MainApplication.getInstance().getCookie();
         mThreadInfoRvAdapter = new ThreadInfoRvAdapter(mCurrentPagerNum);
         recyclerView.setAdapter(mThreadInfoRvAdapter);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +90,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                 if (loginInfo == null) {
                     LoginActivity.start(getActivity());
                 } else {
-                    ToastUtils.showToastShort(getContext(), "额,有空在说.");
-//                    SendReplyActivity.start(getActivity(), mTid);
+                    SendReplyActivity.start(getActivity(), mTid, mFormHash);
                 }
             }
         });
@@ -100,7 +104,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
     }
 
     private void loadThreadInfo() {
-        Observable<ThreadInfo> observable = RetrofitManager.apiService().getThreadInfo(mCurrentPagerNum, mTid);
+        Observable<ThreadInfo> observable = RetrofitManager.apiService().getThreadInfo(mCookie, mCurrentPagerNum, mTid);
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<ThreadInfo, Boolean>() {
@@ -114,6 +118,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                     public void call(ThreadInfo threadInfo) {
                         //每次刷新时获得的回帖数
                         int replies = threadInfo.Variables.thread.replies;
+                        mFormHash = threadInfo.Variables.formhash;
                         mThreadInfoRvAdapter.setData(threadInfo.Variables.postlist);
                         setRefreshCompleted();
                     }

@@ -1,8 +1,10 @@
 package org.succlz123.s1go.app.ui.thread.list;
 
+import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.api.bean.ThreadList;
 import org.succlz123.s1go.app.ui.base.BaseThreadListRvViewHolder;
 import org.succlz123.s1go.app.ui.thread.info.ThreadInfoActivity;
+import org.succlz123.s1go.app.utils.BlackListHelper;
 
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -59,6 +62,13 @@ public class ThreadListRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     public void setData(List<ThreadList.VariablesEntity.ForumThreadlistEntity> threadList) {
+        Iterator<ThreadList.VariablesEntity.ForumThreadlistEntity> iterator = threadList.iterator();
+        while (iterator.hasNext()) {
+            ThreadList.VariablesEntity.ForumThreadlistEntity entry = iterator.next();
+            if (BlackListHelper.isBlack(MainApplication.getInstance().getApplicationContext(), entry.author)) {
+                iterator.remove();
+            }
+        }
         mThreadListList.addAll(threadList);
         notifyDataSetChanged();
     }

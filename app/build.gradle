@@ -49,7 +49,7 @@ dependencies {
     compile "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
     compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
     compile "com.squareup.retrofit2:adapter-rxjava:${rootProject.ext.retrofitVersion}"
-    compile 'io.reactivex:rxandroid:1.2.1'
+    compile "io.reactivex:rxandroid:${rootProject.ext.rxandroidVersion}"
 
     compile("com.facebook.fresco:fresco:${rootProject.ext.frescoVersion}") {
         exclude group: 'com.nineoldandroids', module: 'library'
@@ -62,9 +62,9 @@ dependencies {
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:${rootProject.ext.leakcanaryVersion}"
 
-    compile 'org.qiibeta.views:bitmapview:1.0.1'
+    compile "org.qiibeta.views:BitmapView:${rootProject.ext.bitmapviewVersion}"
 
-    compile 'com.bilibili:magicasakura:0.1.3@aar'
+    compile "com.bilibili:magicasakura:${rootProject.ext.magicasakuraVersion}@aar"
 
 //    compile 'com.frostwire:jlibtorrent:1.2.0.1'
 //    compile 'com.frostwire:jlibtorrent-android-arm:1.2.0.1'

@@ -1,15 +1,16 @@
 package org.succlz123.s1go.app.utils.s1;
 
 import org.succlz123.s1go.app.MainApplication;
-import org.succlz123.s1go.app.utils.AvatarHelper;
+import org.succlz123.s1go.app.utils.PicHelper;
 import org.succlz123.s1go.app.utils.network.NetworkManager;
 
-import static org.succlz123.s1go.app.utils.AvatarHelper.ALL_BIG;
-import static org.succlz123.s1go.app.utils.AvatarHelper.ALL_MIDDLE;
-import static org.succlz123.s1go.app.utils.AvatarHelper.ALL_SMALL;
-import static org.succlz123.s1go.app.utils.AvatarHelper.WIFI_BIG;
-import static org.succlz123.s1go.app.utils.AvatarHelper.WIFI_MIDDLE;
-import static org.succlz123.s1go.app.utils.AvatarHelper.WIFI_SMALL;
+import static org.succlz123.s1go.app.utils.PicHelper.AVATAR_ALL_BIG;
+import static org.succlz123.s1go.app.utils.PicHelper.AVATAR_ALL_MIDDLE;
+import static org.succlz123.s1go.app.utils.PicHelper.AVATAR_ALL_SMALL;
+import static org.succlz123.s1go.app.utils.PicHelper.AVATAR_NOT_DISPLAY;
+import static org.succlz123.s1go.app.utils.PicHelper.AVATAR_WIFI_BIG;
+import static org.succlz123.s1go.app.utils.PicHelper.AVATAR_WIFI_MIDDLE;
+import static org.succlz123.s1go.app.utils.PicHelper.AVATAR_WIFI_SMALL;
 import static org.succlz123.s1go.app.utils.network.NetworkManager.NETWORK_TYPE_WIFI;
 
 /**
@@ -31,24 +32,26 @@ public class S1UidToAvatarUrl {
             uid = builder.toString() + uid;
             uid = uid.substring(0, 3) + "/" + uid.substring(3, 5) + "/" + uid.substring(5, 7) + "/" + uid.substring(7, 9);
         }
-        int displayType = AvatarHelper.getAvatarType(MainApplication.getInstance().getApplicationContext());
+        int displayType = PicHelper.getAvatarType(MainApplication.getInstance().getApplicationContext());
         String url = "";
         switch (displayType) {
-            case WIFI_BIG:
-            case ALL_BIG:
+            case AVATAR_WIFI_BIG:
+            case AVATAR_ALL_BIG:
                 String big = AVATAR_BIG;
                 url = big.replace("000/00/00/00", uid);
                 break;
-            case WIFI_MIDDLE:
-            case ALL_MIDDLE:
+            case AVATAR_WIFI_MIDDLE:
+            case AVATAR_ALL_MIDDLE:
                 String middle = AVATAR_MIDDLE;
                 url = middle.replace("000/00/00/00", uid);
                 break;
-            case WIFI_SMALL:
-            case ALL_SMALL:
+            case AVATAR_WIFI_SMALL:
+            case AVATAR_ALL_SMALL:
                 String small = AVATAR_SMALL;
                 url = small.replace("000/00/00/00", uid);
                 break;
+            case AVATAR_NOT_DISPLAY:
+                return url = "";
         }
 
         if (displayType <= 3 && NetworkManager.getNetworkType(MainApplication.getInstance().getApplicationContext()) != NETWORK_TYPE_WIFI) {

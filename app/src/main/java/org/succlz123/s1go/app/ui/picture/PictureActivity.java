@@ -70,7 +70,13 @@ public class PictureActivity extends BaseToolbarActivity {
                             return;
                         }
                         mBitmap = bitmap;
-                        imageView.setBitmapSource(BitmapSource.newInstance(Uri.parse(mUrl), mBitmap));
+                        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(Uri.parse(mUrl)), MainApplication.getInstance());
+                        File file = getCachedImageOnDisk(cacheKey);
+                        if (file != null) {
+                            imageView.setBitmapSource(BitmapSource.newInstance(file.toString(), mBitmap));
+                        } else {
+                            imageView.setBitmapSource(BitmapSource.newInstance(mBitmap));
+                        }
                     }
                 });
             }

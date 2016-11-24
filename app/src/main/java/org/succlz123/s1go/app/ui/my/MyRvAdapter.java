@@ -8,7 +8,7 @@ import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.api.bean.UserInfo;
 import org.succlz123.s1go.app.ui.blackList.BlackListActivity;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
-import org.succlz123.s1go.app.utils.AvatarHelper;
+import org.succlz123.s1go.app.utils.PicHelper;
 import org.succlz123.s1go.app.utils.ThemeHelper;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
@@ -43,6 +43,7 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int VH_TITLE = 2;
     public static final int VH_SETTING_NIGHT = 3;
     public static final int VH_SETTING_AVATAR = 4;
+    public static final int VH_SETTING_PIC = 5;
 
     private UserInfoVH mUserInfoVH;
     private String[] mTitle = new String[]{"我的主题", "我的收藏", "我的消息", "个人黑名单"};
@@ -79,6 +80,8 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return SettingAvatarVH.create(parent);
         } else if (viewType == VH_TITLE) {
             return TitleVH.create(parent);
+        } else if (viewType == VH_SETTING_PIC) {
+            return SettingPicVH.create(parent);
         }
         return null;
     }
@@ -136,17 +139,37 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 }
             });
         } else if (viewHolder instanceof SettingAvatarVH) {
-            ((SettingAvatarVH) viewHolder).display.setText(AvatarHelper.getDisplayText(viewHolder.itemView.getContext()));
+            ((SettingAvatarVH) viewHolder).display.setText(PicHelper.getAvatarText(viewHolder.itemView.getContext()));
             ((SettingAvatarVH) viewHolder).display.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(final View v) {
                     new AlertDialog.Builder(v.getContext())
                             .setTitle("请选择")
-                            .setSingleChoiceItems(AvatarHelper.items, AvatarHelper.getAvatarType(v.getContext()) - 1,
+                            .setSingleChoiceItems(PicHelper.avatarItems, PicHelper.getAvatarType(v.getContext()) - 1,
                                     new DialogInterface.OnClickListener() {
                                         public void onClick(DialogInterface dialog, int which) {
-                                            AvatarHelper.setAvatarType(v.getContext(), which + 1);
-                                            ((SettingAvatarVH) viewHolder).display.setText(AvatarHelper.getDisplayText(viewHolder.itemView.getContext()));
+                                            PicHelper.setAvatarType(v.getContext(), which + 1);
+                                            ((SettingAvatarVH) viewHolder).display.setText(PicHelper.getAvatarText(viewHolder.itemView.getContext()));
+                                            dialog.dismiss();
+                                        }
+                                    }
+                            )
+                            .setNegativeButton("取消", null)
+                            .show();
+                }
+            });
+        } else if (viewHolder instanceof SettingPicVH) {
+            ((SettingPicVH) viewHolder).display.setText(PicHelper.getPicText(viewHolder.itemView.getContext()));
+            ((SettingPicVH) viewHolder).display.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(final View v) {
+                    new AlertDialog.Builder(v.getContext())
+                            .setTitle("请选择")
+                            .setSingleChoiceItems(PicHelper.picItems, PicHelper.getPicType(v.getContext()) - 1,
+                                    new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            PicHelper.setPicType(v.getContext(), which + 1);
+                                            ((SettingPicVH) viewHolder).display.setText(PicHelper.getPicText(viewHolder.itemView.getContext()));
                                             dialog.dismiss();
                                         }
                                     }
@@ -193,7 +216,7 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 7;
+        return 8;
     }
 
     @Override
@@ -206,6 +229,8 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return VH_SETTING_NIGHT;
         } else if (position == 6) {
             return VH_SETTING_AVATAR;
+        } else if (position == 7) {
+            return VH_SETTING_PIC;
         } else {
             return 0;
         }
@@ -264,16 +289,37 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static class SettingAvatarVH extends RecyclerView.ViewHolder {
         public TextView display;
+        public TextView title;
 
         public SettingAvatarVH(View itemView) {
             super(itemView);
             display = ViewUtils.f(itemView, R.id.display);
+            title = ViewUtils.f(itemView, R.id.title);
+            title.setText("头像显示策略");
         }
 
         public static SettingAvatarVH create(ViewGroup parent) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View view = layoutInflater.inflate(R.layout.recycler_view_item_my_setting_avater, parent, false);
             return new SettingAvatarVH(view);
+        }
+    }
+
+    private static class SettingPicVH extends RecyclerView.ViewHolder {
+        public TextView display;
+        public TextView title;
+
+        public SettingPicVH(View itemView) {
+            super(itemView);
+            display = ViewUtils.f(itemView, R.id.display);
+            title = ViewUtils.f(itemView, R.id.title);
+            title.setText("图片显示策略");
+        }
+
+        public static SettingPicVH create(ViewGroup parent) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View view = layoutInflater.inflate(R.layout.recycler_view_item_my_setting_avater, parent, false);
+            return new SettingPicVH(view);
         }
     }
 }

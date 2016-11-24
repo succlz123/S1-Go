@@ -8,7 +8,7 @@ public class S1GoConfig {
     public static final String REPLY = "reply";
     public static final String AUTH = "auth";
     public static final String SALT_KEY = "saltkey";
-    public static final String COOKIE = "Cookie";
+    public static final String COOKIE = "cookie";
     public static final String FORM_HASH = "formhash";
     public static final String MESSAGE = "message";
     public static final String NOTICE_TRIM_STR = "noticetrimstr";

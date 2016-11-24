@@ -23,12 +23,8 @@ public class BlackListHelper {
             return;
         }
         getBlackList(context).add(userName);
-        HashSet<String> tepSet = new HashSet<>();
-        for (String aSBlackList : sBlackList) {
-            tepSet.add(aSBlackList);
-        }
-        getSharePreference(context).edit()
-                .putStringSet(CURRENT_BLACK_SET, tepSet)
+        getSharePreference(context).edit().clear()
+                .putStringSet(CURRENT_BLACK_SET, sBlackList)
                 .apply();
     }
 
@@ -43,18 +39,13 @@ public class BlackListHelper {
 
     public static boolean delete(Context context, String userName) {
         boolean isSuccess;
-        if (sBlackList != null) {
-            return sBlackList.remove(userName);
+        if (sBlackList == null) {
+            sBlackList = new HashSet<>();
+            sBlackList = getSharePreference(context).getStringSet(CURRENT_BLACK_SET, sBlackList);
         }
-        sBlackList = new HashSet<>();
-        sBlackList = getSharePreference(context).getStringSet(CURRENT_BLACK_SET, sBlackList);
         isSuccess = sBlackList.remove(userName);
-        HashSet<String> tepSet = new HashSet<>();
-        for (String aSBlackList : sBlackList) {
-            tepSet.add(aSBlackList);
-        }
-        getSharePreference(context).edit()
-                .putStringSet(CURRENT_BLACK_SET, tepSet)
+        getSharePreference(context).edit().clear()
+                .putStringSet(CURRENT_BLACK_SET, sBlackList)
                 .apply();
         return isSuccess;
     }

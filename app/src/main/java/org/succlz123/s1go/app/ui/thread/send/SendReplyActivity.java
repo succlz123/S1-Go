@@ -1,16 +1,19 @@
 package org.succlz123.s1go.app.ui.thread.send;
 
+import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
+import org.succlz123.s1go.app.api.bean.SendInfo;
+import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
+import org.succlz123.s1go.app.utils.common.ToastUtils;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +21,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import rx.schedulers.Schedulers;
+
+import static org.succlz123.s1go.app.config.S1GoConfig.FORM_HASH;
 
 /**
  * Created by succlz123 on 2015/4/19.
@@ -30,15 +41,17 @@ public class SendReplyActivity extends BaseToolbarActivity {
     private static final int REVIEWS_MIN = 2;
 
     private EditText mReviewsEdit;
-    private String mTid;
-    private Toolbar mToolbar;
     private Button mPostBtn;
-    private String mFormhash;
-    private String mReviews;
 
-    public static void start(Context context, String tid) {
+    private String mTid;
+    private String mFormHash;
+    private String mReviews;
+    private String mCookie;
+
+    public static void start(Context context, String tid, String formHash) {
         Intent intent = new Intent(context, SendReplyActivity.class);
         intent.putExtra(TID, tid);
+        intent.putExtra(FORM_HASH, formHash);
         context.startActivity(intent);
     }
 
@@ -48,36 +61,23 @@ public class SendReplyActivity extends BaseToolbarActivity {
         setContentView(R.layout.activity_set_reviews);
 
         mTid = getIntent().getStringExtra(TID);
-        mFormhash = getIntent().getStringExtra(S1GoConfig.FORM_HASH);
+        mFormHash = getIntent().getStringExtra(FORM_HASH);
+        mCookie = MainApplication.getInstance().getCookie();
 
-        mReviewsEdit = (EditText) findViewById(R.id.setreviews_content);
-        mPostBtn = (Button) findViewById(R.id.setreviews_post);
+        mReviewsEdit = (EditText) findViewById(R.id.content);
+        mPostBtn = (Button) findViewById(R.id.post);
+
+        Button emoticonBtn = (Button) findViewById(R.id.emoticon);
+        emoticonBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ToastUtils.showToastShort(v.getContext(), "额,有空在说.");
+            }
+        });
 
         showBackButton();
         setTitle(getString(R.string.set_reviews));
         setPostBtnOnClick();
-
-        //				String cookie = MainApplication.getInstance().getUserInfo().getCookiepre();
-//				String auth = S1GoConfig.AUTH + "=" + Uri.encode(MainApplication.getInstance().getUserInfo().getAuth());
-//				String saltkey = S1GoConfig.SALT_KEY + "=" + MainApplication.getInstance().getUserInfo().getSaltkey();
-
-        String noticetrimstr = "";
-        String message = mReviews;
-        String mobiletype = "0";
-//
-//				this.mHearders.put(S1GoConfig.COOKIE, cookie + auth + ";" + cookie + saltkey + ";");
-//				this.mBody.put(S1GoConfig.FORM_HASH, mFormhash);
-//				this.mBody.put(S1GoConfig.NOTICE_TRIM_STR, noticetrimstr);
-//				this.mBody.put(S1GoConfig.MESSAGE, message);
-//				this.mBody.put(S1GoConfig.MOBILE_TYPE, mobiletype);
-
-
-//		if (aVoid.getMessage().getMessageval().equals(S1GoConfig.POST_REPLY_SUCCEED)) {
-//			Toast.makeText(SendReplyActivity.this, getString(R.string.set_succeed), Toast.LENGTH_SHORT).show();
-//			finish();
-//		} else {
-//			Toast.makeText(SendReplyActivity.this, getString(R.string.set_failed), Toast.LENGTH_SHORT).show();
-//		}
     }
 
     private void setPostBtnOnClick() {
@@ -87,18 +87,14 @@ public class SendReplyActivity extends BaseToolbarActivity {
                 mReviews = mReviewsEdit.getText().toString();
                 if (!TextUtils.isEmpty(mReviews)) {
                     if (mReviews.length() < REVIEWS_MIN) {
-                        Toast.makeText(SendReplyActivity.this,
-                                getString(R.string.too_little_words),
-                                Toast.LENGTH_SHORT).show();
+                        ToastUtils.showToastShort(v.getContext(), R.string.too_little_words);
                     } else {
                         if (!SysUtils.isFastClick()) {
                             dialog(TEXT_IS_NOT_EMPTY_AND_SET_REVIEWS);
                         }
                     }
                 } else if (TextUtils.isEmpty(mReviews)) {
-                    Toast.makeText(SendReplyActivity.this,
-                            getString(R.string.please_input_reviews),
-                            Toast.LENGTH_SHORT).show();
+                    ToastUtils.showToastShort(v.getContext(), R.string.please_input_reviews);
                 }
             }
         });
@@ -116,9 +112,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
         } else if (message == TEXT_IS_NOT_EMPTY_AND_SET_REVIEWS) {
             builder.setMessage(getString(R.string.confirmation_set));
         }
-
         builder.setTitle(getString(R.string.tips));
-
         builder.setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -126,21 +120,55 @@ public class SendReplyActivity extends BaseToolbarActivity {
                 if (message == TEXT_IS_NOT_EMPTY_AND_GIVE_UP_REVIEWS) {
                     finish();
                 } else if (message == TEXT_IS_NOT_EMPTY_AND_SET_REVIEWS) {
-
+                    send();
                 }
             }
         });
-
         builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
-
         builder.create().show();
     }
 
+    private void send() {
+        Observable<SendInfo> observable = RetrofitManager.apiService().sendReply(mCookie, mTid, mFormHash, mReviews);
+        Subscription subscription = observable.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .filter(new Func1<SendInfo, Boolean>() {
+                    @Override
+                    public Boolean call(SendInfo sendInfo) {
+                        return SysUtils.isActivityLive(SendReplyActivity.this);
+                    }
+                })
+                .subscribe(new Action1<SendInfo>() {
+                    @Override
+                    public void call(SendInfo sendInfo) {
+                        SendInfo.Message message = sendInfo.Message;
+                        if (message == null) {
+                            ToastUtils.showToastShort(MainApplication.getContext(), R.string.sorry);
+                        }
+                        if (TextUtils.equals(S1GoConfig.POST_REPLY_SUCCEED, message.messageval)) {
+                            ToastUtils.showToastShort(MainApplication.getContext(), R.string.set_succeed);
+                            finish();
+                        } else {
+                            if (!TextUtils.isEmpty(message.messagestr)) {
+                                ToastUtils.showToastShort(MainApplication.getContext(), message.messagestr);
+                            } else {
+                                Toast.makeText(SendReplyActivity.this, getString(R.string.set_failed), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        ToastUtils.showToastShort(MainApplication.getContext(), R.string.sorry);
+                    }
+                });
+        compositeSubscription.add(subscription);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
