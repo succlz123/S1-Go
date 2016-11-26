@@ -24,6 +24,8 @@ import org.succlz123.s1go.app.utils.common.FileUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
 import org.succlz123.s1go.app.utils.common.ViewUtils;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,8 +45,15 @@ import static android.os.Environment.DIRECTORY_PICTURES;
  * Created by succlz123 on 2015/4/17.
  */
 public class PictureActivity extends BaseToolbarActivity {
+    public static final String KEY_IMAGE_URL = "image_url";
+
     private String mUrl;
-    private Bitmap mBitmap;
+
+    public static void start(Context context, String url) {
+        Intent starter = new Intent(context, PictureActivity.class);
+        starter.putExtra(KEY_IMAGE_URL, url);
+        context.startActivity(starter);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,29 +63,29 @@ public class PictureActivity extends BaseToolbarActivity {
         ensureToolbar();
         showBackButton();
         setTitle("看图");
-        mUrl = getIntent().getStringExtra("imageurl");
+        mUrl = getIntent().getStringExtra(KEY_IMAGE_URL);
 
         final GestureBitmapView imageView = ViewUtils.f(this, R.id.img);
         ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(mUrl)).build();
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
-        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, this);
+        final DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, imageRequest);
         dataSource.subscribe(new BaseBitmapDataSubscriber() {
             @Override
             public void onNewResultImpl(@Nullable final Bitmap bitmap) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if (PictureActivity.this.isFinishing() || PictureActivity.this.isDestroyed()) {
+                        if (PictureActivity.this.isFinishing() || PictureActivity.this.isDestroyed() || bitmap == null) {
                             return;
                         }
-                        mBitmap = bitmap;
-                        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(Uri.parse(mUrl)), MainApplication.getInstance());
+                        CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(ImageRequest.fromUri(Uri.parse(mUrl)), this);
                         File file = getCachedImageOnDisk(cacheKey);
                         if (file != null) {
-                            imageView.setBitmapSource(BitmapSource.newInstance(file.toString(), mBitmap));
+                            imageView.setBitmapSource(BitmapSource.newInstance(file.toString(), bitmap));
                         } else {
-                            imageView.setBitmapSource(BitmapSource.newInstance(mBitmap));
+//                            imageView.setBitmapSource(BitmapSource.newInstance(mBitmap));
                         }
+                        dataSource.close();
                     }
                 });
             }
@@ -112,10 +121,6 @@ public class PictureActivity extends BaseToolbarActivity {
     protected void onDestroy() {
         super.onDestroy();
         mUrl = null;
-        if (mBitmap != null) {
-            mBitmap.recycle();
-            mBitmap = null;
-        }
     }
 
     private void savePic() {
@@ -131,23 +136,50 @@ public class PictureActivity extends BaseToolbarActivity {
         }
         String desc = String.valueOf(mUrl.hashCode()) + mUrl.length();
         String fileName = desc + ".jpg";
-        File newFile = new File(appDir, fileName);
+        final File newFile = new File(appDir, fileName);
 
         if (file == null || !file.exists()) {
-            if (mBitmap != null) {
-                try {
-                    FileOutputStream fos = new FileOutputStream(newFile);
-                    mBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                    fos.flush();
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    ToastUtils.showToastShort(this, "保存图片失败");
+
+            final GestureBitmapView imageView = ViewUtils.f(this, R.id.img);
+            ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(mUrl)).build();
+            ImagePipeline imagePipeline = Fresco.getImagePipeline();
+            DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, this);
+            dataSource.subscribe(new BaseBitmapDataSubscriber() {
+                @Override
+                public void onNewResultImpl(@Nullable final Bitmap bitmap) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (PictureActivity.this.isFinishing() || PictureActivity.this.isDestroyed()) {
+                                return;
+                            }
+
+                            MainApplication.getInstance().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (bitmap != null) {
+                                        try {
+                                            FileOutputStream fos = new FileOutputStream(newFile);
+                                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+                                            fos.flush();
+                                            fos.close();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                            ToastUtils.showToastShort(PictureActivity.this, "保存图片失败");
+                                        }
+                                    } else {
+                                        ToastUtils.showToastShort(PictureActivity.this, "保存图片失败");
+                                    }
+                                }
+                            });
+                        }
+                    });
                 }
-            } else {
-                ToastUtils.showToastShort(this, "保存图片失败");
-                return;
-            }
+
+                @Override
+                public void onFailureImpl(DataSource dataSource) {
+                }
+            }, CallerThreadExecutor.getInstance());
         } else {
             if (!FileUtils.copyTo(file, newFile)) {
                 ToastUtils.showToastShort(this, "保存图片失败");

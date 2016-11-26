@@ -44,7 +44,7 @@ dependencies {
 
     compile "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
 
-    compile "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpVersion}"
+//    compile "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpVersion}"
 
     compile "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
     compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"

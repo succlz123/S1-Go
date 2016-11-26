@@ -66,35 +66,6 @@ public class LoginActivity extends BaseToolbarActivity {
                 }
             }
         });
-
-//        private void setFragment() {
-//        mHotFragment = (HotFragment) getSupportFragmentManager().findFragmentByTag(HotFragment.TAG);
-//        if (mHotFragment == null) {
-//            mHotFragment = HotFragment.newInstance();
-//            getSupportFragmentManager().beginTransaction().add(R.id.content, mHotFragment, HotFragment.TAG).commit();
-//        } else {
-//            getSupportFragmentManager().beginTransaction().hide(mForumAreaFragment).show(mHotFragment).commit();
-//        }
-//        mForumAreaFragment = (ForumAreaFragment) getSupportFragmentManager().findFragmentByTag(ForumAreaFragment.TAG);
-//        if (mForumAreaFragment == null) {
-//            mForumAreaFragment = ForumAreaFragment.newInstance();
-//            getSupportFragmentManager().beginTransaction().hide(mHotFragment).add(R.id.content, mForumAreaFragment, ForumAreaFragment.TAG).commit();
-//        } else {
-//            getSupportFragmentManager().beginTransaction().hide(mHotFragment).show(mForumAreaFragment).commit();
-//        }
-//        }
-//        mUserImg = (SimpleDraweeView) navigationView.getHeaderView(0).findViewById(R.id.img);
-//        mUserName = (TextView) navigationView.getHeaderView(0).findViewById(R.id.username);
-//        mUid = (TextView) navigationView.getHeaderView(0).findViewById(R.id.uid);
-//        else {
-//            mUserName.setText("点击头像登陆");
-//            mUserImg.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    LoginActivity.newInstance(MainActivity.this);
-//                }
-//            });
-//        }
     }
 
     private void login(String username, final String password) {

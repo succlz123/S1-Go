@@ -1,64 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
+              android:padding="12dp"
+              android:layout_marginTop="?attr/actionBarSize"
               android:layout_height="match_parent"
               android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/move_linearlayout"
-        android:layout_weight="1"
-        android:animateLayoutChanges="true"
-        android:orientation="vertical">
-
-        <include
-            layout="@layout/layout_toolbar"/>
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/setthreads_title"
-            android:hint="@string/title"
-            android:textSize="20sp"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:singleLine="true"
-            android:paddingEnd="5dp"
-            android:paddingLeft="5dp"/>
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:id="@+id/setthreads_content"
-            android:hint="@string/content"
-            android:textSize="18sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:background="@null"
-            android:paddingLeft="5dp"
-            android:gravity="start"/>
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
 
-        <View android:layout_width="match_parent"
-              android:background="@color/shadow"
-              android:id="@+id/linear_view"
-              android:visibility="gone"
-              android:layout_height="1dp"/>
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/title"
+                android:hint="@string/title"
+                android:textSize="20sp"
+                android:textColorHint="@color/theme_color_text_hint"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:background="@color/theme_color_view_background"/>
+
+        <EditText
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:id="@+id/content"
+                android:hint="@string/content"
+                android:textSize="18sp"
+                android:textColorHint="@color/theme_color_text_hint"
+                android:layout_marginTop="6dp"
+                android:padding="10dp"
+                android:background="@color/theme_color_view_background"
+                android:paddingLeft="5dp"
+                android:gravity="start"/>
 
     </LinearLayout>
 
-    <FrameLayout
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:id="@+id/emoticon_fragment"
-        android:animateLayoutChanges="true"
-        android:visibility="gone">
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="6dp"
+            android:orientation="horizontal">
 
-    </FrameLayout>
+        <Button
+                android:layout_width="58dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/emoticon"
+                android:textSize="16sp"
+                android:textColor="@color/theme_color_text_tertiary"
+                android:background="@color/theme_color_primary"
+                android:text="表情"/>
+
+        <Space
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+        <Button
+                android:layout_width="58dp"
+                android:layout_height="36dp"
+                android:id="@+id/post"
+                android:layout_gravity="center_vertical"
+                android:text="发送"
+                android:textSize="16sp"
+                android:textColor="@color/theme_color_text_tertiary"
+                android:background="@color/theme_color_primary"/>
+
+    </LinearLayout>
 
 </LinearLayout>
 

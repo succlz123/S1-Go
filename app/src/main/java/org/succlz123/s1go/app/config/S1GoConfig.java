@@ -23,7 +23,7 @@ public class S1GoConfig {
     public static final String LOGIN_FAILED = "login_invalid";
 
     public static final String PHONE_INFO = "\n \n \n ——发送自 Stage1st Go "
-            + "[url=https://play.google.com/store/apps/details?id=org.succlz123.s1go.app]"
+            + "[url=http://www.coolapk.com/apk/org.succlz123.s1go.app]"
             + android.os.Build.MODEL
             + " Android "
             + android.os.Build.VERSION.RELEASE

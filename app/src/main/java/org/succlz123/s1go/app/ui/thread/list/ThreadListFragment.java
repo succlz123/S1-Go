@@ -7,6 +7,7 @@ import org.succlz123.s1go.app.api.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.ui.base.BaseThreadRvFragment;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
+import org.succlz123.s1go.app.ui.thread.send.SendThreadsActivity;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
@@ -39,6 +40,8 @@ public class ThreadListFragment extends BaseThreadRvFragment {
     private int mPager = 1;
     private boolean mHasNextPage = true;
     private boolean mIsLoading;
+
+    private String mFormHash;
 
     private String mCookie;
 
@@ -97,8 +100,7 @@ public class ThreadListFragment extends BaseThreadRvFragment {
                 if (loginInfo == null) {
                     LoginActivity.start(getActivity());
                 } else {
-                    ToastUtils.showToastShort(getContext(), "额,有空在说.");
-//                    SendThreadsActivity.start(getActivity(), mFid);
+                    SendThreadsActivity.start(getActivity(), mFid, mFormHash);
                 }
             }
         });
@@ -127,6 +129,7 @@ public class ThreadListFragment extends BaseThreadRvFragment {
                     @Override
                     public void call(ThreadList threadList) {
                         mPager++;
+                        mFormHash = threadList.Variables.formhash;
                         mThreadListRvAdapter.setData(threadList.Variables.forum_threadlist);
                         mIsLoading = false;
                         setRefreshCompleted();

@@ -2,8 +2,6 @@ package org.succlz123.s1go.app.utils.fromhtml;
 
 import org.succlz123.s1go.app.ui.picture.PictureActivity;
 
-import android.content.Intent;
-import android.os.Handler;
 import android.text.Layout;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -16,19 +14,18 @@ import android.widget.TextView;
  * Created by succlz123 on 2015/4/17.
  */
 public class ImageLinkParser extends LinkMovementMethod {
-
     private static final ImageLinkParser instance = new ImageLinkParser();
 
     public static ImageLinkParser getInstance() {
         return instance;
     }
 
-    private Handler handler = new Handler();
     private boolean find = false;
     private ImageSpan findSpan = null;
 
+    @Override
     public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
-        Layout layout = ((TextView) widget).getLayout();
+        Layout layout = widget.getLayout();
 
         if (layout == null) {
             return super.onTouchEvent(widget, buffer, event);
@@ -40,8 +37,7 @@ public class ImageLinkParser extends LinkMovementMethod {
         int line = layout.getLineForVertical(y);
         int offset = layout.getOffsetForHorizontal(line, x);
 
-        TextView tv = (TextView) widget;
-        SpannableString value = SpannableString.valueOf(tv.getText());
+        SpannableString value = SpannableString.valueOf(widget.getText());
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
@@ -61,9 +57,7 @@ public class ImageLinkParser extends LinkMovementMethod {
                         break;
                     }
                 }
-
-                return find ? true : super.onTouchEvent(widget, buffer, event);
-
+                return find || super.onTouchEvent(widget, buffer, event);
             case MotionEvent.ACTION_MOVE:
                 break;
             case MotionEvent.ACTION_CANCEL:
@@ -75,10 +69,7 @@ public class ImageLinkParser extends LinkMovementMethod {
                     if (url.startsWith("static/image/smiley/")) {
                         return false;
                     }
-                    Intent intent = new Intent(widget.getContext(), PictureActivity.class);
-                    intent.putExtra("imageurl", url);
-
-                    widget.getContext().startActivity(intent);
+                    PictureActivity.start(widget.getContext(), url);
                     return true;
                 }
         }

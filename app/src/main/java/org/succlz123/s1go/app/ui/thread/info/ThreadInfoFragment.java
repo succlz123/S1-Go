@@ -104,6 +104,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
     }
 
     private void loadThreadInfo() {
+        setRefreshing();
         Observable<ThreadInfo> observable = RetrofitManager.apiService().getThreadInfo(mCookie, mCurrentPagerNum, mTid);
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

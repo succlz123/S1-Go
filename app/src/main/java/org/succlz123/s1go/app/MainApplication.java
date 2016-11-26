@@ -66,39 +66,41 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
         Fresco.initialize(this);
         ImageLoader.init();
         ThemeUtils.setSwitchColor(this);
-        CrashReport.initCrashReport(this, "900017373", BuildConfig.DEBUG);
 
-        UserInfo.Variables userInfo = getUserInfo();
-        if (userInfo != null) {
-            Observable<UserInfo> observable = RetrofitManager.apiService().login(userInfo.member_username, userInfo.password);
-            observable.subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Action1<UserInfo>() {
-                        @Override
-                        public void call(UserInfo loginInfo) {
-                            String messageVal = loginInfo.Message.messageval;
-                            if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_SUCCEED))) {
-                                loginInfo.Variables.password = getUserInfo().password;
-                                MainApplication.getInstance().addUserInfo(loginInfo);
-                            } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
-                                logout();
-                            }
-                        }
-                    }, new Action1<Throwable>() {
-                        @Override
-                        public void call(Throwable throwable) {
-                            logout();
-                        }
-                    });
-        }
-        Observable.fromCallable(new Callable<Void>() {
+        Observable.fromCallable(new Callable<UserInfo.Variables>() {
             @Override
-            public Void call() throws Exception {
+            public UserInfo.Variables call() throws Exception {
                 S1Emoticon.initEmoticon();
-
-                return null;
+                CrashReport.initCrashReport(MainApplication.getContext(), "900017373", BuildConfig.DEBUG);
+                return getUserInfo();
             }
-        }).subscribeOn(Schedulers.io()).subscribe();
+        }).subscribeOn(Schedulers.io()).subscribe(new Action1<UserInfo.Variables>() {
+            @Override
+            public void call(UserInfo.Variables variables) {
+                if (variables != null) {
+                    Observable<UserInfo> observable = RetrofitManager.apiService().login(variables.member_username, variables.password);
+                    observable.subscribeOn(Schedulers.io())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .subscribe(new Action1<UserInfo>() {
+                                @Override
+                                public void call(UserInfo loginInfo) {
+                                    String messageVal = loginInfo.Message.messageval;
+                                    if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_SUCCEED))) {
+                                        loginInfo.Variables.password = getUserInfo().password;
+                                        MainApplication.getInstance().addUserInfo(loginInfo);
+                                    } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
+                                        logout();
+                                    }
+                                }
+                            }, new Action1<Throwable>() {
+                                @Override
+                                public void call(Throwable throwable) {
+                                    logout();
+                                }
+                            });
+                }
+            }
+        });
     }
 
     @Override
