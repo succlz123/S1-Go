@@ -4,6 +4,7 @@ import com.facebook.common.executors.CallerThreadExecutor;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.common.ResizeOptions;
 import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.datasource.BaseBitmapDataSubscriber;
 import com.facebook.imagepipeline.image.CloseableImage;
@@ -72,9 +73,14 @@ public class SpannedImageGetter implements Html.ImageGetter {
             return null;
         }
 
-        ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(Uri.parse(source)).build();
+        ImageRequest req = ImageRequestBuilder.newBuilderWithSource(Uri.parse(source))
+                .setResizeOptions(new ResizeOptions(400, 600))
+                .setLocalThumbnailPreviewsEnabled(true)
+                .setProgressiveRenderingEnabled(true)
+                .build();
+
         ImagePipeline imagePipeline = Fresco.getImagePipeline();
-        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, MainApplication.getInstance().getResources());
+        DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(req, MainApplication.getInstance().getResources());
         dataSource.subscribe(new BaseBitmapDataSubscriber() {
             @Override
             public void onNewResultImpl(@Nullable Bitmap bitmap) {
@@ -109,7 +115,6 @@ public class SpannedImageGetter implements Html.ImageGetter {
             @Override
             public void run() {
                 tvShow.setText(tvShow.getText());
-                tvShow.invalidate();
             }
         });
     }

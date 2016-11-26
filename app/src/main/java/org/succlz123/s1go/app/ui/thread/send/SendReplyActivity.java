@@ -9,11 +9,11 @@ import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,7 +46,6 @@ public class SendReplyActivity extends BaseToolbarActivity {
     private String mTid;
     private String mFormHash;
     private String mReviews;
-    private String mCookie;
 
     public static void start(Context context, String tid, String formHash) {
         Intent intent = new Intent(context, SendReplyActivity.class);
@@ -62,7 +61,6 @@ public class SendReplyActivity extends BaseToolbarActivity {
 
         mTid = getIntent().getStringExtra(TID);
         mFormHash = getIntent().getStringExtra(FORM_HASH);
-        mCookie = MainApplication.getInstance().getCookie();
 
         mReviewsEdit = (EditText) findViewById(R.id.content);
         mPostBtn = (Button) findViewById(R.id.post);
@@ -106,7 +104,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
      * @param message What calls (onBackPressed or postButton)
      */
     private void dialog(final int message) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, android.R.style.Theme_Material_Light_Dialog);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         if (message == TEXT_IS_NOT_EMPTY_AND_GIVE_UP_REVIEWS) {
             builder.setMessage(getString(R.string.confirmation_reviews_give_up));
         } else if (message == TEXT_IS_NOT_EMPTY_AND_SET_REVIEWS) {
@@ -121,6 +119,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
                     finish();
                 } else if (message == TEXT_IS_NOT_EMPTY_AND_SET_REVIEWS) {
                     send();
+                    ToastUtils.showToastShort(MainApplication.getContext(), "已发送，请耐心等待！");
                 }
             }
         });
@@ -134,7 +133,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
     }
 
     private void send() {
-        Observable<SendInfo> observable = RetrofitManager.apiService().sendReply(mCookie, mTid, mFormHash, mReviews);
+        Observable<SendInfo> observable = RetrofitManager.apiService().sendReply(mTid, mFormHash, mReviews);
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<SendInfo, Boolean>() {

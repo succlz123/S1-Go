@@ -39,7 +39,6 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
     private String mFormHash;
     private int mCurrentPagerNum;
     private int mTotalPagerNum;
-    private String mCookie;
     private ThreadInfoRvAdapter mThreadInfoRvAdapter;
 
     public static ThreadInfoFragment newInstance(String tid, int currentPagerNum, int totalPagerNum) {
@@ -80,7 +79,6 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
                 }
             }
         });
-        mCookie = MainApplication.getInstance().getCookie();
         mThreadInfoRvAdapter = new ThreadInfoRvAdapter(mCurrentPagerNum);
         recyclerView.setAdapter(mThreadInfoRvAdapter);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -105,7 +103,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
 
     private void loadThreadInfo() {
         setRefreshing();
-        Observable<ThreadInfo> observable = RetrofitManager.apiService().getThreadInfo(mCookie, mCurrentPagerNum, mTid);
+        Observable<ThreadInfo> observable = RetrofitManager.apiService().getThreadInfo(mCurrentPagerNum, mTid);
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .filter(new Func1<ThreadInfo, Boolean>() {

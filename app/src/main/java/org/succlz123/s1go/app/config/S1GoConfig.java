@@ -19,6 +19,7 @@ public class S1GoConfig {
     public static final String COOKIE_TIME_DIGIT = "2592000";
 
     public static final String POST_REPLY_SUCCEED = "post_reply_succeed";
+    public static final String POST_NEW_THREAD_SUCCEED = "post_newthread_succeed";
     public static final String LOGIN_SUCCEED = "location_login_succeed_mobile";
     public static final String LOGIN_FAILED = "login_invalid";
 

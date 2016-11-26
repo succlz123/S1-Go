@@ -13,7 +13,7 @@
     <string name="set_threads">发帖</string>
     <string name="set_reviews">回帖</string>
     <string name="too_little_words">回复字数过少</string>
-    <string name="please_input_reviews">请输入回复内容</string>
+    <string name="please_input_reviews">请输入标题或者回复内容</string>
     <string name="tips">提示</string>
     <string name="wait_a_moment">正在发送,稍等片刻</string>
     <string name="confirmation_reviews_give_up">确认放弃回复吗?</string>

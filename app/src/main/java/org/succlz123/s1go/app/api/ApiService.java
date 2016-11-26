@@ -9,7 +9,6 @@ import org.succlz123.s1go.app.api.bean.UserInfo;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -38,24 +37,25 @@ public interface ApiService {
      * 帖子列表
      */
     @GET("index.php?mobile=no&module=forumdisplay&orderby=dateline&submodule=checkpost&tpp=60")
-    Observable<ThreadList> getThreadList(@Header("cookie") String header, @Query("page") int page, @Query("fid") String fid);
+    Observable<ThreadList> getThreadList(@Query("page") int page, @Query("fid") String fid);
 
     /**
      * 帖子内容
      */
     @GET("index.php?&module=viewthread&orderby=dateline&submodule=checkpost&ppp=30")
-    Observable<ThreadInfo> getThreadInfo(@Header("cookie") String header, @Query("page") int page, @Query("tid") String tid);
+    Observable<ThreadInfo> getThreadInfo(@Query("page") int page, @Query("tid") String tid);
 
     /**
      * 回复
      */
     @FormUrlEncoded
     @POST("index.php?mobile=no&module=sendreply&replysubmit=yes&tid=")
-    Observable<SendInfo> sendReply(@Header("cookie") String header, @Query("tid") String tid, @Field("formhash") String formhash, @Field("message") String message);
+    Observable<SendInfo> sendReply(@Query("tid") String tid, @Field("formhash") String formhash, @Field("message") String message);
 
     /**
      * 发帖
      */
-    @GET("index.php?mobile=no&module=newthread&topicsubmit=yes&fid=")
-    Observable<SendInfo> sendNewThread(@Query("page") int page, @Query("tid") String fid);
+    @FormUrlEncoded
+    @POST("index.php?mobile=no&module=newthread&topicsubmit=yes&fid=")
+    Observable<SendInfo> sendNewThread(@Query("fid") String fid, @Field("formhash") String formhash, @Field("subject") String subject, @Field("message") String message);
 }

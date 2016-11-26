@@ -40,7 +40,6 @@ public class BottomNavigationBar extends LinearLayout {
 
     private void init(Context context) {
         setBackgroundResource(R.color.theme_color_view_background);
-        setElevation(6);
         setOrientation(HORIZONTAL);
     }
 
