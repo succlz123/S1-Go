@@ -35,6 +35,7 @@ public class ThreadListFragment extends BaseThreadRvFragment {
     public static final String KEY_THREAD_FRAGMENT_FID = "key_fragment_thread_fid";
 
     private ThreadListRvAdapter mThreadListRvAdapter;
+    private LinearLayoutManager mLayoutManager;
     private String mFid;
 
     private int mPager = 1;
@@ -60,8 +61,8 @@ public class ThreadListFragment extends BaseThreadRvFragment {
         }
 
         recyclerView.setHasFixedSize(true);
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -81,10 +82,10 @@ public class ThreadListFragment extends BaseThreadRvFragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 if (!mIsLoading && mHasNextPage && mThreadListRvAdapter != null) {
-                    int lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition();
-                    if (layoutManager.getChildCount() > 0
-                            && lastVisibleItemPosition + 1 >= layoutManager.getItemCount() - 1
-                            && layoutManager.getItemCount() > layoutManager.getChildCount()) {
+                    int lastVisibleItemPosition = mLayoutManager.findLastVisibleItemPosition();
+                    if (mLayoutManager.getChildCount() > 0
+                            && lastVisibleItemPosition + 1 >= mLayoutManager.getItemCount() - 1
+                            && mLayoutManager.getItemCount() > mLayoutManager.getChildCount()) {
                         loadThreadList();
                     }
                 }
@@ -109,6 +110,19 @@ public class ThreadListFragment extends BaseThreadRvFragment {
     public void onDestroyView() {
         super.onDestroyView();
         mThreadListRvAdapter = null;
+    }
+
+    public void goToTop() {
+        if (recyclerView == null || mLayoutManager == null) {
+            return;
+        }
+        recyclerView.stopScroll();
+        mLayoutManager.setSmoothScrollbarEnabled(true);
+        int firstVisibilityPosition = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+        if (firstVisibilityPosition > 10) {
+            mLayoutManager.scrollToPositionWithOffset(10, 0);
+        }
+        recyclerView.smoothScrollToPosition(0);
     }
 
     private void loadThreadList() {

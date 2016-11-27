@@ -101,13 +101,6 @@ public class ThreadInfoActivity extends BaseToolbarActivity {
         mReviewsViewPagerAdapter = null;
     }
 
-    //    @Override
-//    public void onReplies(int replies) {
-//        this.mReply = replies;
-//        mReviewsViewPagerAdapter.notifyDataSetChanged();
-//        invalidateOptionsMenu();
-//    }
-
     private class ReviewsViewPagerAdapter extends FragmentStatePagerAdapter {
 
         public ReviewsViewPagerAdapter(FragmentManager fm) {
