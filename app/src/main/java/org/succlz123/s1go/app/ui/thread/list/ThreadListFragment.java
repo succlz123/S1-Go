@@ -2,8 +2,8 @@ package org.succlz123.s1go.app.ui.thread.list;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.api.bean.ThreadList;
-import org.succlz123.s1go.app.api.bean.UserInfo;
+import org.succlz123.s1go.app.bean.ThreadList;
+import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.ui.base.BaseThreadRvFragment;
 import org.succlz123.s1go.app.ui.login.LoginActivity;

@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.area;
+package org.succlz123.s1go.app.ui.main.area;
 
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.ui.thread.list.ThreadListActivity;

@@ -50,6 +50,7 @@ dependencies {
     compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"
     compile "com.squareup.retrofit2:adapter-rxjava:${rootProject.ext.retrofitVersion}"
     compile "io.reactivex:rxandroid:${rootProject.ext.rxandroidVersion}"
+    compile "io.reactivex:rxjava:${rootProject.ext.rxjavaVersion}"
 
     compile("com.facebook.fresco:fresco:${rootProject.ext.frescoVersion}") {
         exclude group: 'com.nineoldandroids', module: 'library'
@@ -68,4 +69,8 @@ dependencies {
 
 //    compile 'com.frostwire:jlibtorrent:1.2.0.1'
 //    compile 'com.frostwire:jlibtorrent-android-arm:1.2.0.1'
+
+//    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
+//    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
+
 }

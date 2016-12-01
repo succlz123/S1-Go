@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.ui.my;
+package org.succlz123.s1go.app.ui.main.area;
 
 import org.succlz123.s1go.app.ui.base.BaseRecyclerViewFragment;
 import org.succlz123.s1go.app.utils.common.MyUtils;
@@ -6,58 +6,56 @@ import org.succlz123.s1go.app.utils.common.MyUtils;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 /**
  * Created by succlz123 on 16/4/13.
  */
-public class MyFragment extends BaseRecyclerViewFragment {
-    public static final int REQ_CODE_LOGIN = 200;
-    private MyRvAdapter mAdapter;
+public class ForumAreaFragment extends BaseRecyclerViewFragment {
 
-    public static MyFragment newInstance() {
-        return new MyFragment();
+    public static ForumAreaFragment newInstance() {
+        return new ForumAreaFragment();
     }
 
     @Override
-    public void onViewCreated(final RecyclerView recyclerView, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(RecyclerView recyclerView, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(recyclerView, savedInstanceState);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                return 1;
+            }
+        });
         recyclerView.setHasFixedSize(true);
         int dp5 = MyUtils.dip2px(5);
         recyclerView.setPadding(dp5, dp5, dp5, dp5);
         recyclerView.setClipToPadding(false);
-        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
                 int position = ((RecyclerView.LayoutParams) view.getLayoutParams()).getViewLayoutPosition();
                 int margin = MyUtils.dip2px(5);
+                int left = 0;
                 int top = 0;
-                if (position == 1) {
-                    top = margin;
-                } else if (position == 5) {
+                if (position != 0 && position != 1) {
                     top = margin;
                 }
-                outRect.set(0, top, 0, 0);
+                if (position % 2 != 0) {
+                    left = margin;
+                }
+                outRect.set(left, top, 0, 0);
             }
         });
-        mAdapter = new MyRvAdapter(getContext());
+        ForumAreaRvAdapter mAdapter = new ForumAreaRvAdapter();
         recyclerView.setAdapter(mAdapter);
     }
 
     @Override
     protected void lazyLoad() {
 
-    }
-
-    public void refresh(int requestCode) {
-        if (requestCode == REQ_CODE_LOGIN) {
-            if (mAdapter != null) {
-                mAdapter.refresh();
-            }
-        }
     }
 }

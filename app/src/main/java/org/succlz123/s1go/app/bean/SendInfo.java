@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.api.bean;
+package org.succlz123.s1go.app.bean;
 
 import com.google.gson.annotations.SerializedName;
 

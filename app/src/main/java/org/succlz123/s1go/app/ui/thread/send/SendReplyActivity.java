@@ -2,7 +2,7 @@ package org.succlz123.s1go.app.ui.thread.send;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.api.bean.SendInfo;
+import org.succlz123.s1go.app.bean.SendInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;

@@ -2,32 +2,25 @@ package org.succlz123.s1go.app.ui.login;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.api.bean.UserInfo;
-import org.succlz123.s1go.app.config.RetrofitManager;
-import org.succlz123.s1go.app.config.S1GoConfig;
+import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
-import org.succlz123.s1go.app.utils.common.SysUtils;
+import org.succlz123.s1go.app.utils.common.ToastUtils;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by succlz123 on 16/4/11.
  */
-public class LoginActivity extends BaseToolbarActivity {
+public class LoginActivity extends BaseToolbarActivity implements LoginContract.View {
+    private EditText mUsernameEt;
+    private EditText mPasswordEt;
+
+    private LoginContract.Presenter mLoginPresenter;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, LoginActivity.class);
@@ -47,65 +40,47 @@ public class LoginActivity extends BaseToolbarActivity {
         ensureToolbar();
         setTitle("登陆");
 
-        final EditText usernameEt = (EditText) findViewById(R.id.login_username);
-        final EditText passwordEt = (EditText) findViewById(R.id.login_password);
+        mUsernameEt = (EditText) findViewById(R.id.login_username);
+        mPasswordEt = (EditText) findViewById(R.id.login_password);
         Button action = (Button) findViewById(R.id.login);
+
+        new LoginPresenter(new LoginDataSource(), this);
 
         action.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (SysUtils.isFastClick()) {
-                    return;
-                }
-                String username = usernameEt.getText().toString();
-                String password = passwordEt.getText().toString();
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    login(username, password);
-                } else {
-                    Toast.makeText(LoginActivity.this, getString(R.string.please_input_un_pw), Toast.LENGTH_SHORT).show();
-                }
+                mLoginPresenter.login(mUsernameEt.getText().toString(), mPasswordEt.getText().toString());
             }
         });
     }
 
-    private void login(String username, final String password) {
-        Observable<UserInfo> observable = RetrofitManager.apiService().login(username, password);
-        Subscription subscription = observable.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .filter(new Func1<UserInfo, Boolean>() {
-                    @Override
-                    public Boolean call(UserInfo loginInfo) {
-                        return SysUtils.isActivityLive(LoginActivity.this);
-                    }
-                })
-                .subscribe(new Action1<UserInfo>() {
-                    @Override
-                    public void call(UserInfo loginInfo) {
-                        //login succeed > messageStr = welcome back
-                        //login failed > messageStr = the number of you can try
-                        String messageStr = loginInfo.Message.messagestr;
-                        //login succeed >messageVal = location_login_succeed_mobile
-                        //login failed > messageVal = login_invalid
-                        //抱歉，密码空或包含非法字符     = profile_passwd_illegal
-                        String messageVal = loginInfo.Message.messageval;
+    @Override
+    protected void onDestroy() {
+        mLoginPresenter.unSubscribe();
+        super.onDestroy();
+    }
 
-                        if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_SUCCEED))) {
-                            String hint = getString(R.string.welcome) + loginInfo.Variables.member_username;
-                            Toast.makeText(LoginActivity.this, hint, Toast.LENGTH_SHORT).show();
-                            loginInfo.Variables.password = password;
-                            MainApplication.getInstance().addUserInfo(loginInfo);
-                            setResult(Activity.RESULT_OK);
-                            finish();
-                        } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
-                            Toast.makeText(LoginActivity.this, messageStr, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Action1<Throwable>() {
-                    @Override
-                    public void call(Throwable throwable) {
-                        Toast.makeText(LoginActivity.this, "网络异常,请重试!", Toast.LENGTH_LONG).show();
-                    }
-                });
-        compositeSubscription.add(subscription);
+    @Override
+    public void onLoginSuccess(UserInfo userInfo) {
+        String hint = getString(R.string.welcome) + userInfo.Variables.member_username;
+        ToastUtils.showToastShort(this, hint);
+        MainApplication.getInstance().addUserInfo(userInfo);
+        setResult(Activity.RESULT_OK);
+        finish();
+    }
+
+    @Override
+    public void onLoginFailed(String hint) {
+        ToastUtils.showToastShort(this, hint);
+    }
+
+    @Override
+    public boolean isActive() {
+        return !isDestroyed() && !isFinishing();
+    }
+
+    @Override
+    public void setPresenter(LoginContract.Presenter presenter) {
+        mLoginPresenter = presenter;
     }
 }

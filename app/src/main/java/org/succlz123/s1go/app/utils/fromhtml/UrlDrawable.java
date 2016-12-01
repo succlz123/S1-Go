@@ -1,6 +1,7 @@
 package org.succlz123.s1go.app.utils.fromhtml;
 
 import org.succlz123.s1go.app.MainApplication;
+import org.succlz123.s1go.app.utils.common.ToastUtils;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -32,7 +33,12 @@ public class UrlDrawable extends BitmapDrawable {
             }
         }
         if (mDrawable != null) {
-            mDrawable.draw(canvas);
+            try {
+                mDrawable.draw(canvas);
+            } catch (Exception e) {
+                e.printStackTrace();
+                ToastUtils.showToastLong(MainApplication.getContext(), "bad bitmap!!!");
+            }
         } else {
             canvas.drawColor(Color.RED);
         }

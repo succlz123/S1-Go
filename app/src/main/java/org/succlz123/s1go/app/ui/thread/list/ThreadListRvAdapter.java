@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.ui.thread.list;
 
 import org.succlz123.s1go.app.MainApplication;
-import org.succlz123.s1go.app.api.bean.ThreadList;
+import org.succlz123.s1go.app.bean.ThreadList;
 import org.succlz123.s1go.app.ui.base.BaseThreadListRvViewHolder;
 import org.succlz123.s1go.app.ui.thread.info.ThreadInfoActivity;
 import org.succlz123.s1go.app.utils.BlackListHelper;

@@ -14,12 +14,12 @@ allprojects {
 }
 
 ext {
-    buildToolsVersion = '25.0.0'
+    buildToolsVersion = '25.0.1'
     targetSdkVersion = 23
     compileSdkVersion = targetSdkVersion
     minSdkVersion = 21
 
-    androidSupportLibraryVersion = '25.0.0'
+    androidSupportLibraryVersion = '25.0.1'
 
     okhttpVersion = '3.4.2'
     gsonVersion = '2.8.0'
@@ -28,9 +28,10 @@ ext {
     leakcanaryVersion = '1.5'
     buglyVersion = '2.3.6'
     rxandroidVersion = '1.2.1'
+    rxjavaVersion = '1.2.3'
     bitmapviewVersion = '1.0.5'
 
-    magicasakuraVersion='0.1.3'
+    magicasakuraVersion = '0.1.3'
 
     jUnitVersion = '4.12'
 }

@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.api.bean;
+package org.succlz123.s1go.app.bean;
 
 /**
  * Created by succlz123 on 16/4/24.

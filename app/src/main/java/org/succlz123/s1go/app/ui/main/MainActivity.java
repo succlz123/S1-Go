@@ -3,10 +3,10 @@ package org.succlz123.s1go.app.ui.main;
 import com.bilibili.magicasakura.utils.ThemeUtils;
 
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.ui.area.ForumAreaFragment;
+import org.succlz123.s1go.app.ui.main.area.ForumAreaFragment;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
-import org.succlz123.s1go.app.ui.hot.HotFragment;
-import org.succlz123.s1go.app.ui.my.MyFragment;
+import org.succlz123.s1go.app.ui.main.hot.HotFragment;
+import org.succlz123.s1go.app.ui.main.my.MyFragment;
 import org.succlz123.s1go.app.utils.ThemeHelper;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.ViewUtils;

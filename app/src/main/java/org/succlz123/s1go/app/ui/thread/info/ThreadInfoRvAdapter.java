@@ -4,7 +4,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.api.bean.ThreadInfo;
+import org.succlz123.s1go.app.bean.ThreadInfo;
 import org.succlz123.s1go.app.utils.BlackListHelper;
 import org.succlz123.s1go.app.utils.common.ViewUtils;
 import org.succlz123.s1go.app.utils.fromhtml.ImageLinkParser;

@@ -12,7 +12,8 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by succlz123 on 2015/7/8.
  */
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
+
     public CompositeSubscription compositeSubscription;
 
     private boolean mFragmentStateSaved;

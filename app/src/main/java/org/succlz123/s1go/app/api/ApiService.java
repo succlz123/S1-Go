@@ -1,10 +1,10 @@
 package org.succlz123.s1go.app.api;
 
-import org.succlz123.s1go.app.api.bean.HotPost;
-import org.succlz123.s1go.app.api.bean.SendInfo;
-import org.succlz123.s1go.app.api.bean.ThreadInfo;
-import org.succlz123.s1go.app.api.bean.ThreadList;
-import org.succlz123.s1go.app.api.bean.UserInfo;
+import org.succlz123.s1go.app.bean.HotPost;
+import org.succlz123.s1go.app.bean.SendInfo;
+import org.succlz123.s1go.app.bean.ThreadInfo;
+import org.succlz123.s1go.app.bean.ThreadList;
+import org.succlz123.s1go.app.bean.UserInfo;
 
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

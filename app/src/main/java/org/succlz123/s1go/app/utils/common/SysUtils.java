@@ -591,7 +591,7 @@ public class SysUtils {
 
     public synchronized static boolean isFastClick() {
         long time = System.currentTimeMillis();
-        if (time - lastClickTime < 700) {
+        if (time - lastClickTime < 500) {
             ToastUtils.showToastShort(MainApplication.getContext(), "骚年,你点太快了!");
             return true;
         }

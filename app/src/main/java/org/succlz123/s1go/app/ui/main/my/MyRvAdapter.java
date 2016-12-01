@@ -1,11 +1,11 @@
-package org.succlz123.s1go.app.ui.my;
+package org.succlz123.s1go.app.ui.main.my;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.api.bean.UserInfo;
+import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.ui.blackList.BlackListActivity;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
 import org.succlz123.s1go.app.utils.PicHelper;
@@ -33,7 +33,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import static org.succlz123.s1go.app.R.id.uid;
-import static org.succlz123.s1go.app.ui.my.MyFragment.REQ_CODE_LOGIN;
+import static org.succlz123.s1go.app.ui.main.my.MyFragment.REQ_CODE_LOGIN;
 
 /**
  * Created by succlz123 on 16/4/13.

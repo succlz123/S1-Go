@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.database;
 
 import org.succlz123.s1go.app.MainApplication;
-import org.succlz123.s1go.app.api.bean.UserInfo;
+import org.succlz123.s1go.app.bean.UserInfo;
 
 import android.content.ContentValues;
 import android.content.Context;

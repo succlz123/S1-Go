@@ -7,11 +7,11 @@ import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.qiibeta.bitmapview.image.TileImage;
-import org.succlz123.s1go.app.api.bean.UserInfo;
+import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.database.UserDatabase;
-import org.succlz123.s1go.app.ui.login.LoginInfoListener;
+import org.succlz123.s1go.app.utils.UserInfoChangeListener;
 import org.succlz123.s1go.app.utils.ThemeHelper;
 import org.succlz123.s1go.app.utils.image.ImageLoader;
 import org.succlz123.s1go.app.utils.s1.S1Emoticon;
@@ -42,7 +42,7 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
 
     private static MainApplication sInstance;
 
-    private List<LoginInfoListener> mLoginListenerList = new ArrayList<LoginInfoListener>();
+    private List<UserInfoChangeListener> mLoginListenerList = new ArrayList<UserInfoChangeListener>();
     private Handler mHandler = new Handler();
 
     public static MainApplication getInstance() {
@@ -109,8 +109,8 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
         TileImage.clearBitmapRecyclePool();
     }
 
-    public void addUserListener(LoginInfoListener LoginInfoListener) {
-        this.mLoginListenerList.add(LoginInfoListener);
+    public void addUserListener(UserInfoChangeListener UserInfoChangeListener) {
+        this.mLoginListenerList.add(UserInfoChangeListener);
     }
 
     public UserInfo.Variables getUserInfo() {
@@ -123,8 +123,8 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
     public void addUserInfo(UserInfo userInfo) {
         this.loginInfo = userInfo.Variables;
         UserDatabase.getInstance().execInsert(userInfo);
-        for (LoginInfoListener LoginInfoListener : mLoginListenerList) {
-            LoginInfoListener.onChanged(MainApplication.this.loginInfo);
+        for (UserInfoChangeListener UserInfoChangeListener : mLoginListenerList) {
+            UserInfoChangeListener.onChanged(MainApplication.this.loginInfo);
         }
     }
 
