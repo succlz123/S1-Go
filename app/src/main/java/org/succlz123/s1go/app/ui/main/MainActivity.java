@@ -2,11 +2,13 @@ package org.succlz123.s1go.app.ui.main;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 
+import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.ui.main.area.ForumAreaFragment;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
+import org.succlz123.s1go.app.ui.main.area.ForumAreaFragment;
 import org.succlz123.s1go.app.ui.main.hot.HotFragment;
 import org.succlz123.s1go.app.ui.main.my.MyFragment;
+import org.succlz123.s1go.app.utils.IMMLeaks;
 import org.succlz123.s1go.app.utils.ThemeHelper;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.ViewUtils;
@@ -15,7 +17,6 @@ import org.succlz123.s1go.app.widget.BottomNavigationBar;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +27,8 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import java.util.List;
+
+import static android.os.Build.VERSION.SDK_INT;
 
 /**
  * Created by succlz123 on 16/4/13.
@@ -61,7 +64,7 @@ public class MainActivity extends BaseToolbarActivity {
                         ThemeUtils.refreshUI(MainActivity.this, new ThemeUtils.ExtraRefreshable() {
                             @Override
                             public void refreshGlobal(Activity activity) {
-                                if (Build.VERSION.SDK_INT >= 21) {
+                                if (SDK_INT >= 21) {
                                     Window window = activity.getWindow();
                                     window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
                                     window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -93,6 +96,13 @@ public class MainActivity extends BaseToolbarActivity {
 //            setTaskDescription(description);
 //        }
 //    }
+
+
+    @Override
+    protected void onDestroy() {
+        IMMLeaks.fixFocusedViewLeak(MainApplication.getInstance());
+        super.onDestroy();
+    }
 
     private static class MainVpAdapter extends FragmentPagerAdapter {
 

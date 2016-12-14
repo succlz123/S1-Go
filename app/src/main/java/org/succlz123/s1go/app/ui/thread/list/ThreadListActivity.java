@@ -8,11 +8,17 @@ import org.succlz123.s1go.app.utils.s1.S1Fid;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.util.concurrent.Callable;
+
+import bolts.Continuation;
+import bolts.Task;
 
 /**
  * Created by succlz123 on 2015/4/14.
@@ -29,6 +35,7 @@ public class ThreadListActivity extends BaseToolbarActivity {
         context.startActivity(intent);
     }
 
+    private Task mTask;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +45,21 @@ public class ThreadListActivity extends BaseToolbarActivity {
         showBackButton();
         ensureToolbar();
         setTitle(S1Fid.getS1Fid(Integer.valueOf(mFid)));
-        setUpFragment();
+        setUpListFragment();
+
+        mTask=  Task.callInBackground(new Callable<Object>() {
+            @Override
+            public Object call() throws Exception {
+                Thread.currentThread().sleep(10000);
+                return null;
+            }
+        }).onSuccessTask(new Continuation<Object, Task<Object>>() {
+            @Override
+            public Task<Object> then(Task<Object> task) throws Exception {
+                Log.d("", "");
+                return null;
+            }
+        }, Task.UI_THREAD_EXECUTOR);
 
         final GestureDetector detector = new GestureDetector(ThreadListActivity.this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -68,7 +89,18 @@ public class ThreadListActivity extends BaseToolbarActivity {
         });
     }
 
-    private void setUpFragment() {
+    @Override
+    protected void onDestroy() {
+        mTask=null;
+        super.onDestroy();
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+    }
+
+    private void setUpListFragment() {
         mThreadListFragment = (ThreadListFragment) getSupportFragmentManager().findFragmentByTag(ThreadListFragment.TAG);
         if (mThreadListFragment == null) {
             mThreadListFragment = ThreadListFragment.newInstance(mFid);
@@ -79,6 +111,7 @@ public class ThreadListActivity extends BaseToolbarActivity {
                     .add(R.id.content, mThreadListFragment, ThreadListFragment.TAG)
                     .commit();
         }
+        new ThreadListPresenter(mFid, new ThreadListDataSource(), mThreadListFragment);
     }
 
     @Override
@@ -94,6 +127,7 @@ public class ThreadListActivity extends BaseToolbarActivity {
                 onBackPressed();
                 return true;
             case 100:
+                mThreadListFragment.xx();
                 ToastUtils.showToastShort(this, "额,有空在说.");
                 return true;
         }

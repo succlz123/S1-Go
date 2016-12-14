@@ -1,10 +1,10 @@
 package org.succlz123.s1go.app.ui.thread.send;
 
+import org.succlz123.s1go.app.BuildConfig;
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.bean.SendInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
-import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
@@ -28,8 +28,6 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-import static org.succlz123.s1go.app.config.S1GoConfig.FORM_HASH;
-
 /**
  * Created by succlz123 on 2015/4/19.
  */
@@ -50,7 +48,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
     public static void start(Context context, String tid, String formHash) {
         Intent intent = new Intent(context, SendReplyActivity.class);
         intent.putExtra(TID, tid);
-        intent.putExtra(FORM_HASH, formHash);
+        intent.putExtra(BuildConfig.FORM_HASH, formHash);
         context.startActivity(intent);
     }
 
@@ -60,7 +58,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
         setContentView(R.layout.activity_set_reviews);
 
         mTid = getIntent().getStringExtra(TID);
-        mFormHash = getIntent().getStringExtra(FORM_HASH);
+        mFormHash = getIntent().getStringExtra(BuildConfig.FORM_HASH);
 
         mReviewsEdit = (EditText) findViewById(R.id.content);
         mPostBtn = (Button) findViewById(R.id.post);
@@ -149,7 +147,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
                         if (message == null) {
                             ToastUtils.showToastShort(MainApplication.getContext(), R.string.sorry);
                         }
-                        if (TextUtils.equals(S1GoConfig.POST_REPLY_SUCCEED, message.messageval)) {
+                        if (TextUtils.equals(BuildConfig.POST_REPLY_SUCCEED, message.messageval)) {
                             ToastUtils.showToastShort(MainApplication.getContext(), R.string.set_succeed);
                             finish();
                         } else {

@@ -1,9 +1,9 @@
 package org.succlz123.s1go.app.ui.login;
 
+import org.succlz123.s1go.app.BuildConfig;
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.bean.UserInfo;
-import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.utils.schedulers.SchedulerProvider;
 
 import android.text.TextUtils;
@@ -64,9 +64,9 @@ public class LoginPresenter implements LoginContract.Presenter {
                         //login failed > messageVal = login_invalid
                         //抱歉，密码空或包含非法字符     = profile_passwd_illegal
                         String messageVal = userInfo.Message.messageval;
-                        if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_SUCCEED))) {
+                        if ((TextUtils.equals(messageVal, BuildConfig.LOGIN_SUCCEED))) {
                             mLoginView.onLoginSuccess(userInfo);
-                        } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
+                        } else if ((TextUtils.equals(messageVal, BuildConfig.LOGIN_FAILED))) {
                             mLoginView.onLoginFailed(messageVal);
                         }
                     }

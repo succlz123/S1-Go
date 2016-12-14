@@ -120,7 +120,7 @@ public class S1TypeId {
 
     public static final String T59 = "篮球";
     public static final String T60 = "足球";
-    ;
+
     public static final String T61 = "网球";
     public static final String T58 = "综合";
     public static final String T62 = "赛车";

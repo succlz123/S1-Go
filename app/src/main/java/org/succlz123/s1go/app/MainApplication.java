@@ -9,10 +9,9 @@ import com.tencent.bugly.crashreport.CrashReport;
 import org.qiibeta.bitmapview.image.TileImage;
 import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
-import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.database.UserDatabase;
-import org.succlz123.s1go.app.utils.UserInfoChangeListener;
 import org.succlz123.s1go.app.utils.ThemeHelper;
+import org.succlz123.s1go.app.utils.UserInfoChangeListener;
 import org.succlz123.s1go.app.utils.image.ImageLoader;
 import org.succlz123.s1go.app.utils.s1.S1Emoticon;
 
@@ -85,10 +84,10 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
                                 @Override
                                 public void call(UserInfo loginInfo) {
                                     String messageVal = loginInfo.Message.messageval;
-                                    if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_SUCCEED))) {
+                                    if ((TextUtils.equals(messageVal, BuildConfig.LOGIN_SUCCEED))) {
                                         loginInfo.Variables.password = getUserInfo().password;
                                         MainApplication.getInstance().addUserInfo(loginInfo);
-                                    } else if ((TextUtils.equals(messageVal, S1GoConfig.LOGIN_FAILED))) {
+                                    } else if ((TextUtils.equals(messageVal, BuildConfig.LOGIN_FAILED))) {
                                         logout();
                                     }
                                 }
@@ -139,8 +138,8 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
             return "";
         }
         String cookie = userInfo.cookiepre;
-        String auth = S1GoConfig.AUTH + "=" + Uri.encode(userInfo.auth);
-        String saltKey = S1GoConfig.SALT_KEY + "=" + userInfo.saltkey;
+        String auth = BuildConfig.AUTH + "=" + Uri.encode(userInfo.auth);
+        String saltKey = BuildConfig.SALT_KEY + "=" + userInfo.saltkey;
         return cookie + auth + ";" + cookie + saltKey + ";";
     }
 

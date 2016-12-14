@@ -22,8 +22,8 @@ public class OkHttpClientManager {
     private OkHttpClientManager() {
         if (okHttpClient == null) {
             OkHttpClient.Builder okHttpClientBuilder = new OkHttpClient().newBuilder();
-            okHttpClientBuilder.connectTimeout(10, TimeUnit.SECONDS);
-            okHttpClientBuilder.readTimeout(15, TimeUnit.SECONDS);
+            okHttpClientBuilder.connectTimeout(8, TimeUnit.SECONDS);
+            okHttpClientBuilder.readTimeout(10, TimeUnit.SECONDS);
 
             Context context = MainApplication.getContext();
             File baseDir = context.getCacheDir();

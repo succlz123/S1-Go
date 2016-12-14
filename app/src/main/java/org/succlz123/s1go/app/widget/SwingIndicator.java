@@ -41,7 +41,7 @@ public class SwingIndicator extends View {
         int cycle = a.getInt(R.styleable.swingindicator_cycle, 400);//周期，默认为2秒
         cycle = cycle / 2;
         int number = (int) (cycle * 1.0 / 1000 * 83);
-        this.increment = (int) (this.swingRadius / number);
+        this.increment = this.swingRadius / number;
         this.increment = this.increment <= 0 ? 1 : this.increment;
     }
 

@@ -111,17 +111,4 @@ public class BottomNavigationBar extends LinearLayout {
             }
         });
     }
-
-//    private void setUserInfo(UserInfo.Variables userInfo) {
-//        if (userInfo == null) {
-//            return;
-//        }
-//        String username = userInfo.member_username;
-//        toolbar.setSubtitle(username);
-//        if (toolbar.getChildCount() > 3) {
-//            View view = toolbar.getChildAt(3);
-//            view.setTranslationY(view.getHeight() + 15);
-//            view.animate().translationY(0);
-//        }
-//    }
 }

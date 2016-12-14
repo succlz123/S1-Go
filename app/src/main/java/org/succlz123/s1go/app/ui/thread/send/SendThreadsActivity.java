@@ -1,10 +1,10 @@
 package org.succlz123.s1go.app.ui.thread.send;
 
+import org.succlz123.s1go.app.BuildConfig;
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.bean.SendInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
-import org.succlz123.s1go.app.config.S1GoConfig;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
@@ -59,7 +59,7 @@ public class SendThreadsActivity extends BaseToolbarActivity {
     public static void start(Context context, String fid, String formHash) {
         Intent intent = new Intent(context, SendThreadsActivity.class);
         intent.putExtra(KEY_FID, fid);
-        intent.putExtra(S1GoConfig.FORM_HASH, formHash);
+        intent.putExtra(BuildConfig.FORM_HASH, formHash);
         context.startActivity(intent);
     }
 
@@ -69,7 +69,7 @@ public class SendThreadsActivity extends BaseToolbarActivity {
         setContentView(R.layout.activity_set_threads);
 
         mFid = getIntent().getStringExtra(KEY_FID);
-        mFormHash = getIntent().getStringExtra(S1GoConfig.FORM_HASH);
+        mFormHash = getIntent().getStringExtra(BuildConfig.FORM_HASH);
         mRootView = getWindow().findViewById(Window.ID_ANDROID_CONTENT);
         mTitleEdit = ViewUtils.f(this, R.id.title);
         mContentEdit = ViewUtils.f(this, R.id.content);
@@ -177,7 +177,7 @@ public class SendThreadsActivity extends BaseToolbarActivity {
                         if (message == null) {
                             ToastUtils.showToastShort(MainApplication.getContext(), R.string.sorry);
                         }
-                        if (TextUtils.equals(S1GoConfig.POST_NEW_THREAD_SUCCEED, message.messageval)) {
+                        if (TextUtils.equals(BuildConfig.POST_NEW_THREAD_SUCCEED, message.messageval)) {
                             ToastUtils.showToastShort(MainApplication.getContext(), R.string.set_succeed);
                             finish();
                         } else {

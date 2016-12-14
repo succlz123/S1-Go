@@ -15,7 +15,6 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
 
-import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.utils.common.FileUtils;
 
 import android.graphics.Bitmap;
@@ -45,7 +44,7 @@ public class PicDataSource implements PicContract.DataSource {
         final Uri uri = Uri.parse(url);
         final ImageRequest imageRequest = ImageRequestBuilder.newBuilderWithSource(uri).build();
         final ImagePipeline imagePipeline = Fresco.getImagePipeline();
-        final DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, this);
+        final DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, null);
         Observable<Bitmap> observable1 = Observable.fromEmitter(new Action1<Emitter<Bitmap>>() {
             @Override
             public void call(final Emitter<Bitmap> bitmapEmitter) {
@@ -68,7 +67,7 @@ public class PicDataSource implements PicContract.DataSource {
         Observable<String> observable2 = Observable.create(new Observable.OnSubscribe<String>() {
             @Override
             public void call(Subscriber<? super String> subscriber) {
-                CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(imageRequest, this);
+                CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(imageRequest, null);
                 File file = getCachedImageOnDisk(cacheKey);
                 if (file != null) {
                     subscriber.onNext(file.toString());
@@ -99,7 +98,7 @@ public class PicDataSource implements PicContract.DataSource {
         return Observable.fromEmitter(new Action1<Emitter<Boolean>>() {
             @Override
             public void call(final Emitter<Boolean> bitmapEmitter) {
-                CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(imageRequest, MainApplication.getInstance());
+                CacheKey cacheKey = DefaultCacheKeyFactory.getInstance().getEncodedCacheKey(imageRequest, null);
                 File file = getCachedImageOnDisk(cacheKey);
 
                 if (file != null && file.exists()) {
@@ -108,7 +107,7 @@ public class PicDataSource implements PicContract.DataSource {
                     return;
                 }
 
-                DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, this);
+                DataSource<CloseableReference<CloseableImage>> dataSource = imagePipeline.fetchDecodedImage(imageRequest, null);
                 dataSource.subscribe(new BaseBitmapDataSubscriber() {
                     @Override
                     public void onNewResultImpl(@Nullable final Bitmap bitmap) {
