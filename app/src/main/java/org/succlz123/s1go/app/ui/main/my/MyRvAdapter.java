@@ -9,6 +9,7 @@ import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.ui.blackList.BlackListActivity;
 import org.succlz123.s1go.app.ui.login.LoginActivity;
 import org.succlz123.s1go.app.utils.PicHelper;
+import org.succlz123.s1go.app.utils.SettingHelper;
 import org.succlz123.s1go.app.utils.ThemeHelper;
 import org.succlz123.s1go.app.utils.common.MyUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
@@ -44,15 +45,18 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int VH_SETTING_NIGHT = 3;
     public static final int VH_SETTING_AVATAR = 4;
     public static final int VH_SETTING_PIC = 5;
+    public static final int VH_SETTING_PHONE_TAIL = 6;
 
     private UserInfoVH mUserInfoVH;
     private String[] mTitle = new String[]{"我的主题", "我的收藏", "我的消息", "个人黑名单"};
     private int[] mIcon = new int[]{R.drawable.ic_swap_calls_white_48dp, R.drawable.ic_clear_all_white_48dp, R.drawable.ic_remove_white_48dp};
 
     private int mThemeId;
+    private boolean mPhoneTail;
 
     public MyRvAdapter(Context context) {
         mThemeId = ThemeHelper.getTheme(context);
+        mPhoneTail = SettingHelper.isShowPhoneTail(context);
     }
 
     public void refresh() {
@@ -82,6 +86,8 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return TitleVH.create(parent);
         } else if (viewType == VH_SETTING_PIC) {
             return SettingPicVH.create(parent);
+        } else if (viewType == VH_SETTING_PHONE_TAIL) {
+            return PhoneTailVH.create(parent);
         }
         return null;
     }
@@ -178,6 +184,14 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .show();
                 }
             });
+        } else if (viewHolder instanceof PhoneTailVH) {
+            ((PhoneTailVH) viewHolder).switchPhoneTail.setChecked(mPhoneTail);
+            ((PhoneTailVH) viewHolder).switchPhoneTail.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((PhoneTailVH) viewHolder).switchPhoneTail.setChecked(SettingHelper.togglePhoneTail(view.getContext()));
+                }
+            });
         }
     }
 
@@ -216,7 +230,7 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 8;
+        return 9;
     }
 
     @Override
@@ -231,6 +245,8 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return VH_SETTING_AVATAR;
         } else if (position == 7) {
             return VH_SETTING_PIC;
+        } else if (position == 8) {
+            return VH_SETTING_PHONE_TAIL;
         } else {
             return 0;
         }
@@ -320,6 +336,21 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View view = layoutInflater.inflate(R.layout.recycler_view_item_my_setting_avater, parent, false);
             return new SettingPicVH(view);
+        }
+    }
+
+    private static class PhoneTailVH extends RecyclerView.ViewHolder {
+        public CheckBox switchPhoneTail;
+
+        public PhoneTailVH(View itemView) {
+            super(itemView);
+            switchPhoneTail = ViewUtils.f(itemView, R.id.switch_night);
+        }
+
+        public static PhoneTailVH create(ViewGroup parent) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View view = layoutInflater.inflate(R.layout.recycler_view_item_my_setting_phone_tail, parent, false);
+            return new PhoneTailVH(view);
         }
     }
 }

@@ -6,6 +6,7 @@ import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.bean.SendInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.ui.base.BaseToolbarActivity;
+import org.succlz123.s1go.app.utils.SettingHelper;
 import org.succlz123.s1go.app.utils.common.SysUtils;
 import org.succlz123.s1go.app.utils.common.ToastUtils;
 import org.succlz123.s1go.app.utils.common.ViewUtils;
@@ -161,6 +162,9 @@ public class SendThreadsActivity extends BaseToolbarActivity {
     }
 
     private void send() {
+        if (SettingHelper.isShowPhoneTail(this)) {
+            mContent += BuildConfig.PHONE_INFO;
+        }
         Observable<SendInfo> observable = RetrofitManager.apiService().sendNewThread(mFid, mFormHash, mTitle, mContent);
         Subscription subscription = observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

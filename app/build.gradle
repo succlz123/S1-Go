@@ -8,8 +8,8 @@ android {
         applicationId "org.succlz123.s1go.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
-        versionName "1.0.9"
+        versionCode 10
+        versionName "1.0.10"
 
         buildConfigField 'String', 'AUTH', '\"auth\"'
         buildConfigField 'String', 'SALT_KEY', '\"saltkey\"'
@@ -20,7 +20,7 @@ android {
         buildConfigField 'String', 'LOGIN_SUCCEED', '\"location_login_succeed_mobile\"'
         buildConfigField 'String', 'LOGIN_FAILED', '\"login_invalid\"'
 
-        buildConfigField 'String', 'PHONE_INFO', '\"\\n \\n \\n + ——发送自 Stage1st Go [url=http://www.coolapk.com/apk/org.succlz123.s1go.app] \" + android.os.Build.MODEL + \"Android\" + android.os.Build.VERSION.RELEASE + "[/url]"'
+        buildConfigField 'String', 'PHONE_INFO', '\"\\n \\n \\n—— 发送自 [url=http://www.coolapk.com/apk/org.succlz123.s1go.app] Stage1st Go \" + android.os.Build.MODEL + \" Android \" + android.os.Build.VERSION.RELEASE + "[/url]"'
     }
 
     compileOptions {

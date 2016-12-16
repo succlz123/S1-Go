@@ -282,4 +282,12 @@ public class ImageLoader {
             super.onRelease(id);
         }
     }
+
+    public void clearMemoryCache() {
+        try {
+            Fresco.getImagePipeline().clearMemoryCaches();
+        } catch (Exception ignored) {
+        }
+        System.gc();
+    }
 }

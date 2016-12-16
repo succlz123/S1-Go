@@ -8,16 +8,12 @@ import org.succlz123.s1go.app.utils.s1.S1Fid;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
-import java.util.concurrent.Callable;
-
-import bolts.Continuation;
 import bolts.Task;
 
 /**
@@ -36,6 +32,7 @@ public class ThreadListActivity extends BaseToolbarActivity {
     }
 
     private Task mTask;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,20 +43,6 @@ public class ThreadListActivity extends BaseToolbarActivity {
         ensureToolbar();
         setTitle(S1Fid.getS1Fid(Integer.valueOf(mFid)));
         setUpListFragment();
-
-        mTask=  Task.callInBackground(new Callable<Object>() {
-            @Override
-            public Object call() throws Exception {
-                Thread.currentThread().sleep(10000);
-                return null;
-            }
-        }).onSuccessTask(new Continuation<Object, Task<Object>>() {
-            @Override
-            public Task<Object> then(Task<Object> task) throws Exception {
-                Log.d("", "");
-                return null;
-            }
-        }, Task.UI_THREAD_EXECUTOR);
 
         final GestureDetector detector = new GestureDetector(ThreadListActivity.this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -87,17 +70,6 @@ public class ThreadListActivity extends BaseToolbarActivity {
                 return detector.onTouchEvent(event);
             }
         });
-    }
-
-    @Override
-    protected void onDestroy() {
-        mTask=null;
-        super.onDestroy();
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
     }
 
     private void setUpListFragment() {

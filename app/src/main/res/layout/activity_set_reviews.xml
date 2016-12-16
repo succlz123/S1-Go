@@ -11,7 +11,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"
             android:id="@+id/content"
-            android:hint="请输入回复"
+            android:hint="请输入回复(5字起)"
             android:textColorHint="@color/theme_color_text_hint"
             android:textSize="18sp"
             android:padding="10dp"

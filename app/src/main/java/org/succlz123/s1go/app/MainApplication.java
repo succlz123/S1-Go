@@ -7,6 +7,7 @@ import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.qiibeta.bitmapview.image.TileImage;
+import org.succlz123.blockanalyzer.BlockAnalyzer;
 import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.database.UserDatabase;
@@ -100,12 +101,31 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
                 }
             }
         });
+        BlockAnalyzer.install(this);
     }
 
     @Override
     public void onTrimMemory(int level) {
         super.onTrimMemory(level);
         TileImage.clearBitmapRecyclePool();
+        ImageLoader.getInstance().clearMemoryCache();
+    }
+
+    // So sadly! This method will never be called in production device
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        sInstance = null;
+        ImageLoader.getInstance().shutDown();
+    }
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+    }
+
+    public void runOnUiThread(Runnable runnable) {
+        mHandler.post(runnable);
     }
 
     public void addUserListener(UserInfoChangeListener UserInfoChangeListener) {
@@ -141,10 +161,6 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
         String auth = BuildConfig.AUTH + "=" + Uri.encode(userInfo.auth);
         String saltKey = BuildConfig.SALT_KEY + "=" + userInfo.saltkey;
         return cookie + auth + ";" + cookie + saltKey + ";";
-    }
-
-    public void runOnUiThread(Runnable runnable) {
-        mHandler.post(runnable);
     }
 
     @Override
