@@ -35,7 +35,7 @@ public class ThreadListPresenter implements ThreadListContract.Presenter {
 
     @Override
     public void loadThreadList() {
-        if (mIsLoading && !mHasNextPage) {
+        if (mIsLoading || !mHasNextPage) {
             return;
         }
         mIsLoading = true;

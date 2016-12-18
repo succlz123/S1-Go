@@ -39,6 +39,7 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
     private String mFormHash;
     private int mCurrentPagerNum;
     private int mTotalPagerNum;
+    private LinearLayoutManager mLayoutManager;
     private ThreadInfoRvAdapter mThreadInfoRvAdapter;
 
     public static ThreadInfoFragment newInstance(String tid, int currentPagerNum, int totalPagerNum) {
@@ -65,8 +66,8 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
         }
         swipeRefreshLayout.setEnabled(false);
         recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -100,6 +101,19 @@ public class ThreadInfoFragment extends BaseThreadRvFragment {
         super.onDestroyView();
         mThreadInfoRvAdapter = null;
     }
+
+//    public void goToTop() {
+//        if (recyclerView == null || mLayoutManager == null) {
+//            return;
+//        }
+//        recyclerView.stopScroll();
+//        mLayoutManager.setSmoothScrollbarEnabled(true);
+//        int firstVisibilityPosition = mLayoutManager.findFirstCompletelyVisibleItemPosition();
+//        if (firstVisibilityPosition > 10) {
+//            mLayoutManager.scrollToPositionWithOffset(10, 0);
+//        }
+//        recyclerView.smoothScrollToPosition(0);
+//    }
 
     private void loadThreadInfo() {
         setRefreshing();

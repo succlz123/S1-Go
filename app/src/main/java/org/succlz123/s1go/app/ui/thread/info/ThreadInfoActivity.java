@@ -76,6 +76,33 @@ public class ThreadInfoActivity extends BaseToolbarActivity {
                 }
             }
         });
+
+//        final GestureDetector detector = new GestureDetector(ThreadInfoActivity.this, new GestureDetector.SimpleOnGestureListener() {
+//            @Override
+//            public boolean onSingleTapUp(MotionEvent e) {
+//                return super.onSingleTapUp(e);
+//            }
+//
+//            @Override
+//            public boolean onDoubleTapEvent(MotionEvent e) {
+//                return super.onDoubleTapEvent(e);
+//            }
+//
+//            @Override
+//            public boolean onDoubleTap(MotionEvent e) {
+//                if (mThreadListFragment != null) {
+//                    mThreadListFragment.goToTop();
+//                    ToastUtils.showToastShort(ThreadInfoActivity.this, "已经返回顶部");
+//                }
+//                return super.onDoubleTap(e);
+//            }
+//        });
+//        getToolbar().setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return detector.onTouchEvent(event);
+//            }
+//        });
     }
 
     @Override
