@@ -10,15 +10,14 @@
         android:background="@color/theme_color_view_background"
         android:layout_height="match_parent">
 
-    <ImageView android:layout_width="24dp"
+    <ImageView android:layout_width="22dp"
                android:id="@+id/icon"
                android:duplicateParentState="true"
                android:backgroundTint="@color/selector_tint_bottom_navigation"
-               android:background="@drawable/ic_panorama_fish_eye_white_48dp"
-               android:layout_height="24dp"/>
+               android:layout_height="22dp"/>
 
     <TextView android:layout_width="wrap_content"
-              android:textSize="14sp"
+              android:textSize="12sp"
               android:id="@+id/title"
               android:visibility="gone"
               android:layout_marginTop="1dp"

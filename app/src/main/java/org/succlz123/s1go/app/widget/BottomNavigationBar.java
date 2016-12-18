@@ -52,7 +52,6 @@ public class BottomNavigationBar extends LinearLayout {
 
         imgIcon.setBackgroundResource(drawableResId);
         tvTitle.setText(title);
-
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

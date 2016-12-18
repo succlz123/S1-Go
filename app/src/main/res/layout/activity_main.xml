@@ -17,7 +17,7 @@
     <org.succlz123.s1go.app.widget.BottomNavigationBar
             android:layout_width="match_parent"
             android:id="@+id/bottom_bar"
-            android:elevation="6dp"
-            android:layout_height="56dp"/>
+            android:elevation="10dp"
+            android:layout_height="54dp"/>
 
 </com.bilibili.magicasakura.widgets.TintLinearLayout>
