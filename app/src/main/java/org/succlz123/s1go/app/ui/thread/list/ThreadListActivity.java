@@ -14,8 +14,6 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 
-import bolts.Task;
-
 /**
  * Created by succlz123 on 2015/4/14.
  */
@@ -23,6 +21,9 @@ public class ThreadListActivity extends BaseToolbarActivity {
     public static final String KEY_THREAD_ACTIVITY_FID = "key_activity_thread_fid";
 
     private String mFid;
+    private String[] mChildFid;
+
+    private ThreadListPresenter mPresenter;
     private ThreadListFragment mThreadListFragment;
 
     public static void start(Context context, String fid) {
@@ -30,8 +31,6 @@ public class ThreadListActivity extends BaseToolbarActivity {
         intent.putExtra(KEY_THREAD_ACTIVITY_FID, fid);
         context.startActivity(intent);
     }
-
-    private Task mTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class ThreadListActivity extends BaseToolbarActivity {
 
         showBackButton();
         ensureToolbar();
-        setTitle(S1Fid.getS1Fid(Integer.valueOf(mFid)));
+        setTitle(S1Fid.getS1FidName(mFid));
         setUpListFragment();
 
         final GestureDetector detector = new GestureDetector(ThreadListActivity.this, new GestureDetector.SimpleOnGestureListener() {
@@ -72,6 +71,12 @@ public class ThreadListActivity extends BaseToolbarActivity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        mPresenter = null;
+        super.onDestroy();
+    }
+
     private void setUpListFragment() {
         mThreadListFragment = (ThreadListFragment) getSupportFragmentManager().findFragmentByTag(ThreadListFragment.TAG);
         if (mThreadListFragment == null) {
@@ -83,25 +88,40 @@ public class ThreadListActivity extends BaseToolbarActivity {
                     .add(R.id.content, mThreadListFragment, ThreadListFragment.TAG)
                     .commit();
         }
-        new ThreadListPresenter(mFid, new ThreadListDataSource(), mThreadListFragment);
+        mPresenter = new ThreadListPresenter(mFid, new ThreadListDataSource(), mThreadListFragment);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuItem item = menu.add(Menu.NONE, Menu.FIRST, 100, "字号");
+        mChildFid = S1Fid.getS1ChildFidName(mFid);
+        if (mChildFid != null && mChildFid.length > 0) {
+            for (int i = 0; i < mChildFid.length; i++) {
+                String s = mChildFid[i];
+                int position = i;
+                menu.add(Menu.NONE, position++, 100, s);
+            }
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
+        int id = item.getItemId();
+        switch (id) {
             case android.R.id.home:
                 onBackPressed();
                 return true;
-            case 100:
-                mThreadListFragment.xx();
-                ToastUtils.showToastShort(this, "额,有空在说.");
-                return true;
+            default:
+                String s = mChildFid[id];
+                if (mPresenter != null) {
+                    mPresenter.setFid(S1Fid.getFidFormName(s));
+                    mPresenter.loadThreadList();
+                }
+                ToastUtils.showToastShort(this, s);
+//            case 100:
+//                mThreadListFragment.xx();
+//                ToastUtils.showToastShort(this, "额,有空在说.");
+//                return true;
         }
         return super.onOptionsItemSelected(item);
     }

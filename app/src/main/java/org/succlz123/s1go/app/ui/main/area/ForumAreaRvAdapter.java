@@ -59,7 +59,7 @@ public class ForumAreaRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(final RecyclerView.ViewHolder viewHolder, int position) {
         if (viewHolder instanceof ForumAreaVH) {
-            ((ForumAreaVH) viewHolder).name.setText(S1Fid.getS1Fid(mFidList.get(position)));
+            ((ForumAreaVH) viewHolder).name.setText(S1Fid.getS1FidName(mFidList.get(position)));
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

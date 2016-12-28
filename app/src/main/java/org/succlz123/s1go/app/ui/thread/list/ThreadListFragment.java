@@ -154,8 +154,4 @@ public class ThreadListFragment extends BaseThreadRvFragment implements ThreadLi
         ToastUtils.showToastShort(getActivity(), R.string.sorry);
         setRefreshError();
     }
-
-    public void xx() {
-        mThreadListRvAdapter.getItemCount();
-    }
 }

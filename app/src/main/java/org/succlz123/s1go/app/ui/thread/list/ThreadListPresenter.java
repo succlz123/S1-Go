@@ -75,6 +75,12 @@ public class ThreadListPresenter implements ThreadListContract.Presenter {
     }
 
     @Override
+    public void setFid(String fid) {
+        mPager = 1;
+        this.mFid = fid;
+    }
+
+    @Override
     public void subscribe() {
 
     }

@@ -1,5 +1,9 @@
 package org.succlz123.s1go.app.utils.s1;
 
+import org.succlz123.s1go.app.BuildConfig;
+
+import android.text.TextUtils;
+
 import java.lang.reflect.Field;
 
 /**
@@ -27,12 +31,16 @@ public class S1Fid {
     public static final String S97 = "蛋头电玩贩卖区";
     public static final String S102 = "大众软件精华区";
 
+    public static final String[] L4 = new String[]{S4, S97, S102};
+
     public static final String S135 = "手游页游";
 
     public static final String S6 = "动漫论坛";
     public static final String S144 = "欧美动漫";
     public static final String S83 = "动漫投票鉴赏";
     public static final String S130 = "番且炒弹";
+
+    public static final String[] L6 = new String[]{S6, S83, S130};
 
     public static final String S136 = "模玩专区";
     public static final String S48 = "影视论坛";
@@ -42,10 +50,15 @@ public class S1Fid {
     public static final String S80 = "摄影区";
     public static final String S124 = "开箱区";
 
+    public static final String[] L51 = new String[]{S51, S80, S124};
+
     public static final String S50 = "文史沙龙";
     public static final String S120 = "读书会";
 
+    public static final String[] L50 = new String[]{S50, S120};
+
     public static final String S31 = "彼岸文化";
+
     public static final String S77 = "八卦体育";
 
     public static final String S75 = "外野";
@@ -58,9 +71,9 @@ public class S1Fid {
     public static final String S71 = "火星";
     public static final String S100 = "哥欠";
 
-    public static final String S133 = "剑灵";
+    public static final String[] L75 = new String[]{S75, S123, S93, S74, S101, S87, S109, S71, S100};
 
-    public static final String S82 = "网游综合讨论区";
+    public static final String S82 = "新网游综合讨论区";
     public static final String S110 = "洛奇英雄传";
     public static final String S53 = "魔兽世界";
     public static final String S66 = "光荣网游版";
@@ -71,9 +84,11 @@ public class S1Fid {
     public static final String S36 = "仙境传说R O.";
     public static final String S116 = "剑网3";
     public static final String S113 = "第九大陆C9";
+    public static final String S133 = "剑灵";
+
+    public static final String[] L82 = new String[]{S82, S110, S53, S66, S78, S79, S94, S56, S36, S116, S113, S133};
 
     public static final String S115 = "二手交易区";
-    public static final String S119 = "内有小电影";
 
     /**
      * 主题公园
@@ -98,28 +113,76 @@ public class S1Fid {
     public static final String S27 = "内野";
     public static final String S9 = "仓库-游戏精华备份区";
     public static final String S15 = "本垒";
+    public static final String S119 = "内有小电影";
 
-    public static String getS1Fid(int fid) {
+    public static final String[] L27 = new String[]{S27, S9, S15, S119};
+
+    public static String getS1FidName(String fid) {
         String name = "S" + fid;
         Class<S1Fid> c = S1Fid.class;
         Field field = null;
         try {
             field = c.getDeclaredField(name);
             return field.get(null).toString();
-        } catch (NoSuchFieldException | IllegalAccessException ignored) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
         }
         return null;
     }
 
-    public static String getS1Fid(String fid) {
-        String name = "S" + fid;
+    public static String[] getS1ChildFidName(String fid) {
+        String name = "L" + fid;
+        Class<S1Fid> c = S1Fid.class;
+        Field field = null;
+        try {
+            field = c.getDeclaredField(name);
+            return (String[]) field.get(null);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static String getS1ChildFidNumber(String fid) {
+        String name = "L" + fid;
         Class<S1Fid> c = S1Fid.class;
         Field field = null;
         try {
             field = c.getDeclaredField(name);
             return field.get(null).toString();
-        } catch (NoSuchFieldException | IllegalAccessException ignored) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
         }
         return null;
+    }
+
+    public static String getFidFormName(String name) {
+        Class<S1Fid> c = S1Fid.class;
+        Field[] fields = c.getFields();
+        try {
+            for (Field field : fields) {
+                // fuck Instant Run
+                if (TextUtils.equals(field.getName(), "$change")) {
+                    continue;
+                }
+                Object o = field.get(null);
+                if (o instanceof String) {
+                    if (TextUtils.equals(name, (CharSequence) o)) {
+                        return field.getName().replace("S", "");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            if (BuildConfig.DEBUG) {
+                e.printStackTrace();
+            }
+        }
+        return "1";
     }
 }

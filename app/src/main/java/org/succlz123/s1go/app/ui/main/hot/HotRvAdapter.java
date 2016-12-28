@@ -38,7 +38,7 @@ public class HotRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             ((BaseThreadListRvViewHolder) viewHolder).lastPoster.setText(hostPost.lastposter);
             ((BaseThreadListRvViewHolder) viewHolder).reply.setText(hostPost.replies);
             ((BaseThreadListRvViewHolder) viewHolder).views.setText(hostPost.views);
-            ((BaseThreadListRvViewHolder) viewHolder).fid.setText("[" + S1Fid.getS1Fid(hostPost.fid) + "]");
+            ((BaseThreadListRvViewHolder) viewHolder).fid.setText("[" + S1Fid.getS1FidName(hostPost.fid) + "]");
         }
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

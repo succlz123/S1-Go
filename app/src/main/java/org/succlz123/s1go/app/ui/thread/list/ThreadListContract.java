@@ -31,6 +31,8 @@ public interface ThreadListContract {
         String getFormHash();
 
         void onRefresh();
+
+        void setFid(String fid);
     }
 
     interface DataSource extends BaseDataSource {
