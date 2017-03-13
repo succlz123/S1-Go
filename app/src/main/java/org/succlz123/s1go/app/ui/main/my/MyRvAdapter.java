@@ -46,6 +46,7 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public static final int VH_SETTING_AVATAR = 4;
     public static final int VH_SETTING_PIC = 5;
     public static final int VH_SETTING_PHONE_TAIL = 6;
+    public static final int VH_SETTING_URL_IP = 7;
 
     private UserInfoVH mUserInfoVH;
     private String[] mTitle = new String[]{"我的主题", "我的收藏", "我的消息", "个人黑名单"};
@@ -53,10 +54,12 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private int mThemeId;
     private boolean mPhoneTail;
+    private boolean mUrlIp;
 
     public MyRvAdapter(Context context) {
         mThemeId = ThemeHelper.getTheme(context);
         mPhoneTail = SettingHelper.isShowPhoneTail(context);
+        mUrlIp = SettingHelper.isUrlIp(context);
     }
 
     public void refresh() {
@@ -88,6 +91,8 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return SettingPicVH.create(parent);
         } else if (viewType == VH_SETTING_PHONE_TAIL) {
             return PhoneTailVH.create(parent);
+        } else if (viewType == VH_SETTING_URL_IP) {
+            return UrlIpVH.create(parent);
         }
         return null;
     }
@@ -192,6 +197,14 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     ((PhoneTailVH) viewHolder).switchPhoneTail.setChecked(SettingHelper.togglePhoneTail(view.getContext()));
                 }
             });
+        } else if (viewHolder instanceof UrlIpVH) {
+            ((UrlIpVH) viewHolder).switchIp.setChecked(mUrlIp);
+            ((UrlIpVH) viewHolder).switchIp.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ((UrlIpVH) viewHolder).switchIp.setChecked(SettingHelper.toggleUrl(view.getContext()));
+                }
+            });
         }
     }
 
@@ -230,7 +243,7 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return 9;
+        return 10;
     }
 
     @Override
@@ -247,6 +260,8 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return VH_SETTING_PIC;
         } else if (position == 8) {
             return VH_SETTING_PHONE_TAIL;
+        } else if (position == 9) {
+            return VH_SETTING_URL_IP;
         } else {
             return 0;
         }
@@ -344,13 +359,28 @@ public class MyRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         public PhoneTailVH(View itemView) {
             super(itemView);
-            switchPhoneTail = ViewUtils.f(itemView, R.id.switch_night);
+            switchPhoneTail = ViewUtils.f(itemView, R.id.switch_tail);
         }
 
         public static PhoneTailVH create(ViewGroup parent) {
             LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
             View view = layoutInflater.inflate(R.layout.recycler_view_item_my_setting_phone_tail, parent, false);
             return new PhoneTailVH(view);
+        }
+    }
+
+    private static class UrlIpVH extends RecyclerView.ViewHolder {
+        public CheckBox switchIp;
+
+        public UrlIpVH(View itemView) {
+            super(itemView);
+            switchIp = ViewUtils.f(itemView, R.id.switch_ip);
+        }
+
+        public static UrlIpVH create(ViewGroup parent) {
+            LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
+            View view = layoutInflater.inflate(R.layout.recycler_view_item_my_setting_url_ip, parent, false);
+            return new UrlIpVH(view);
         }
     }
 }

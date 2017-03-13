@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/title"
             android:layout_weight="1"
-            android:text="发帖回帖显示小尾巴"
+            android:text="使用IP地址访问S1"
             android:textSize="16sp"
             android:gravity="start|left|center_vertical"
             android:textColor="@color/theme_color_text_primary"/>
@@ -27,6 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:compoundButtonTint="@color/selector_compoundbutton_normal"
-            android:id="@+id/switch_tail"/>
+            android:id="@+id/switch_ip"/>
 
 </com.bilibili.magicasakura.widgets.TintLinearLayout>

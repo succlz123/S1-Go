@@ -1,7 +1,9 @@
 package org.succlz123.s1go.app.config;
 
 
+import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.api.ApiService;
+import org.succlz123.s1go.app.utils.SettingHelper;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -13,6 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitManager {
     public static final String BASE = "http://bbs.saraba1st.com/2b/api/mobile/";
+    public static final String BASE_IP = "http://119.23.22.79/2b/api/mobile/";
 
     public static final String LOGIN = "http://bbs.saraba1st.com/2b/api/mobile/" +
             "index.php?mobile=no&version=1&module=login&loginsubmit=yes&loginfield=auto&submodule=checkpost";
@@ -45,7 +48,7 @@ public class RetrofitManager {
     }
 
     public static Retrofit getRetrofit() {
-        return getRetrofit(BASE);
+        return getRetrofit(SettingHelper.isUrlIp(MainApplication.getContext()) ? BASE_IP : BASE);
     }
 
     public static ApiService apiService() {

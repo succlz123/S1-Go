@@ -14,10 +14,6 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-    <View android:layout_width="match_parent"
-          android:layout_height="1dp"
-          android:background="@color/theme_color_window_background"/>
-
     <org.succlz123.s1go.app.widget.BottomNavigationBar
             android:layout_width="match_parent"
             android:id="@+id/bottom_bar"

@@ -9,8 +9,10 @@ import android.content.SharedPreferences;
 
 public class SettingHelper {
     private static final String CURRENT_SETTING_PHONE_TAIL = "current_setting_phone_tail";
-
     private static boolean sSettingPhoneTail;
+
+    private static final String CURRENT_SETTING_URL = "current_setting_url";
+    private static boolean sSettingUrl;
 
     public static SharedPreferences getSharePreference(Context context) {
         return context.getSharedPreferences("setting", Context.MODE_PRIVATE);
@@ -31,5 +33,22 @@ public class SettingHelper {
         }
         sSettingPhoneTail = getSharePreference(context).getBoolean(CURRENT_SETTING_PHONE_TAIL, false);
         return sSettingPhoneTail;
+    }
+
+    public static boolean toggleUrl(Context context) {
+        isUrlIp(context);
+        sSettingUrl = !sSettingUrl;
+        getSharePreference(context).edit()
+                .putBoolean(CURRENT_SETTING_URL, sSettingUrl)
+                .apply();
+        return sSettingUrl;
+    }
+
+    public static boolean isUrlIp(Context context) {
+        if (sSettingUrl) {
+            return true;
+        }
+        sSettingUrl = getSharePreference(context).getBoolean(CURRENT_SETTING_URL, false);
+        return sSettingUrl;
     }
 }
