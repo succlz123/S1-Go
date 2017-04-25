@@ -30,8 +30,8 @@ public class BlockNotifier {
                 .setContentText(msg)
                 .setAutoCancel(true)
                 .setSmallIcon(R.drawable.ic_user_img)
-                .setDefaults(3)
-                .setContentIntent(getPendingIntent(context, path));
+                .setDefaults(3);
+//                .setContentIntent(getPendingIntent(context, path));
         notificationManager.notify(block.getBlockTime().hashCode(), builder.build());
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }

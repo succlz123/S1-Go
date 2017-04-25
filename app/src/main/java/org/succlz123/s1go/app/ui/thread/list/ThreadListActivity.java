@@ -117,6 +117,7 @@ public class ThreadListActivity extends BaseToolbarActivity {
                     mPresenter.setFid(S1Fid.getFidFormName(s));
                     mPresenter.loadThreadList();
                 }
+                setTitle(s);
                 ToastUtils.showToastShort(this, s);
 //            case 100:
 //                mThreadListFragment.xx();

@@ -23,7 +23,7 @@ public abstract class BaseThreadRvFragment extends BaseFragment implements Swipe
     protected long mLastRefreshStartTime;
     protected RecyclerView recyclerView;
     protected FloatingActionButton floatingActionButton;
-    private TextView hintTextView;
+//    private TextView hintTextView;
 
     @Nullable
     @Override
@@ -32,7 +32,6 @@ public abstract class BaseThreadRvFragment extends BaseFragment implements Swipe
         swipeRefreshLayout = ViewUtils.f(view, R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(this);
         swipeRefreshLayout.setColorSchemeColors(ContextCompat.getColor(getContext(), R.color.theme_color_secondary));
-        hintTextView = ViewUtils.f(view, R.id.hint);
         recyclerView = ViewUtils.f(view, R.id.recycler_view);
         if (recyclerView == null) {
             throw new NullPointerException("recyclerView not found");
@@ -104,8 +103,6 @@ public abstract class BaseThreadRvFragment extends BaseFragment implements Swipe
         } else {
             swipeRefreshLayout.post(mRefreshCompletedAction);
         }
-        hintTextView.setVisibility(View.GONE);
-        hintTextView.setText("");
     }
 
     public void setRefreshError() {

@@ -64,7 +64,7 @@ public class LoginPresenter implements LoginContract.Presenter {
                         //login failed > messageVal = login_invalid
                         //抱歉，密码空或包含非法字符     = profile_passwd_illegal
                         String messageVal = userInfo.Message.messageval;
-                        if ((TextUtils.equals(messageVal, BuildConfig.LOGIN_SUCCEED))) {
+                        if (TextUtils.equals(messageVal, BuildConfig.LOGIN_MOBILE_SUCCEED) || TextUtils.equals(messageVal, BuildConfig.LOGIN_SUCCEED)) {
                             mLoginView.onLoginSuccess(userInfo);
                         } else if ((TextUtils.equals(messageVal, BuildConfig.LOGIN_FAILED))) {
                             mLoginView.onLoginFailed(messageVal);

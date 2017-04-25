@@ -62,6 +62,7 @@ public class S1Fid {
     public static final String S77 = "八卦体育";
 
     public static final String S75 = "外野";
+    public static final String S141 = "泥潭(新闻时政区)";
     public static final String S123 = "吃货";
     public static final String S93 = "火暴";
     public static final String S74 = "马叉虫";
@@ -71,7 +72,7 @@ public class S1Fid {
     public static final String S71 = "火星";
     public static final String S100 = "哥欠";
 
-    public static final String[] L75 = new String[]{S75, S123, S93, S74, S101, S87, S109, S71, S100};
+    public static final String[] L75 = new String[]{S75, S141, S123, S93, S74, S101, S87, S109, S71, S100};
 
     public static final String S82 = "新网游综合讨论区";
     public static final String S110 = "洛奇英雄传";

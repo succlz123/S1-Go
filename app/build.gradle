@@ -8,8 +8,8 @@ android {
         applicationId "org.succlz123.s1go.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 13
-        versionName "1.1.0"
+        versionCode 15
+        versionName "1.1.2"
 
         buildConfigField 'String', 'AUTH', '\"auth\"'
         buildConfigField 'String', 'SALT_KEY', '\"saltkey\"'
@@ -17,7 +17,8 @@ android {
 
         buildConfigField 'String', 'POST_REPLY_SUCCEED', '\"post_reply_succeed\"'
         buildConfigField 'String', 'POST_NEW_THREAD_SUCCEED', '\"post_newthread_succeed\"'
-        buildConfigField 'String', 'LOGIN_SUCCEED', '\"location_login_succeed_mobile\"'
+        buildConfigField 'String', 'LOGIN_MOBILE_SUCCEED', '\"location_login_succeed_mobile\"'
+        buildConfigField 'String', 'LOGIN_SUCCEED', '\"login_succeed\"'
         buildConfigField 'String', 'LOGIN_FAILED', '\"login_invalid\"'
 
         buildConfigField 'String', 'PHONE_INFO', '\"\\n \\n \\n—— 发送自 [url=http://www.coolapk.com/apk/org.succlz123.s1go.app] Stage1st Go \" + android.os.Build.MODEL + \" Android \" + android.os.Build.VERSION.RELEASE + "[/url]"'
@@ -52,10 +53,6 @@ dependencies {
     compile "com.android.support:appcompat-v7:${rootProject.ext.androidSupportLibraryVersion}"
     compile "com.android.support:recyclerview-v7:${rootProject.ext.androidSupportLibraryVersion}"
     compile "com.android.support:design:${rootProject.ext.androidSupportLibraryVersion}"
-
-    compile "com.google.code.gson:gson:${rootProject.ext.gsonVersion}"
-
-//    compile "com.squareup.okhttp3:okhttp:${rootProject.ext.okhttpVersion}"
 
     compile "com.squareup.retrofit2:retrofit:${rootProject.ext.retrofitVersion}"
     compile "com.squareup.retrofit2:converter-gson:${rootProject.ext.retrofitVersion}"

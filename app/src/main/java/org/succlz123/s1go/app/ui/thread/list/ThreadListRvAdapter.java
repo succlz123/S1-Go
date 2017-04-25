@@ -6,8 +6,10 @@ import org.succlz123.s1go.app.ui.base.BaseThreadListRvViewHolder;
 import org.succlz123.s1go.app.ui.thread.info.ThreadInfoActivity;
 import org.succlz123.s1go.app.utils.BlackListHelper;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.util.DiffUtil;
+import android.support.v7.util.ListUpdateCallback;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.view.View;
@@ -56,6 +58,15 @@ public class ThreadListRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     }
 
     @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position, List<Object> payloads) {
+        if (payloads.isEmpty()) {
+            onBindViewHolder(holder, position);
+        } else {
+            Bundle bundle = (Bundle) payloads.get(0);
+        }
+    }
+
+    @Override
     public int getItemCount() {
         if (mThreadListList != null) {
             return mThreadListList.size();
@@ -78,7 +89,35 @@ public class ThreadListRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
         DiffUtil.DiffResult result = DiffUtil.calculateDiff(new Callback(mThreadListList, threadList), true);
         mThreadListList = threadList;
-        result.dispatchUpdatesTo(this);
+        result.dispatchUpdatesTo(new ListUpdateCallback() {
+            @Override
+            public void onInserted(int position, int count) {
+                if (count == getItemCount()) {
+                    notifyDataSetChanged();
+                    return;
+                }
+                notifyItemRangeInserted(position, count);
+            }
+
+            @Override
+            public void onRemoved(int position, int count) {
+                if (count == getItemCount()) {
+                    notifyDataSetChanged();
+                    return;
+                }
+                notifyItemRangeRemoved(position, count);
+            }
+
+            @Override
+            public void onMoved(int fromPosition, int toPosition) {
+                notifyItemMoved(fromPosition, toPosition);
+            }
+
+            @Override
+            public void onChanged(int position, int count, Object payload) {
+                notifyItemRangeChanged(position, count, payload);
+            }
+        });
     }
 
     public void change(List<ThreadList.VariablesEntity.ForumThreadlistEntity> threadList) {
@@ -128,6 +167,12 @@ public class ThreadListRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @Nullable
         @Override
         public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+//            Bundle bundle = new Bundle();
+//
+//            if ((newAvatarPath == null && oldAvatarPath != null)) {
+//                bundle.putString("avatarPath", newAvatarPath);
+//            }
+
             return super.getChangePayload(oldItemPosition, newItemPosition);
         }
     }
