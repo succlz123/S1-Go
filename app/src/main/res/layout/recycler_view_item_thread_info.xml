@@ -1,65 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:elevation="1dp"
+              android:layout_height="wrap_content"
               android:background="@color/theme_color_view_background"
-              android:layout_height="wrap_content">
+              android:elevation="1dp"
+              android:orientation="vertical">
 
     <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="60dp">
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
 
         <com.facebook.drawee.view.SimpleDraweeView
-                android:layout_width="43dp"
-                android:layout_height="43dp"
-                android:id="@+id/author_img"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                app:roundAsCircle="true"
-                app:placeholderImage="@drawable/ic_user_img"
-                android:layout_gravity="center_vertical"/>
+            android:id="@+id/author_img"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            app:placeholderImage="@drawable/ic_user_img"
+            app:roundAsCircle="true"/>
 
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/author_name"
-                android:layout_marginTop="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_toRightOf="@+id/author_img"
-                android:textSize="16sp"
-                android:textColor="@color/theme_base"/>
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/author_img"
+            android:textColor="@color/theme_base"
+            android:textSize="16sp"/>
+
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_gravity="center_vertical"
-                android:layout_below="@+id/author_name"
-                android:layout_toRightOf="@+id/author_img"
-                android:id="@+id/author_time"
-                android:textSize="13sp"
-                android:textColor="@color/gray"/>
+            android:id="@+id/author_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author_name"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/author_img"
+            android:textColor="@color/gray"
+            android:textSize="13sp"/>
+
         <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_gravity="center_vertical"
-                android:id="@+id/author_num"
-                android:textSize="16sp"
-                android:textColor="@color/gray"/>
+            android:id="@+id/author_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="10dp"
+            android:textColor="@color/gray"
+            android:textSize="16sp"/>
     </RelativeLayout>
 
-    <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/author_content"
-            android:textSize="16sp"
-            android:layout_margin="5dp"
-            android:textIsSelectable="true"
-            android:padding="5dp"
-            android:textColor="@color/theme_color_text_primary"/>
+    <org.succlz123.htmlview.HtmlTextView
+        android:id="@+id/author_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:focusable="false"
+        android:padding="5dp"
+        android:textColor="@color/theme_color_text_primary"
+        android:textIsSelectable="true"
+        android:textSize="16sp"/>
 
 </LinearLayout>

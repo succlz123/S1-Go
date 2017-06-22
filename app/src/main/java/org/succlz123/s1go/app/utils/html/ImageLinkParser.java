@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.utils.fromhtml;
+package org.succlz123.s1go.app.utils.html;
 
 import org.succlz123.s1go.app.ui.picture.PictureActivity;
 

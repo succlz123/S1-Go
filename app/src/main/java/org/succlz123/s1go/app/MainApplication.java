@@ -71,7 +71,7 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
         Observable.fromCallable(new Callable<UserInfo.Variables>() {
             @Override
             public UserInfo.Variables call() throws Exception {
-                S1Emoticon.initEmoticon();
+//                S1Emoticon.initEmoticon();
                 CrashReport.initCrashReport(MainApplication.getContext(), "900017373", BuildConfig.DEBUG);
                 return getUserInfo();
             }

@@ -1,4 +1,4 @@
-package org.succlz123.s1go.app.widget;
+package org.succlz123.s1go.app.utils;
 
 /**
  * Created by succlz123 on 2015/4/26.

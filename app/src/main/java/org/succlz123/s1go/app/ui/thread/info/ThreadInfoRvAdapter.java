@@ -2,25 +2,28 @@ package org.succlz123.s1go.app.ui.thread.info;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import org.succlz123.htmlview.HtmlTextView;
 import org.succlz123.s1go.app.MainApplication;
 import org.succlz123.s1go.app.R;
 import org.succlz123.s1go.app.bean.ThreadInfo;
 import org.succlz123.s1go.app.utils.BlackListHelper;
 import org.succlz123.s1go.app.utils.common.ViewUtils;
-import org.succlz123.s1go.app.utils.fromhtml.ImageLinkParser;
-import org.succlz123.s1go.app.utils.fromhtml.SpannedImageGetter;
+import org.succlz123.s1go.app.utils.html.ImageLinkParser;
+import org.succlz123.s1go.app.utils.html.S1ImageGetter;
 import org.succlz123.s1go.app.utils.s1.S1UidToAvatarUrl;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.text.Spanned;
 import android.text.TextUtils;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -33,9 +36,15 @@ import java.util.List;
 public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private List<ThreadInfo.VariablesEntity.PostlistEntity> mThreadInfoList = new ArrayList<>();
     private int mCurrentPagerNum;
+    private int mScreenWidth;
+    private int mScreenHeight;
 
     public ThreadInfoRvAdapter(int currentPagerNum) {
         mCurrentPagerNum = currentPagerNum;
+        WindowManager manager = (WindowManager) MainApplication.getInstance().getSystemService(Context.WINDOW_SERVICE);
+        Display display = manager.getDefaultDisplay();
+        mScreenWidth = display.getWidth();
+        mScreenHeight = display.getHeight();
     }
 
     @Override
@@ -86,8 +95,7 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             if (TextUtils.isEmpty(reply)) {
                 ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setText("null-null");
             } else {
-                Spanned spanned = Html.fromHtml(reply, new SpannedImageGetter(((ThreadInfoRvViewHolder) viewHolder).tvReviews), null);
-                ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setText(spanned);
+                ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setHtml(reply, new S1ImageGetter(((ThreadInfoRvViewHolder) viewHolder).tvReviews, mScreenWidth, mScreenHeight));
             }
         }
     }
@@ -114,7 +122,7 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         public TextView tvName;
         public TextView tvTime;
         public TextView tvNum;
-        public TextView tvReviews;
+        public HtmlTextView tvReviews;
 
         public ThreadInfoRvViewHolder(View itemView) {
             super(itemView);

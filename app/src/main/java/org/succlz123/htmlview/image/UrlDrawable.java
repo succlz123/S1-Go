@@ -1,24 +1,20 @@
-package org.succlz123.s1go.app.utils.fromhtml;
+package org.succlz123.htmlview.image;
 
-import org.succlz123.s1go.app.MainApplication;
-import org.succlz123.s1go.app.utils.common.ToastUtils;
-
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 /**
- * Created by succlz123 on 2015/5/24.
+ * Created by succlz123 on 2017/6/23.
  */
-public class UrlDrawable extends BitmapDrawable {
-    private Drawable mDrawable;
 
-    public UrlDrawable(int size) {
-        super(MainApplication.getInstance().getResources(), Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_4444));
-    }
+@SuppressWarnings("deprecation")
+public class UrlDrawable extends BitmapDrawable {
+    private static final String TAG = "UrlDrawable";
+    private Drawable mDrawable;
 
     public void setActualDrawable(Drawable drawable) {
         this.mDrawable = drawable;
@@ -36,16 +32,13 @@ public class UrlDrawable extends BitmapDrawable {
             try {
                 mDrawable.draw(canvas);
             } catch (Exception e) {
-                e.printStackTrace();
-                ToastUtils.showToastLong(MainApplication.getContext(), "bad bitmap!!!");
+                Log.e(TAG, "bad bitmap! " + e.toString());
             }
-        } else {
-            canvas.drawColor(Color.RED);
         }
     }
 
     @Override
-    public void setBounds(Rect bounds) {
+    public void setBounds(@NonNull Rect bounds) {
         super.setBounds(bounds);
         if (mDrawable != null) {
             mDrawable.setBounds(bounds);

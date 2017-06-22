@@ -1,7 +1,7 @@
 package org.succlz123.s1go.app.deprecated;
 
 import org.succlz123.s1go.app.utils.common.SysUtils;
-import org.succlz123.s1go.app.widget.AppSize;
+import org.succlz123.s1go.app.utils.AppSize;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
