@@ -3,6 +3,7 @@ package org.succlz123.s1go.app.utils.html;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -69,7 +70,7 @@ public class S1ImageGetter implements Html.ImageGetter {
             Drawable drawable = ContextCompat.getDrawable(MainApplication.getInstance(), R.drawable.ic_downloading);
             urlDrawable.setActualDrawable(drawable);
             urlDrawable.setBounds(0, 0, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
-            handlerHttpImage(urlDrawable, source, mScreenWidth / 5 * 3, mScreenHeight / 5 * 3);
+            handlerHttpImage(urlDrawable, source, mScreenWidth / 2, mScreenHeight / 2);
         }
         return urlDrawable;
     }
@@ -108,12 +109,30 @@ public class S1ImageGetter implements Html.ImageGetter {
         if (tvShow == null) {
             return;
         }
-        BitmapDrawable drawable = new BitmapDrawable(MainApplication.getInstance().getResources(), bitmap);
-        urlDrawable.setActualDrawable(drawable);
-        int bitmapWidth = bitmap.getWidth();
-        int bitmapHeight = bitmap.getHeight();
-        float scale = getScale(bitmapWidth, bitmapHeight, width, height);
-        urlDrawable.setBounds(0, 0, (int) (bitmapWidth / scale), (int) (bitmapHeight / scale));
+
+        if (width == mEmotionSize) {
+            BitmapDrawable drawable = new BitmapDrawable(MainApplication.getInstance().getResources(), bitmap);
+            urlDrawable.setActualDrawable(drawable);
+            int bitmapWidth = bitmap.getWidth();
+            int bitmapHeight = bitmap.getHeight();
+            float scale = getScale(bitmapWidth, bitmapHeight, width, height);
+            urlDrawable.setBounds(0, 0, (int) (bitmapWidth / scale), (int) (bitmapHeight / scale));
+        } else {
+            BitmapDrawable drawable = new BitmapDrawable(MainApplication.getInstance().getResources(), bitmap);
+            urlDrawable.setActualDrawable(drawable);
+            int bitmapWidth = bitmap.getWidth();
+            int bitmapHeight = bitmap.getHeight();
+
+            if (bitmapHeight > 0) {
+                float ratio = (float) bitmapWidth / bitmapHeight;
+                int newHeight = (int) (mScreenWidth / ratio);
+
+                bitmapWidth = mScreenWidth;
+                bitmapHeight = newHeight;
+            }
+            urlDrawable.setBounds(0, 0, bitmapWidth, bitmapHeight);
+        }
+
         MainApplication.getInstance().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -130,5 +149,26 @@ public class S1ImageGetter implements Html.ImageGetter {
         } else {
             return h;
         }
+    }
+
+    public static Bitmap scaleImage(Bitmap bitmap, int newWidth) {
+        if (bitmap == null) {
+            return null;
+        }
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        float ratio = (float) width / height;
+        int newHeight = (int) (newWidth / ratio);
+
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+        Bitmap newBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, true);
+        if (!bitmap.isRecycled()) {
+            bitmap.recycle();
+        }
+        return newBitmap;
     }
 }

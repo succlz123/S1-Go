@@ -2,19 +2,20 @@ package org.succlz123.s1go.app;
 
 import com.bilibili.magicasakura.utils.ThemeUtils;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.imagepipeline.core.ImagePipelineConfig;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.qiibeta.bitmapview.image.TileImage;
 import org.succlz123.blockanalyzer.BlockAnalyzer;
+import org.succlz123.crash.CrashHelper;
 import org.succlz123.s1go.app.bean.UserInfo;
 import org.succlz123.s1go.app.config.RetrofitManager;
 import org.succlz123.s1go.app.database.UserDatabase;
 import org.succlz123.s1go.app.utils.ThemeHelper;
 import org.succlz123.s1go.app.utils.UserInfoChangeListener;
 import org.succlz123.s1go.app.utils.image.ImageLoader;
-import org.succlz123.s1go.app.utils.s1.S1Emoticon;
 
 import android.app.Activity;
 import android.app.Application;
@@ -51,10 +52,6 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
         return sInstance;
     }
 
-    public static Context getContext() {
-        return MainApplication.getInstance().getApplicationContext();
-    }
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -64,7 +61,11 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
         sInstance = this;
         registerActivityLifecycleCallbacks(new MainActivityLifecycleCallback());
         refWatcher = LeakCanary.install(this);
-        Fresco.initialize(this);
+
+        ImagePipelineConfig build = ImagePipelineConfig.newBuilder(this).setDownsampleEnabled(true).build();
+        Fresco.initialize(this, build);
+        CrashHelper.init(this);
+
         ImageLoader.init();
         ThemeUtils.setSwitchColor(this);
 
@@ -72,7 +73,7 @@ public class MainApplication extends Application implements ThemeUtils.switchCol
             @Override
             public UserInfo.Variables call() throws Exception {
 //                S1Emoticon.initEmoticon();
-                CrashReport.initCrashReport(MainApplication.getContext(), "900017373", BuildConfig.DEBUG);
+                CrashReport.initCrashReport(MainApplication.getInstance(), "900017373", BuildConfig.DEBUG);
                 return getUserInfo();
             }
         }).subscribeOn(Schedulers.io()).subscribe(new Action1<UserInfo.Variables>() {

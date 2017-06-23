@@ -25,7 +25,7 @@ public class OkHttpClientManager {
             okHttpClientBuilder.connectTimeout(8, TimeUnit.SECONDS);
             okHttpClientBuilder.readTimeout(10, TimeUnit.SECONDS);
 
-            Context context = MainApplication.getContext();
+            Context context = MainApplication.getInstance();
             File baseDir = context.getCacheDir();
             if (baseDir != null) {
                 final File cacheDir = new File(baseDir, "HttpResponseCache");

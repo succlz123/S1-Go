@@ -48,7 +48,7 @@ public class RetrofitManager {
     }
 
     public static Retrofit getRetrofit() {
-        return getRetrofit(SettingHelper.isUrlIp(MainApplication.getContext()) ? BASE_IP : BASE);
+        return getRetrofit(SettingHelper.isUrlIp(MainApplication.getInstance()) ? BASE_IP : BASE);
     }
 
     public static ApiService apiService() {

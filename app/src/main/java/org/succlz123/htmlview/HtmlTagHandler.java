@@ -7,6 +7,7 @@ import android.text.Layout;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.AlignmentSpan;
 import android.text.style.BulletSpan;
 import android.text.style.LeadingMarginSpan;
@@ -41,22 +42,20 @@ public class HtmlTagHandler implements Html.TagHandler {
      * ourselves so before passing the string html into Html.fromHtml(), we can use this method to
      * replace the &lt;ul&gt; and &lt;li&gt; tags with tags of our own.
      *
-     * @see <a href="https://github.com/android/platform_frameworks_base/commit/8b36c0bbd1503c61c111feac939193c47f812190">Specific Android SDK Commit</a>
-     *
-     * @param html        String containing HTML, for example: "<b>Hello world!</b>"
+     * @param html String containing HTML, for example: "<b>Hello world!</b>"
      * @return html with replaced <ul> and <li> tags
+     * @see <a href="https://github.com/android/platform_frameworks_base/commit/8b36c0bbd1503c61c111feac939193c47f812190">Specific Android SDK Commit</a>
      */
-    String overrideTags(@Nullable String html){
-
-        if (html == null) return null;
-
+    String overrideTags(@Nullable String html) {
+        if (TextUtils.isEmpty(html)) {
+            return null;
+        }
         html = html.replace("<ul", "<" + UNORDERED_LIST);
         html = html.replace("</ul>", "</" + UNORDERED_LIST + ">");
         html = html.replace("<ol", "<" + ORDERED_LIST);
         html = html.replace("</ol>", "</" + ORDERED_LIST + ">");
         html = html.replace("<li", "<" + LIST_ITEM);
         html = html.replace("</li>", "</" + LIST_ITEM + ">");
-
         return html;
     }
 

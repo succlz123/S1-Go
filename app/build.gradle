@@ -8,8 +8,8 @@ android {
         applicationId "org.succlz123.s1go.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 15
-        versionName "1.1.2"
+        versionCode 16
+        versionName "1.1.3"
 
         buildConfigField 'String', 'AUTH', '\"auth\"'
         buildConfigField 'String', 'SALT_KEY', '\"saltkey\"'

@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class HtmlTextView extends JellyBeanSpanFixTextView {
     public static final String TAG = "HtmlTextView";
-    public static final boolean DEBUG = false;
+    public static final boolean DEBUG = true;
 
     @Nullable
     private ClickableTableSpan clickableTableSpan;
@@ -90,9 +90,6 @@ public class HtmlTextView extends JellyBeanSpanFixTextView {
                 setText(Html.fromHtml(html, imageGetter, htmlTagHandler));
             }
         }
-
-        // make links work
-        setMovementMethod(LocalLinkMovementMethod.getInstance());
     }
 
     /**

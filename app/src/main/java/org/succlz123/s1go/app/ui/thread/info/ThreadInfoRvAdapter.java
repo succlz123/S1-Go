@@ -1,17 +1,5 @@
 package org.succlz123.s1go.app.ui.thread.info;
 
-import com.facebook.drawee.view.SimpleDraweeView;
-
-import org.succlz123.htmlview.HtmlTextView;
-import org.succlz123.s1go.app.MainApplication;
-import org.succlz123.s1go.app.R;
-import org.succlz123.s1go.app.bean.ThreadInfo;
-import org.succlz123.s1go.app.utils.BlackListHelper;
-import org.succlz123.s1go.app.utils.common.ViewUtils;
-import org.succlz123.s1go.app.utils.html.ImageLinkParser;
-import org.succlz123.s1go.app.utils.html.S1ImageGetter;
-import org.succlz123.s1go.app.utils.s1.S1UidToAvatarUrl;
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.net.Uri;
@@ -25,6 +13,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import org.succlz123.htmlview.HtmlTextView;
+import org.succlz123.s1go.app.MainApplication;
+import org.succlz123.s1go.app.R;
+import org.succlz123.s1go.app.bean.ThreadInfo;
+import org.succlz123.s1go.app.utils.BlackListHelper;
+import org.succlz123.s1go.app.utils.common.ViewUtils;
+import org.succlz123.s1go.app.utils.html.S1ImageGetter;
+import org.succlz123.s1go.app.utils.html.S1LinkMovementMethod;
+import org.succlz123.s1go.app.utils.s1.S1UidToAvatarUrl;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -90,7 +90,7 @@ public class ThreadInfoRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 ((ThreadInfoRvViewHolder) viewHolder).tvNum.setText("" + ((30 * (mCurrentPagerNum - 1)) + position) + MainApplication.getInstance().getString(R.string.lou));
             }
 
-            ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setMovementMethod(ImageLinkParser.getInstance());
+            ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setMovementMethod(S1LinkMovementMethod.getInstance());
             String reply = content.message;
             if (TextUtils.isEmpty(reply)) {
                 ((ThreadInfoRvViewHolder) viewHolder).tvReviews.setText("null-null");

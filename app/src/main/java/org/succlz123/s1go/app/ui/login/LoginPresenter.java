@@ -36,7 +36,7 @@ public class LoginPresenter implements LoginContract.Presenter {
     public void login(final String username, final String password) {
         if (username.isEmpty() || password.isEmpty()) {
             if (mLoginView.isActive()) {
-                mLoginView.onLoginFailed(MainApplication.getContext().getString(R.string.please_input_un_pw));
+                mLoginView.onLoginFailed(MainApplication.getInstance().getString(R.string.please_input_un_pw));
                 return;
             }
         }

@@ -118,7 +118,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
                     finish();
                 } else if (message == TEXT_IS_NOT_EMPTY_AND_SET_REVIEWS) {
                     send();
-                    ToastUtils.showToastShort(MainApplication.getContext(), "已发送，请耐心等待！");
+                    ToastUtils.showToastShort(MainApplication.getInstance(), "已发送，请耐心等待！");
                 }
             }
         });
@@ -149,14 +149,14 @@ public class SendReplyActivity extends BaseToolbarActivity {
                     public void call(SendInfo sendInfo) {
                         SendInfo.Message message = sendInfo.Message;
                         if (message == null) {
-                            ToastUtils.showToastShort(MainApplication.getContext(), R.string.sorry);
+                            ToastUtils.showToastShort(MainApplication.getInstance(), R.string.sorry);
                         }
                         if (TextUtils.equals(BuildConfig.POST_REPLY_SUCCEED, message.messageval)) {
-                            ToastUtils.showToastShort(MainApplication.getContext(), R.string.set_succeed);
+                            ToastUtils.showToastShort(MainApplication.getInstance(), R.string.set_succeed);
                             finish();
                         } else {
                             if (!TextUtils.isEmpty(message.messagestr)) {
-                                ToastUtils.showToastShort(MainApplication.getContext(), message.messagestr);
+                                ToastUtils.showToastShort(MainApplication.getInstance(), message.messagestr);
                             } else {
                                 Toast.makeText(SendReplyActivity.this, getString(R.string.set_failed), Toast.LENGTH_SHORT).show();
                             }
@@ -165,7 +165,7 @@ public class SendReplyActivity extends BaseToolbarActivity {
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-                        ToastUtils.showToastShort(MainApplication.getContext(), R.string.sorry);
+                        ToastUtils.showToastShort(MainApplication.getInstance(), R.string.sorry);
                     }
                 });
         compositeSubscription.add(subscription);
