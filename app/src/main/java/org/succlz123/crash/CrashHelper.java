@@ -17,50 +17,48 @@ import java.util.Date;
  */
 
 public class CrashHelper implements Thread.UncaughtExceptionHandler {
-    private static CrashHelper instance;
+    private static CrashHelper sInstance;
+    private static Context sApplicationContext;
 
-    public static CrashHelper getInstance() {
-        if (instance == null) {
-            instance = new CrashHelper();
+    public static CrashHelper getInstance(Context context) {
+        if (sInstance == null) {
+            sApplicationContext = context.getApplicationContext();
+            sInstance = new CrashHelper();
         }
-        return instance;
+        return sInstance;
     }
 
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        String logDir;
-        if (Environment.getExternalStorageDirectory() != null) {
-            logDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "snda" + File.separator + "log";
-            File file = new File(logDir);
-            boolean mkSuccess;
-            if (!file.isDirectory()) {
+        String logDir = sApplicationContext.getExternalFilesDir("crash").getAbsolutePath();
+        File file = new File(logDir);
+        boolean mkSuccess;
+        if (!file.isDirectory()) {
+            mkSuccess = file.mkdirs();
+            if (!mkSuccess) {
                 mkSuccess = file.mkdirs();
-                if (!mkSuccess) {
-                    mkSuccess = file.mkdirs();
-                }
-            }
-            try {
-                FileWriter fw = new FileWriter(logDir + File.separator + "error.log", true);
-                fw.write(new Date() + "\n");
-                StackTraceElement[] stackTrace = e.getStackTrace();
-                fw.write(e.getMessage() + "\n");
-                for (int i = 0; i < stackTrace.length; i++) {
-                    fw.write("file:" + stackTrace[i].getFileName() + " class:" + stackTrace[i].getClassName()
-                            + " method:" + stackTrace[i].getMethodName() + " line:" + stackTrace[i].getLineNumber()
-                            + "\n");
-                }
-                fw.write("\n");
-                fw.close();
-            } catch (IOException e1) {
-                Log.e("crash handler", "load file failed...", e1.getCause());
             }
         }
-        e.printStackTrace();
-        Toast.makeText(MainApplication.getInstance(), e.toString(), Toast.LENGTH_LONG).show();
+        try {
+            FileWriter fw = new FileWriter(logDir + File.separator + "error.log", true);
+            fw.write(new Date() + "\n");
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            fw.write(e.getMessage() + "\n");
+            for (int i = 0; i < stackTrace.length; i++) {
+                fw.write("file:" + stackTrace[i].getFileName() + " class:" + stackTrace[i].getClassName()
+                        + " method:" + stackTrace[i].getMethodName() + " line:" + stackTrace[i].getLineNumber()
+                        + "\n");
+            }
+            fw.write("\n");
+            fw.close();
+        } catch (IOException e1) {
+            Log.e("crash handler", "load file failed...", e1.getCause());
+        }
+        Toast.makeText(sApplicationContext, e.toString(), Toast.LENGTH_LONG).show();
         android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     public static void init(Context ctx) {
-        Thread.setDefaultUncaughtExceptionHandler(CrashHelper.getInstance());
+        Thread.setDefaultUncaughtExceptionHandler(CrashHelper.getInstance(ctx));
     }
 }
