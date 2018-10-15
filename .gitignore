@@ -1,6 +1,3 @@
-*.dex
-*.class
-
 local.properties
 proguard/
 
@@ -8,28 +5,10 @@ proguard/
 bin/
 gen/
 
-# IntelliJ IDEA
-*.ipr
-*.iws
-*.log
-.idea
-*.iml
-
 # Gradle
 .gradle
 gradlew.bat
 build
-
-reports
-/captures
-jacoco.exec
-
-# Mac system files
-.DS_Store
-
-# Android Studio Navigation editor temp files
-.navigation/
-out
 
 # Eclipse project files
 .classpath
@@ -38,8 +17,79 @@ out
 eclipsebin
 .metadata/
 
-#NDK
+# NDK
 obj/
 jniLibs
 app/app-release.apk
 app/src/main/java/org/succlz123/s1go/app/test/
+
+# Miscellaneous
+*.class
+*.lock
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+*.dex
+
+# IntelliJ related
+*.ipr
+*.iws
+*.iml
+.idea/
+
+# Visual Studio Code related
+.vscode/
+
+# Android related
+**/android/**/gradle-wrapper.jar
+**/android/.gradle
+**/android/captures/
+**/android/gradlew
+**/android/gradlew.bat
+**/android/local.properties
+**/android/**/GeneratedPluginRegistrant.java
+
+# iOS/XCode related
+**/ios/**/*.mode1v3
+**/ios/**/*.mode2v3
+**/ios/**/*.moved-aside
+**/ios/**/*.pbxuser
+**/ios/**/*.perspectivev3
+**/ios/**/*sync/
+**/ios/**/.sconsign.dblite
+**/ios/**/.tags*
+**/ios/**/.vagrant/
+**/ios/**/DerivedData/
+**/ios/**/Icon?
+**/ios/**/Pods/
+**/ios/**/.symlinks/
+**/ios/**/profile
+**/ios/**/xcuserdata
+**/ios/.generated/
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/app.flx
+**/ios/Flutter/app.zip
+**/ios/Flutter/flutter_assets/
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.*
+
+# Exceptions to above rules.
+!**/ios/**/default.mode1v3
+!**/ios/**/default.mode2v3
+!**/ios/**/default.pbxuser
+!**/ios/**/default.perspectivev3
+!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+ios/Frameworks/
+
+# pub
+.packages
+.metadata
+.dart_tool/
+.pub/

@@ -1,0 +1,6 @@
+*.java linguist-language=Dart
+*.kt linguist-language=Dart
+*.h linguist-language=Dart
+*.m linguist-language=Dart
+*.swift linguist-language=Dart
+*.dart linguist-language=Dart
