@@ -74,11 +74,4 @@ dependencies {
     compile "org.qiibeta.views:BitmapView:${rootProject.ext.bitmapviewVersion}"
 
     compile "com.bilibili:magicasakura:${rootProject.ext.magicasakuraVersion}@aar"
-
-//    compile 'com.frostwire:jlibtorrent:1.2.0.1'
-//    compile 'com.frostwire:jlibtorrent-android-arm:1.2.0.1'
-
-//    compile 'com.hannesdorfmann.mosby:mvp:2.0.1'
-//    compile 'com.hannesdorfmann.mosby:viewstate:2.0.1'
-
 }
